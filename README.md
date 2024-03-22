@@ -1,2 +1,0 @@
-# plant
-project 1

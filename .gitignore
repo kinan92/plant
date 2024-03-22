@@ -336,3 +336,6 @@ $RECYCLE.BIN/
 .idea/*
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,java,intellij,jetbrains,eclipse
+
+.classpath
+.project

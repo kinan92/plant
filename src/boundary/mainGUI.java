@@ -9,7 +9,7 @@ public class mainGUI extends JFrame {
 
     private JLabel plantName;
     int width = 550;
-    int height = 450;
+    int height = 470;
     private ImageIcon elefantöra = new ImageIcon("images/elefantora.png");
     private ImageIcon skiphour = new ImageIcon("images/skiphour.png");
     private ImageIcon storage = new ImageIcon("images/storage.png");
@@ -36,7 +36,7 @@ public class mainGUI extends JFrame {
     public JPanel sideButtons()
     {
         JPanel sideButtons = new JPanel();
-        sideButtons.setBackground(Color.GRAY);
+        sideButtons.setBackground(Color.LIGHT_GRAY);
         sideButtons.setPreferredSize(new Dimension(230, (height / 5) * 3));
         sideButtons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
@@ -136,6 +136,11 @@ public class mainGUI extends JFrame {
         System.out.println("Vacation pressed.");
     }
 
+    private void waterPressed()
+    {
+        System.out.println("Water pressed.");
+    }
+
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();
@@ -163,7 +168,6 @@ public class mainGUI extends JFrame {
     {
         JPanel plantView = new JPanel();
         plantView.setPreferredSize(new Dimension(256, (height / 5) * 4));
-        plantView.setBackground(Color.ORANGE);
         plantView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -176,7 +180,9 @@ public class mainGUI extends JFrame {
         c.gridx = 0;
         c.gridy = 2;
         JLabel plantImage = new JLabel(elefantöra);
+        JLabel plantShadow = new JLabel(new ImageIcon("images/elefantora_shadow.png"));
         plantView.add(plantImage, c);
+        plantView.add(plantShadow, c);
 
         c.weightx = 0;
         c.gridx = 0;
@@ -190,8 +196,7 @@ public class mainGUI extends JFrame {
     private JPanel plantCare()
     {
         JPanel plantView = new JPanel();
-        plantView.setPreferredSize(new Dimension(256, 55));
-        plantView.setBackground(Color.RED);
+        plantView.setSize(new Dimension(256, 55));
         plantView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -205,7 +210,7 @@ public class mainGUI extends JFrame {
         waterPlant.setPreferredSize(new Dimension(45, 45));
 
         plantView.add(waterPlant, c);
-        waterPlant.addActionListener(l -> getPlantPressed());
+        waterPlant.addActionListener(l -> waterPressed());
         waterPlant.setRolloverEnabled(true);
         waterPlant.setRolloverIcon(new ImageIcon("images/water_hover.png"));
 
@@ -213,13 +218,9 @@ public class mainGUI extends JFrame {
         c.weighty = 0;
         c.gridx = 0;
         c.gridy = 0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.insets = new Insets(5, 0, 15, 0);
         plantView.add(waterPlant, c);
-
-        c.weightx = 1;
-        c.weighty = 0;
-        c.gridx = 1;
-        c.gridy = 0;
-        plantView.add(Box.createGlue(), c);
 
         return plantView;
     }

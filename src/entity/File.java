@@ -29,7 +29,7 @@ public class File {
 		}
 	}
 
-	public void creatAFileIFNotExsest() {
+	public void creatAFileIFNotExist() {
 		try {
 
 			datafile.close();

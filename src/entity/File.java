@@ -1,5 +1,6 @@
 package entity;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -8,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.function.Consumer;
 
-public class File {
+public class File  extends Thread{
 	private Object objectFromTheFile = null;
 	private String fileName = "files\\data.dat";
 	private FileOutputStream datafile;
@@ -16,6 +17,7 @@ public class File {
 	private ObjectInputStream readObjectFromFile;
 
 	public File() {
+		 
 		try {
 			datafile = new FileOutputStream(fileName);
 			myWriter = new ObjectOutputStream(datafile);
@@ -27,7 +29,9 @@ public class File {
 
 			e.printStackTrace();
 		}
+			
 	}
+	
 
 	public void creatAFileIFNotExist() {
 		try {
@@ -42,7 +46,7 @@ public class File {
 	}
 
 	public void writeObjectToFile(Object obj) {
-		Thread fileThread = new Thread(() -> {
+		
 			try {
 
 				myWriter.writeObject(obj);
@@ -53,26 +57,21 @@ public class File {
 				e.printStackTrace();
 			}
 
-		});
-		fileThread.start();
+	
 	}
 
-	public Object readObjectFromFile(Consumer<Object> callback) {
-
-		Thread fileThread = new Thread(() -> {
+	public Object readObjectFromFile() {	
+	
 			try {
-				//readObjectFromFile = new ObjectInputStream(new FileInputStream(fileName));
-				// Read object from the file
-				 while ((objectFromTheFile = readObjectFromFile.readObject()) != null) {
-		                callback.accept(objectFromTheFile);
-		            }
-			//	readObjectFromFile.close();
+				objectFromTheFile = readObjectFromFile.readObject();
+				readObjectFromFile.close();
+			} catch (EOFException e) {
+			    // End of file reached unexpectedly
+			    System.err.println("End of file reached unexpectedly.");
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}
-		});
-
-		fileThread.start();
+		
 		return objectFromTheFile;
 
 	}

@@ -27,17 +27,39 @@ public class mainGUI extends JFrame {
         JPanel plantView = plantView();
         add(plantView, BorderLayout.WEST);
 
+        /*JPanel healthBar = healthBar();
+        add(healthBar, BorderLayout.CENTER);*/
+
         JPanel sideButtons = sideButtons();
         add(sideButtons, BorderLayout.EAST);
 
         setVisible(true);
     }
 
+    public JPanel healthBar()
+    {
+        JPanel healthBarPanel = new JPanel();
+        healthBarPanel.setLayout(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+        setPreferredSize(new Dimension(62, height));
+
+        c.weightx = 0;
+        c.weighty = 0;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.insets = new Insets(10, 3, 10, 3);
+        JLabel healthBar = new JLabel();
+        healthBar.setIcon(new ImageIcon("images/healthbar.png"));
+        healthBarPanel.add(healthBar, c);
+
+        return healthBarPanel;
+    }
+
     public JPanel sideButtons()
     {
         JPanel sideButtons = new JPanel();
         sideButtons.setBackground(Color.LIGHT_GRAY);
-        sideButtons.setPreferredSize(new Dimension(230, (height / 5) * 3));
+        sideButtons.setPreferredSize(new Dimension(220, (height / 5) * 3));
         sideButtons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -171,11 +193,13 @@ public class mainGUI extends JFrame {
         plantView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 0;
         plantView.add(nameView(), c);
 
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
@@ -184,6 +208,7 @@ public class mainGUI extends JFrame {
         plantView.add(plantImage, c);
         plantView.add(plantShadow, c);
 
+        c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 3;
@@ -196,8 +221,9 @@ public class mainGUI extends JFrame {
     private JPanel plantCare()
     {
         JPanel plantView = new JPanel();
-        plantView.setSize(new Dimension(256, 55));
+        plantView.setSize(new Dimension(256, 50));
         plantView.setLayout(new GridBagLayout());
+        plantView.setBackground(Color.GRAY);
         GridBagConstraints c = new GridBagConstraints();
 
         /*JButton waterPlant = new JButton("Water plant");
@@ -219,7 +245,7 @@ public class mainGUI extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(5, 0, 15, 0);
+        c.insets = new Insets(10, 0, 10, 0);
         plantView.add(waterPlant, c);
 
         return plantView;

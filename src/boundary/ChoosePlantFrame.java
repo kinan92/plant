@@ -1,18 +1,24 @@
 package boundary;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChoosePlantFrame extends JFrame{
-    private JLabel plantName;
+    private Controller controller;
     int width = 550;
     int height = 470;
     private List<ImageIcon> plantImages = new ArrayList<>();
+    private List<ImageIcon> plantHoverImages = new ArrayList<>();
+    //Constructor will receive controller and an ArrayList of PlantType when created
     public ChoosePlantFrame()
     {
         getArrayList();
+        getHoverArrayList();
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -38,9 +44,9 @@ public class ChoosePlantFrame extends JFrame{
     private void getArrayList()
     {
         //ImageIcon elefantora = new ImageIcon("images/elefantora.png");
-        ImageIcon elefantora = new ImageIcon(new ImageIcon("images/elefantora.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon snakeplant = new ImageIcon(new ImageIcon("images/snakeplant.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon cactus = new ImageIcon(new ImageIcon("images/cactus1.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+        ImageIcon elefantora = new ImageIcon(new ImageIcon("images/plants/elefantora.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+        ImageIcon snakeplant = new ImageIcon(new ImageIcon("images/plants/snakeplant.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+        ImageIcon cactus = new ImageIcon(new ImageIcon("images/plants/cactus1.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
 
         plantImages.add(elefantora);
         plantImages.add(snakeplant);
@@ -51,6 +57,27 @@ public class ChoosePlantFrame extends JFrame{
         plantImages.add(elefantora);
         plantImages.add(snakeplant);
         plantImages.add(cactus);
+    }
+
+    //Metoden är enbart för test och kommer att ersättas
+    //Klassen kommer att ha en ArrayList av PlantType från controllern och i denna metoden kommer
+    //bilder att hämtas genom den ArrayListen
+    private void getHoverArrayList()
+    {
+        //ImageIcon elefantora = new ImageIcon("images/elefantora.png");
+        ImageIcon elefantora = new ImageIcon(new ImageIcon("images/plants/elefantora_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+        ImageIcon snakeplant = new ImageIcon(new ImageIcon("images/plants/snakeplant_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+        ImageIcon cactus = new ImageIcon(new ImageIcon("images/plants/cactus1_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
+
+        plantHoverImages.add(elefantora);
+        plantHoverImages.add(snakeplant);
+        plantHoverImages.add(cactus);
+        plantHoverImages.add(elefantora);
+        plantHoverImages.add(snakeplant);
+        plantHoverImages.add(cactus);
+        plantHoverImages.add(elefantora);
+        plantHoverImages.add(snakeplant);
+        plantHoverImages.add(cactus);
     }
 
     public JPanel plants()
@@ -66,6 +93,9 @@ public class ChoosePlantFrame extends JFrame{
             plant.setBorder(BorderFactory.createEmptyBorder());
             plant.setContentAreaFilled(false);
             plant.setIcon(plantImages.get(i));
+            ImageIcon shadow = plantHoverImages.get(i);
+            plant.setRolloverEnabled(true);
+            plant.setRolloverIcon(shadow);
 
             //ActionListener that will return the ArrayList number when the plant is pressed
             int plantNumber = i;
@@ -75,6 +105,9 @@ public class ChoosePlantFrame extends JFrame{
         return plants;
     }
 
+    //This method will be replaced by a method that calls a method in the Controller to notify
+    //that a plant has been chosen and which plant has been chosen (via the index that will
+    //correspond to an index in the PlantType ArrayList)
     private void plantPressed(int plant)
     {
         System.out.println(plant);

@@ -10,11 +10,11 @@ public class mainGUI extends JFrame {
     private JLabel plantName;
     int width = 550;
     int height = 470;
-    private ImageIcon elefantöra = new ImageIcon("images/elefantora.png");
-    private ImageIcon skiphour = new ImageIcon("images/skiphour.png");
-    private ImageIcon storage = new ImageIcon("images/storage.png");
-    private ImageIcon vacationImage = new ImageIcon("images/vacation.png");
-    private ImageIcon widgetImage = new ImageIcon("images/widget.png");
+    private ImageIcon elefantöra = new ImageIcon("images/plants/elefantora.png");
+    private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
+    private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
+    private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
+    private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
     public mainGUI()
     {
         setLayout(new BorderLayout());
@@ -79,7 +79,7 @@ public class mainGUI extends JFrame {
         sideButtons.add(getPlant, c);
         getPlant.addActionListener(l -> getPlantPressed());
         getPlant.setRolloverEnabled(true);
-        getPlant.setRolloverIcon(new ImageIcon("images/storage_hover.png"));
+        getPlant.setRolloverIcon(new ImageIcon("images/buttons/storage_hover.png"));
 
         //Creates Widget button
         JButton widget = new JButton();
@@ -97,7 +97,7 @@ public class mainGUI extends JFrame {
         sideButtons.add(widget, c);
         widget.addActionListener(l -> widgetPressed());
         widget.setRolloverEnabled(true);
-        widget.setRolloverIcon(new ImageIcon("images/widget_hover.png"));
+        widget.setRolloverIcon(new ImageIcon("images/buttons/widget_hover.png"));
 
         //Creates Skip Hour button
         JButton skipHour = new JButton();
@@ -115,7 +115,7 @@ public class mainGUI extends JFrame {
         sideButtons.add(skipHour, c);
         skipHour.addActionListener(l -> skipHourPressed());
         skipHour.setRolloverEnabled(true);
-        skipHour.setRolloverIcon(new ImageIcon("images/skiphour_hover.png"));
+        skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
 
         //Creates Vacation button
         JButton vacation = new JButton();
@@ -133,7 +133,7 @@ public class mainGUI extends JFrame {
         sideButtons.add(vacation, c);
         vacation.addActionListener(l -> vacationPressed());
         vacation.setRolloverEnabled(true);
-        vacation.setRolloverIcon(new ImageIcon("images/vacation_hover.png"));
+        vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));
 
         return sideButtons;
     }
@@ -232,13 +232,13 @@ public class mainGUI extends JFrame {
         JButton waterPlant = new JButton();
         waterPlant.setBorder(BorderFactory.createEmptyBorder());
         waterPlant.setContentAreaFilled(false);
-        waterPlant.setIcon(new ImageIcon("images/water.png"));
+        waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));
         waterPlant.setPreferredSize(new Dimension(45, 45));
 
         plantView.add(waterPlant, c);
         waterPlant.addActionListener(l -> waterPressed());
         waterPlant.setRolloverEnabled(true);
-        waterPlant.setRolloverIcon(new ImageIcon("images/water_hover.png"));
+        waterPlant.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
 
         c.weightx = 0;
         c.weighty = 0;

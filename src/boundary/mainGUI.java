@@ -23,6 +23,9 @@ public class mainGUI extends JFrame {
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
+        ImageIcon icon = new ImageIcon("images/icon.png");
+        setIconImage(icon.getImage());
+
 
         JPanel plantView = plantView();
         add(plantView, BorderLayout.WEST);
@@ -173,14 +176,14 @@ public class mainGUI extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         JLabel plantName = new JLabel("Bob");
-        plantName.setFont(new Font("Montserrat", Font.PLAIN, 32));
+        plantName.setFont(new Font("vgafix", Font.PLAIN, 26));
         nameView.add(plantName, c);
 
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 1;
         JLabel plantSpecies = new JLabel("Species: Elefantöra");
-        plantName.setFont(new Font("Montserrat", Font.PLAIN, 24));
+        plantSpecies.setFont(new Font("vgafix", Font.PLAIN, 16));
         nameView.add(plantSpecies, c);
 
         return nameView;
@@ -204,9 +207,13 @@ public class mainGUI extends JFrame {
         c.gridx = 0;
         c.gridy = 2;
         JLabel plantImage = new JLabel(elefantöra);
+        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         JLabel plantShadow = new JLabel(new ImageIcon("images/elefantora_shadow.png"));
+        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
         plantView.add(plantImage, c);
+        plantView.add(plantPot, c);
         plantView.add(plantShadow, c);
+        plantView.add(plantBackground, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;

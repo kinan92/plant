@@ -1,10 +1,8 @@
 package boundary;
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
-import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
 
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -22,6 +20,8 @@ public class MainFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
+		ImageIcon icon = new ImageIcon("images/icon.png");
+		setIconImage(icon.getImage());
 		initialize();
 	}
 

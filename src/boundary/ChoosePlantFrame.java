@@ -23,8 +23,11 @@ public class ChoosePlantFrame extends JFrame{
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
+        ImageIcon icon = new ImageIcon("images/icon.png");
+        setIconImage(icon.getImage());
         setLocationRelativeTo(null);
         setResizable(false);
+
         JScrollPane scroll = new JScrollPane(
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS

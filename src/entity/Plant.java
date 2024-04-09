@@ -11,6 +11,7 @@ public class Plant {
 	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
+	private int waterLevel;
 	
 	public Plant(String name, int age, ImageIcon image, LocalDateTime dateAndTime) {
 		super();

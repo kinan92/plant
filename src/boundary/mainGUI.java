@@ -1,4 +1,6 @@
 package boundary;
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -6,7 +8,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class mainGUI extends JFrame {
-
+    private Controller controller;
     private JLabel plantName;
     int width = 550;
     int height = 470;
@@ -25,6 +27,7 @@ public class mainGUI extends JFrame {
         setResizable(false);
         ImageIcon icon = new ImageIcon("images/icon.png");
         setIconImage(icon.getImage());
+        this.controller = new Controller();
 
 
         JPanel plantView = plantView();
@@ -164,6 +167,8 @@ public class mainGUI extends JFrame {
     private void waterPressed()
     {
         System.out.println("Water pressed.");
+        controller.waterPlant();
+        System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
     public JPanel nameView()
@@ -246,6 +251,8 @@ public class mainGUI extends JFrame {
         waterPlant.addActionListener(l -> waterPressed());
         waterPlant.setRolloverEnabled(true);
         waterPlant.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
+
+
 
         c.weightx = 0;
         c.weighty = 0;

@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Image;
 import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
@@ -19,7 +18,16 @@ public class Plant {
 		this.age = age;
 		this.image = image;
 		this.dateAndTime = dateAndTime;
+		this.waterLevel = 0;
 	}
+	public void waterPlant(){
+		waterLevel++;
+	}
+
+	public int getWaterLevel(){
+		return this.waterLevel;
+	}
+
 	public String getName() {
 		return name;
 	}

@@ -86,7 +86,6 @@ public class ChoosePlantFrame extends JFrame{
     public JPanel plants()
     {
         JPanel plants = new JPanel();
-        plants.setBackground(Color.PINK);
         plants.setLayout(new GridLayout(2, plantImages.size()));
 
         //Loops through plantImages and creates buttons with the images
@@ -97,6 +96,9 @@ public class ChoosePlantFrame extends JFrame{
             plant.setContentAreaFilled(false);
             plant.setIcon(plantImages.get(i));
             ImageIcon shadow = plantHoverImages.get(i);
+
+
+            plant.setFocusPainted(false);
             plant.setRolloverEnabled(true);
             plant.setRolloverIcon(shadow);
 

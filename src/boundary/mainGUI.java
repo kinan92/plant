@@ -176,14 +176,14 @@ public class mainGUI extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         JLabel plantName = new JLabel("Bob");
-        plantName.setFont(new Font("vgafix", Font.PLAIN, 26));
+        plantName.setFont(new Font("Calibri", Font.PLAIN, 26));
         nameView.add(plantName, c);
 
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 1;
         JLabel plantSpecies = new JLabel("Species: Elefantöra");
-        plantSpecies.setFont(new Font("vgafix", Font.PLAIN, 16));
+        plantSpecies.setFont(new Font("Calibri", Font.PLAIN, 16));
         nameView.add(plantSpecies, c);
 
         return nameView;

@@ -1,0 +1,4 @@
+Dracaena Trifasciata,Snake Plant,images/plant/snakeplant.png,images/buttons/snakeplant_button.png,images/buttons/snakeplant_button_hover.png,Detta är en snake plant
+Pilea Peperomioides,Chinese Money Plant,images/plants/moneyplant.png,images/buttons/moneyplant_button.png,images/buttons/moneyplant_button_hover.png,Denna plantan är cool
+Opuntia Microdasys,Bunny Ear Cactus,images/plants/bunnyear.png,images/buttons/bunnyear_button.png,images/buttons/bunnyear_button_hover.png,Denna plantan ser ut som en kanin
+Echinocactus Grusonii,Golden Barrel Cactus,images/plants/goldenbarrelcactus.png,images/buttons/goldenbarrelcactus_button.png,images/buttons/goldenbarrelcactus_button_hover.png,Detta är en kaktus

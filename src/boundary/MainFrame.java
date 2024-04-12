@@ -1,5 +1,7 @@
 package boundary;
 
+import controller.Controller;
+
 import javax.swing.*;
 
 import javax.swing.GroupLayout.Alignment;
@@ -12,11 +14,14 @@ public class MainFrame extends JFrame {
 	JButton createPlantButton = new JButton("Create Plant");
 	JButton getAPlantButton = new JButton("Open Last Plant");
 	GroupLayout groupLayout = new GroupLayout(getContentPane());
+	Controller controller;
 
 	/**
 	 * Create the application.
 	 */
-	public MainFrame() {
+	public MainFrame(Controller controller)
+	{
+		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);
 		setResizable(false);
@@ -28,7 +33,7 @@ public class MainFrame extends JFrame {
 	private void clickCreatePlantButton() {
 		createPlantButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChoosePlantFrame choosePlantFrame = new ChoosePlantFrame();
+				controller.choosePlantFrame();
 				dispose();
 			}
 		});

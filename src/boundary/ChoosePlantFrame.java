@@ -12,13 +12,14 @@ public class ChoosePlantFrame extends JFrame{
     private Controller controller;
     int width = 550;
     int height = 470;
-    private List<ImageIcon> plantImages = new ArrayList<>();
-    private List<ImageIcon> plantHoverImages = new ArrayList<>();
+    private ArrayList<String> plantImages = new ArrayList<>();
+    private ArrayList<String> plantHoverImages = new ArrayList<>();
     //Constructor will receive controller and an ArrayList of PlantType when created
-    public ChoosePlantFrame()
+    public ChoosePlantFrame(ArrayList<String> plantImages, ArrayList<String> plantHoverImages)
     {
-        getArrayList();
-        getHoverArrayList();
+        this.plantImages = plantImages;
+        this.plantHoverImages = plantHoverImages;
+
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -41,48 +42,6 @@ public class ChoosePlantFrame extends JFrame{
         setVisible(true);
     }
 
-    //Metoden är enbart för test och kommer att ersättas
-    //Klassen kommer att ha en ArrayList av PlantType från controllern och i denna metoden kommer
-    //bilder att hämtas genom den ArrayListen
-    private void getArrayList()
-    {
-        //ImageIcon elefantora = new ImageIcon("images/elefantora.png");
-        ImageIcon elefantora = new ImageIcon(new ImageIcon("images/plants/elefantora.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon snakeplant = new ImageIcon(new ImageIcon("images/plants/snakeplant.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon cactus = new ImageIcon(new ImageIcon("images/plants/cactus1.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-
-        plantImages.add(elefantora);
-        plantImages.add(snakeplant);
-        plantImages.add(cactus);
-        plantImages.add(elefantora);
-        plantImages.add(snakeplant);
-        plantImages.add(cactus);
-        plantImages.add(elefantora);
-        plantImages.add(snakeplant);
-        plantImages.add(cactus);
-    }
-
-    //Metoden är enbart för test och kommer att ersättas
-    //Klassen kommer att ha en ArrayList av PlantType från controllern och i denna metoden kommer
-    //bilder att hämtas genom den ArrayListen
-    private void getHoverArrayList()
-    {
-        //ImageIcon elefantora = new ImageIcon("images/elefantora.png");
-        ImageIcon elefantora = new ImageIcon(new ImageIcon("images/plants/elefantora_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon snakeplant = new ImageIcon(new ImageIcon("images/plants/snakeplant_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-        ImageIcon cactus = new ImageIcon(new ImageIcon("images/plants/cactus1_hover.png").getImage().getScaledInstance(154, 192, Image.SCALE_DEFAULT));
-
-        plantHoverImages.add(elefantora);
-        plantHoverImages.add(snakeplant);
-        plantHoverImages.add(cactus);
-        plantHoverImages.add(elefantora);
-        plantHoverImages.add(snakeplant);
-        plantHoverImages.add(cactus);
-        plantHoverImages.add(elefantora);
-        plantHoverImages.add(snakeplant);
-        plantHoverImages.add(cactus);
-    }
-
     public JPanel plants()
     {
         JPanel plants = new JPanel();
@@ -94,8 +53,9 @@ public class ChoosePlantFrame extends JFrame{
             JButton plant = new JButton();
             plant.setBorder(BorderFactory.createEmptyBorder());
             plant.setContentAreaFilled(false);
-            plant.setIcon(plantImages.get(i));
-            ImageIcon shadow = plantHoverImages.get(i);
+            System.out.println(plantImages.get(i));
+            plant.setIcon(new ImageIcon(plantImages.get(i)));
+            ImageIcon shadow = new ImageIcon(plantHoverImages.get(i));
 
 
             plant.setFocusPainted(false);

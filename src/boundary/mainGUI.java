@@ -147,9 +147,11 @@ public class mainGUI extends JFrame {
     }
 
     private void widgetPressed()
-    {
+    {	
+    	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
-            new MargePlantAndPot("images/plants/goldenbarrelcactus.png", "images/h.png");
+    									//plant	path						pot path
+            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/h.png");
         });
         System.out.println("Widget pressed.");
     }

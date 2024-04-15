@@ -9,10 +9,10 @@ public class Plant {
 	
 	private String name;
 	private int age;
-	private ImageIcon image;
+	private String image ;
 	private LocalDateTime dateAndTime;
 	
-	public Plant(String name, int age, ImageIcon image, LocalDateTime dateAndTime) {
+	public Plant(String name, int age, String image, LocalDateTime dateAndTime) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -31,12 +31,13 @@ public class Plant {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public ImageIcon getImage() {
+	public String getImage() {
 		return image;
 	}
-	public void setImage(ImageIcon image) {
+	public void setImage(String image) {
 		this.image = image;
 	}
+	
 	public LocalDateTime getDateAndTime() {
 		return dateAndTime;
 	}

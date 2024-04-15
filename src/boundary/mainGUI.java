@@ -148,6 +148,9 @@ public class mainGUI extends JFrame {
 
     private void widgetPressed()
     {
+    	SwingUtilities.invokeLater(() -> {
+            new MargePlantAndPot("images/plants/goldenbarrelcactus.png", "images/h.png");
+        });
         System.out.println("Widget pressed.");
     }
 

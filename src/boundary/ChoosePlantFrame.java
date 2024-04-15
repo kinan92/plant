@@ -17,6 +17,7 @@ public class ChoosePlantFrame extends JFrame{
     //Constructor will receive controller and an ArrayList of PlantType when created
     public ChoosePlantFrame(ArrayList<String> plantImages, ArrayList<String> plantHoverImages)
     {
+        System.out.println("You're in ChoosePlantFrame");
         this.plantImages = plantImages;
         this.plantHoverImages = plantHoverImages;
 

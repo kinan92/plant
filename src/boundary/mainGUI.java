@@ -17,6 +17,7 @@ public class mainGUI extends JFrame {
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
     public mainGUI()
     {
+        System.out.println("You're in mainGUI");
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);

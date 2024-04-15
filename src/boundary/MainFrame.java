@@ -21,6 +21,7 @@ public class MainFrame extends JFrame {
 	 */
 	public MainFrame(Controller controller)
 	{
+		System.out.println("You're in mainFrame");
 		this.controller = controller;
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setVisible(true);

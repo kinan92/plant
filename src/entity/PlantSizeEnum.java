@@ -2,26 +2,23 @@ package entity;
 
 public enum PlantSizeEnum {
 	
-	little("Littel", 0),
-	big("Big", 5),
-	dead("dead", 10);
+	little("Littel"),
+	big("Big"),
+	dead("dead");
 
 	private final String size;
 
-	private final int age;
 
-	PlantSizeEnum(String size, int age) {
+
+	PlantSizeEnum(String size) {
 
 		this.size = size;
-		this.age = age;
+
 	}
 
 	public String getSize() {
 		return size;
 	}
 
-	public int getPlantEnumAge() {
-		return age;
-	}
 
 }

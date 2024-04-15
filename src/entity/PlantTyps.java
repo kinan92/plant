@@ -12,9 +12,5 @@ public class PlantTyps {
 		plant= new Plant(bilderEnum, 0, bilderEnum, null);
 	}
 	
-	//private String getImageName() {
-		
-		
-	//	return String;
-//	}
+
 }

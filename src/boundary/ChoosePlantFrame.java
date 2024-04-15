@@ -40,6 +40,8 @@ public class ChoosePlantFrame extends JFrame{
         JScrollPane scroller = new JScrollPane(plants);
         this.getContentPane().add(scroller, BorderLayout.CENTER);
 
+        JPanel navigation = navigation();
+
         setVisible(true);
     }
 
@@ -51,24 +53,53 @@ public class ChoosePlantFrame extends JFrame{
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantImages.size(); i++)
         {
-            JButton plant = new JButton();
-            plant.setBorder(BorderFactory.createEmptyBorder());
-            plant.setContentAreaFilled(false);
+            JButton plantBtn = new JButton();
+            plantBtn.setBorder(BorderFactory.createEmptyBorder());
+            plantBtn.setContentAreaFilled(false);
             System.out.println(plantImages.get(i));
-            plant.setIcon(new ImageIcon(plantImages.get(i)));
+            plantBtn.setIcon(new ImageIcon(plantImages.get(i)));
             ImageIcon shadow = new ImageIcon(plantHoverImages.get(i));
 
 
-            plant.setFocusPainted(false);
-            plant.setRolloverEnabled(true);
-            plant.setRolloverIcon(shadow);
+            plantBtn.setFocusPainted(false);
+            plantBtn.setRolloverEnabled(true);
+            plantBtn.setRolloverIcon(shadow);
 
             //ActionListener that will return the ArrayList number when the plant is pressed
             int plantNumber = i;
-            plant.addActionListener(l -> plantPressed(plantNumber));
-            plants.add(plant);
+            plantBtn.addActionListener(l -> plantPressed(plantNumber));
+            plants.add(plantBtn);
         }
         return plants;
+    }
+
+    /**
+     * @author Petri Närhi */
+    public JPanel navigation()
+    {
+        JPanel navigation = new JPanel();
+        navigation.setLayout(new GridLayout());
+
+        //Loops through plantImages and creates buttons with the images
+        JButton backBtn = new JButton();
+        backBtn.setBorder(BorderFactory.createEmptyBorder());
+        backBtn.setContentAreaFilled(false);
+        backBtn.setIcon(new ImageIcon("images/buttons/back"));
+
+
+        backBtn.setFocusPainted(false);
+        backBtn.setRolloverEnabled(true);
+        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover"));
+
+        //ActionListener that will return the ArrayList number when the plant is pressed
+        backBtn.addActionListener(l -> backPressed());
+        navigation.add(backBtn);
+        return navigation;
+    }
+
+    /**
+     * @author Petri Närhi */
+    private void backPressed() {
     }
 
     //This method will be replaced by a method that calls a method in the Controller to notify

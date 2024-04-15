@@ -41,6 +41,7 @@ public class ChoosePlantFrame extends JFrame{
         this.getContentPane().add(scroller, BorderLayout.CENTER);
 
         JPanel navigation = navigation();
+        this.getContentPane().add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
     }

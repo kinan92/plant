@@ -35,6 +35,7 @@ public class ChoosePlantFrame extends JFrame{
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
         );
         add(scroll);
+        add(navigation());
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
@@ -79,7 +80,7 @@ public class ChoosePlantFrame extends JFrame{
     public JPanel navigation()
     {
         JPanel navigation = new JPanel();
-        navigation.setLayout(new GridLayout());
+        navigation.setLayout(null);
 
         //Loops through plantImages and creates buttons with the images
         JButton backBtn = new JButton();
@@ -94,7 +95,9 @@ public class ChoosePlantFrame extends JFrame{
 
         //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
+        backBtn.setLocation(0,0);
         navigation.add(backBtn);
+        navigation.setVisible(true);
         return navigation;
     }
 

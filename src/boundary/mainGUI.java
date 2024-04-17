@@ -1,4 +1,6 @@
 package boundary;
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
@@ -10,6 +12,7 @@ public class mainGUI extends JFrame {
     private JLabel plantName;
     int width = 550;
     int height = 470;
+    private Controller controller = new Controller();
     private ImageIcon elefantöra = new ImageIcon("images/plants/elefantora.png");
     private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
@@ -169,6 +172,8 @@ public class mainGUI extends JFrame {
     private void waterPressed()
     {
         System.out.println("Water pressed.");
+        controller.waterPlant();
+        System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
     public JPanel nameView()

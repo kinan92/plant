@@ -23,6 +23,7 @@ public class Controller {
 		this.window = new MainFrame(this);
 		loadPlantTypes();
 		test();
+		plant = new Plant("TestPlant", 0,  null, null);
 	}
 
 	private void test()
@@ -37,6 +38,15 @@ public class Controller {
 			System.out.println();
 		}
 	}
+
+	public void waterPlant(){
+		plant.waterPlant();
+	}
+	// Gets the current plant water level
+	public int getPlantWaterLevel(){
+		return plant.getWaterLevel();
+	}
+
 
 	public void choosePlantFrame()
 	{

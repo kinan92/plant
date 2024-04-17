@@ -11,14 +11,26 @@ public class Plant {
 	private int age;
 	private String image ;
 	private LocalDateTime dateAndTime;
-	
+	private int waterLevel;
+
 	public Plant(String name, int age, String image, LocalDateTime dateAndTime) {
 		super();
 		this.name = name;
 		this.age = age;
 		this.image = image;
 		this.dateAndTime = dateAndTime;
+		this.waterLevel = 0;
 	}
+
+	public void waterPlant(){
+		waterLevel++;
+	}
+
+
+	public int getWaterLevel(){
+		return this.waterLevel;
+	}
+
 	public String getName() {
 		return name;
 	}

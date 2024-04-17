@@ -28,7 +28,7 @@ public class ChoosePlantFrame extends JFrame{
         ImageIcon icon = new ImageIcon("images/icon.png");
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         JScrollPane scroll = new JScrollPane(
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
@@ -42,7 +42,7 @@ public class ChoosePlantFrame extends JFrame{
         this.getContentPane().add(scroller, BorderLayout.CENTER);
 
         JPanel navigation = navigation();
-        this.getContentPane().add(navigation, BorderLayout.SOUTH);
+        add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -51,6 +51,7 @@ public class ChoosePlantFrame extends JFrame{
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, plantImages.size()));
+        plants.setPreferredSize(new Dimension(width, (height / 10) * 7));
 
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantImages.size(); i++)
@@ -80,24 +81,27 @@ public class ChoosePlantFrame extends JFrame{
     public JPanel navigation()
     {
         JPanel navigation = new JPanel();
-        navigation.setLayout(null);
+        navigation.setLayout(new FlowLayout());
+        navigation.setBackground(Color.ORANGE);
+        navigation.setPreferredSize(new Dimension(width, (height / 10)));
 
         //Loops through plantImages and creates buttons with the images
         JButton backBtn = new JButton();
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setContentAreaFilled(false);
-        backBtn.setIcon(new ImageIcon("images/buttons/back"));
+        backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
 
 
         backBtn.setFocusPainted(false);
         backBtn.setRolloverEnabled(true);
-        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover"));
+        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
 
         //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(0,0);
         navigation.add(backBtn);
         navigation.setVisible(true);
+
         return navigation;
     }
 

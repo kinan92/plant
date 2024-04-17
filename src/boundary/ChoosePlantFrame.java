@@ -35,14 +35,14 @@ public class ChoosePlantFrame extends JFrame{
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
         );
         add(scroll);
-        add(navigation());
+        //add(navigation());
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
         this.getContentPane().add(scroller, BorderLayout.CENTER);
 
         JPanel navigation = navigation();
-        this.getContentPane().add(navigation, BorderLayout.SOUTH);
+        add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -95,7 +95,7 @@ public class ChoosePlantFrame extends JFrame{
 
         //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
-        backBtn.setLocation(0,0);
+        backBtn.setLocation(100,100);
         navigation.add(backBtn);
         navigation.setVisible(true);
         return navigation;

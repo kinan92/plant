@@ -13,7 +13,7 @@ public class mainGUI extends JFrame {
     int width = 550;
     int height = 470;
     private Controller controller = new Controller();
-    private ImageIcon elefantöra = new ImageIcon("images/plants/elefantora.png");
+    private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
     private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
@@ -218,11 +218,9 @@ public class mainGUI extends JFrame {
         c.gridy = 2;
         JLabel plantImage = new JLabel(elefantöra);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
-        JLabel plantShadow = new JLabel(new ImageIcon("images/elefantora_shadow.png"));
         JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
         plantView.add(plantImage, c);
         plantView.add(plantPot, c);
-        plantView.add(plantShadow, c);
         plantView.add(plantBackground, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;

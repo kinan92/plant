@@ -23,7 +23,6 @@ public class Controller {
 		this.window = new MainFrame(this);
 		loadPlantTypes();
 		test();
-		plant = new Plant("TestPlant", 1,  "moneyplant.png", null);
 	}
 
 	private void test()

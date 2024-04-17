@@ -2,13 +2,11 @@ package entity;
 
 public enum PlantSizeEnum {
 	
-	little("Littel"),
+	little("Little"),
 	big("Big"),
 	dead("dead");
 
 	private final String size;
-
-
 
 	PlantSizeEnum(String size) {
 
@@ -19,6 +17,4 @@ public enum PlantSizeEnum {
 	public String getSize() {
 		return size;
 	}
-
-
 }

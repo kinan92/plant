@@ -150,7 +150,7 @@ public class mainGUI extends JFrame {
     }
 
     private void widgetPressed()
-    {	
+    {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
@@ -251,7 +251,6 @@ public class mainGUI extends JFrame {
         waterPlant.setContentAreaFilled(false);
         waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));
         waterPlant.setPreferredSize(new Dimension(45, 45));
-
         plantView.add(waterPlant, c);
         waterPlant.addActionListener(l -> waterPressed());
         waterPlant.setRolloverEnabled(true);

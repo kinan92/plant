@@ -57,5 +57,4 @@ public class Plant {
 		this.dateAndTime = dateAndTime;
 	}
 
-	
 }

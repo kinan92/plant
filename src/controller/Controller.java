@@ -23,6 +23,7 @@ public class Controller {
 		this.window = new MainFrame(this);
 		loadPlantTypes();
 		test();
+		plant = new Plant("TestPlanta", 0, null,null);
 	}
 
 	private void test()
@@ -82,6 +83,9 @@ public class Controller {
 		} catch( IOException e ) {
 			System.out.println( "readPlantType: " + e );
 		}
+	}
+
+	public void skipTime(int hours){
 	}
 
 	private void createPlant()

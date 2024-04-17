@@ -63,11 +63,23 @@ public class mainGUI extends JFrame {
 
     public JPanel sideButtons()
     {
+
         JPanel sideButtons = new JPanel();
         sideButtons.setBackground(Color.LIGHT_GRAY);
         sideButtons.setPreferredSize(new Dimension(220, (height / 5) * 3));
         sideButtons.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
+
+        // creates the time indication
+        /*
+        JLabel timeLabel = new JLabel("Time: ");
+        c.gridx = 0;
+        c.gridy = 0;
+        c.anchor = GridBagConstraints.LINE_END;
+        sideButtons.add(timeLabel, c);
+
+         */
+
 
         //Creates Plant Storage button
         JButton getPlant = new JButton();
@@ -149,6 +161,8 @@ public class mainGUI extends JFrame {
         System.out.println("Plant Collection pressed.");
     }
 
+
+
     private void widgetPressed()
     {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
@@ -159,10 +173,19 @@ public class mainGUI extends JFrame {
         System.out.println("Widget pressed.");
     }
 
+
     private void skipHourPressed()
     {
+        /*
         System.out.println("Skip hour pressed.");
+        int hoursToSkip = 1;
+        controller.skipTime(hoursToSkip);
+        System.out.println("Skipped " + hoursToSkip + " hour(s).");
+
+         */
     }
+
+
 
     private void vacationPressed()
     {

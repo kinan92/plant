@@ -3,43 +3,36 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
-import java.io.File;
-import java.io.IOException;
 
-public class mainGUI extends JFrame {
+public class PlantView extends JPanel {
 
     private JLabel plantName;
-    int width = 550;
-    int height = 470;
-    private Controller controller = new Controller();
+    int width;
+    int height;
+    private Controller controller;
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
     private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
-    public mainGUI()
+    public PlantView(int width, int height, Controller controller)
     {
-        setLayout(new BorderLayout());
-        setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(width, height);
-        setLocationRelativeTo(null);
-        setResizable(false);
-        ImageIcon icon = new ImageIcon("images/icon.png");
-        setIconImage(icon.getImage());
+        super(null);
+        this.width = width;
+        this.height = height;
+        this.controller = controller;
+        System.out.println("hej plantview");
+        this.setSize(width, height);
+        BorderLayout borderLayout = new BorderLayout();
+        this.setLayout(borderLayout);
+        this.setBackground(Color.ORANGE);
 
 
         JPanel plantView = plantView();
         add(plantView, BorderLayout.WEST);
 
-        /*JPanel healthBar = healthBar();
-        add(healthBar, BorderLayout.CENTER);*/
-
         JPanel sideButtons = sideButtons();
         add(sideButtons, BorderLayout.EAST);
-
-        setVisible(true);
     }
 
     public JPanel healthBar()
@@ -179,10 +172,11 @@ public class mainGUI extends JFrame {
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();
+        nameView.setPreferredSize(new Dimension(256, height / 7));
         nameView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        c.weightx = 0;
+        c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
         JLabel plantName = new JLabel("Bob");
@@ -202,7 +196,7 @@ public class mainGUI extends JFrame {
     public JPanel plantView()
     {
         JPanel plantView = new JPanel();
-        plantView.setPreferredSize(new Dimension(256, (height / 5) * 4));
+        plantView.setPreferredSize(new Dimension(256, height));
         plantView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -224,7 +218,7 @@ public class mainGUI extends JFrame {
         plantView.add(plantBackground, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0;
+        c.weightx = 1;
         c.gridx = 0;
         c.gridy = 3;
         JPanel plantCare = plantCare();

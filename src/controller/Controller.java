@@ -1,26 +1,29 @@
 package controller;
 
-import boundary.ChoosePlantFrame;
+import boundary.*;
 import entity.*;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import boundary.MainFrame;
-import boundary.mainGUI;
+import boundary.MainMenu;
+import boundary.PlantView;
 
 public class Controller {
 	private ArrayList<Plant> listOffPlant = new ArrayList<>();
 	private Plant plant;
-	private MainFrame window;
-	private mainGUI maingui;
+	private MainMenu window;
+	private PlantView maingui;
+	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 
 	public Controller() {
-		this.window = new MainFrame(this);
+		//this.window = new MainMenu(this);
+		mainFrame = new MainFrame(this);
+		mainFrame.addMainMenu();
+
 		loadPlantTypes();
 		test();
 		plant = new Plant("TestPlant", 0,  null, null);
@@ -93,5 +96,10 @@ public class Controller {
 	public ArrayList<PlantType> getPlantTypes()
 	{
 		return plantTypes;
+	}
+
+	public void showPlantView()
+	{
+		mainFrame.addPlantView();
 	}
 }

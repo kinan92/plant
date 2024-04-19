@@ -1,7 +1,4 @@
-import boundary.MainFrame;
-import boundary.mainGUI;
 import controller.Controller;
-import entity.File;
 
 public class Main {
 

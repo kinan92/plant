@@ -9,6 +9,7 @@ public class PlantView extends JPanel {
     private JLabel plantName;
     int width;
     int height;
+    private JProgressBar waterBar;
     private Controller controller;
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
     private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
@@ -189,6 +190,7 @@ public class PlantView extends JPanel {
     {
         System.out.println("Water pressed.");
         controller.waterPlant();
+        updateWaterLevel(controller.getPlantWaterLevel());
         System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
@@ -276,9 +278,22 @@ public class PlantView extends JPanel {
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(10, 0, 10, 0);
+        c.insets = new Insets(0, 0, 0, 0);
         plantView.add(waterPlant, c);
+
+        waterBar = new JProgressBar(0, 100);
+        waterBar.setValue(0);
+        waterBar.setStringPainted(true);
+        c.gridx = 0;
+        c.gridy = 1;
+        plantView.add(waterBar, c);
 
         return plantView;
     }
+
+    public void updateWaterLevel(int waterLevel){
+        waterBar.setValue(waterLevel);
+    }
+
+
 }

@@ -3,13 +3,19 @@ package controller;
 import boundary.*;
 import entity.*;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.TimerTask;
 
 import boundary.MainMenu;
 import boundary.PlantView;
+
+import javax.swing.*;
 
 public class Controller {
 	private ArrayList<Plant> listOffPlant = new ArrayList<>();
@@ -18,6 +24,8 @@ public class Controller {
 	private PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
+	private Timer waterDecreaseTimer;
+	private Timer ageTimer;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -26,7 +34,29 @@ public class Controller {
 
 		loadPlantTypes();
 		test();
-		plant = new Plant("TestPlanta", 0, null,null);
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
+		startWaterDecreaseTimer();
+	}
+
+	private void startAgeTimer(){
+		ageTimer = new Timer(86400000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateAge();
+			}
+		});
+		ageTimer.start();
+	}
+
+	private void updateAge(){
+		for (Plant plant : listOffPlant){
+			plant.incrementAge();
+		}
+	}
+
+	public void stopAgeTimer(){
+		if (ageTimer != null){
+			ageTimer.stop();
+		}
 	}
 
 	private void test()
@@ -39,6 +69,23 @@ public class Controller {
 			System.out.println(pt.getPlantImageButton());
 			System.out.println(pt.getPlantInformation());
 			System.out.println();
+		}
+	}
+
+	public void startWaterDecreaseTimer(){
+		waterDecreaseTimer = new Timer(60000, new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				plant.decreaseWaterLevel();
+			}
+		});
+		waterDecreaseTimer.start();
+
+	}
+
+	public void stopWaterDecreaseTimer(){
+		if (waterDecreaseTimer != null){
+			waterDecreaseTimer.stop();
+			waterDecreaseTimer = null;
 		}
 	}
 
@@ -93,7 +140,10 @@ public class Controller {
 
 	private void createPlant()
 	{
+		/*
 		plant = new Plant(maingui.plantView().getName(), 0,  plant.getImage(), null);
+
+		 */
 	}
 
 	public ArrayList<PlantType> getPlantTypes()

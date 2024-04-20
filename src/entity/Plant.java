@@ -9,21 +9,34 @@ public class Plant {
 	
 	private String name;
 	private int age;
-	private String image ;
+	private ImageIcon image ;
 	private LocalDateTime dateAndTime;
 	private int waterLevel;
+	private final int WATER_INCREMENT = 5;
+	private final int WATER_DECREMENT = 1;
 
-	public Plant(String name, int age, String image, LocalDateTime dateAndTime) {
+	public Plant(String name, int age, String imagePath, int initialWaterLevel) {
 		super();
 		this.name = name;
 		this.age = age;
-		this.image = image;
+		this.image = new ImageIcon(imagePath);
 		this.dateAndTime = dateAndTime;
-		this.waterLevel = 0;
+		this.waterLevel = initialWaterLevel;
 	}
 
 	public void waterPlant(){
-		waterLevel++;
+		waterLevel += WATER_INCREMENT;
+	}
+
+	public void incrementAge(){
+		this.age++;
+	}
+
+
+	public void decreaseWaterLevel(){
+		if(waterLevel > 0){
+			waterLevel -= WATER_DECREMENT;
+		}
 	}
 
 
@@ -43,10 +56,10 @@ public class Plant {
 	public void setAge(int age) {
 		this.age = age;
 	}
-	public String getImage() {
+	public ImageIcon getImage() {
 		return image;
 	}
-	public void setImage(String image) {
+	public void setImage(ImageIcon image) {
 		this.image = image;
 	}
 	

@@ -16,6 +16,7 @@ public class PlantView extends JPanel {
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
+   private JButton waterPlant;
     public PlantView(int width, int height, Controller controller)
     {
         super(null);
@@ -128,6 +129,7 @@ public class PlantView extends JPanel {
         skipHour.addActionListener(l -> skipHourPressed());
         skipHour.setRolloverEnabled(true);
         skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
+        // skipHour.setRolloverIcon(new ImageIcon(skiphour.getImage().getScaledInstance(skiphour.getIconWidth()-5, skiphour.getIconHeight()-1, Image.SCALE_SMOOTH)));
 
         //Creates Vacation button
         JButton vacation = new JButton();
@@ -162,7 +164,8 @@ public class PlantView extends JPanel {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
-            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/h.png");
+            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",waterPlant);
+            
         });
         System.out.println("Widget pressed.");
     }
@@ -263,7 +266,7 @@ public class PlantView extends JPanel {
         /*JButton waterPlant = new JButton("Water plant");
         waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
 
-        JButton waterPlant = new JButton();
+       waterPlant = new JButton();
         waterPlant.setBorder(BorderFactory.createEmptyBorder());
         waterPlant.setContentAreaFilled(false);
         waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));

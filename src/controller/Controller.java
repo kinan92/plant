@@ -21,11 +21,12 @@ public class Controller {
 	private ArrayList<Plant> listOffPlant = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
-	private PlantView maingui;
+	private PlantView plantView;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
+	private Plant currentPlant;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -34,8 +35,16 @@ public class Controller {
 
 		loadPlantTypes();
 		test();
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
 		startWaterDecreaseTimer();
+
+	}
+
+	public void setCurrentPlant(Plant newPlant) {
+		this.currentPlant = newPlant;
+	}
+
+	public Plant getCurrentPlant() {
+		return currentPlant;
 	}
 
 	private void startAgeTimer(){
@@ -90,7 +99,13 @@ public class Controller {
 	}
 
 	public void waterPlant(){
-		plant.waterPlant();
+		currentPlant.waterPlant();
+		plantView.updatePlantDetails(currentPlant);
+	}
+
+	public void swithToNewPlant(Plant newPlant){
+		currentPlant = newPlant;
+		plantView.updatePlantDetails(newPlant);
 	}
 	// Gets the current plant water level
 	public int getPlantWaterLevel(){

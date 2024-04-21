@@ -31,8 +31,11 @@ public class PlantView extends JPanel {
         this.setBackground(Color.ORANGE);
         this.plant = plant;
 
-        add(createPlantPanel(), BorderLayout.WEST);
-        add(createSideButtons(), BorderLayout.EAST);
+
+        add(plantView(), BorderLayout.WEST);
+
+
+        add(sideButtons(), BorderLayout.EAST);
 
     }
 
@@ -55,7 +58,7 @@ public class PlantView extends JPanel {
         plantPanel.add(plantImage, c);
 
         c.gridy = 3;
-        plantPanel.add(createPlantPanel(), c);
+        plantPanel.add(plantCare(), c);
         return plantPanel;
     }
 
@@ -245,36 +248,42 @@ public class PlantView extends JPanel {
 
     public JPanel plantView()
     {
-        JPanel plantView = new JPanel();
-        plantView.setPreferredSize(new Dimension(256, height));
-        plantView.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
+       JPanel plantPanel = new JPanel(new GridBagLayout());
+       GridBagConstraints c = new GridBagConstraints();
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        plantView.add(nameView(), c);
+       c.fill = GridBagConstraints.HORIZONTAL;
+       c.weightx = 0;
+       c.gridx = 0;
+       c.gridy = 0;
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
-        c.gridx = 0;
-        c.gridy = 2;
-        JLabel plantImage = new JLabel(elefantöra);
-        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
-        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
-        plantView.add(plantImage, c);
-        plantView.add(plantPot, c);
-        plantView.add(plantBackground, c);
+       JLabel plantNameLabel = new JLabel(plant.getName());
+       plantNameLabel.setFont(new Font("Calibri", Font.PLAIN, 26));
+       plantPanel.add(plantNameLabel, c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
-        c.gridx = 0;
-        c.gridy = 3;
-        JPanel plantCare = plantCare();
-        plantView.add(plantCare, c);
+       c.gridy = 1;
+       JLabel plantSpeciesLabel = new JLabel("Species: " + plant.getName());
+       plantSpeciesLabel.setFont(new Font("Calibri", Font.PLAIN, 16));
+       plantPanel.add(plantSpeciesLabel, c);
 
-        return plantView;
+       c.fill = GridBagConstraints.HORIZONTAL;
+       c.weightx = 1;
+       c.gridx = 0;
+       c.gridy = 2;
+       JLabel plantImageLabel = new JLabel(plant.getImage());
+       JLabel plantBackground = new JLabel(new ImageIcon("images/buttons/plant_background.png"));
+       JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+       plantPanel.add(plantImageLabel, c);
+       plantPanel.add(plantPot, c);
+       plantPanel.add(plantBackground, c);
+
+       c.fill = GridBagConstraints.HORIZONTAL;
+       c.weightx = 1;
+       c.gridx = 0;
+       c.gridy = 3;
+       plantPanel.add(plantCare(), c);
+
+       return plantPanel;
+
     }
 
     private JPanel plantCare()
@@ -318,6 +327,13 @@ public class PlantView extends JPanel {
 
     public void updateWaterLevel(int waterLevel){
         waterBar.setValue(waterLevel);
+    }
+    public void updatePlantDetails(Plant plant){
+        this.plant = plant;
+        plantName.setText(plant.getName());
+        plantSpecies.setText("Species: " + plant.getName());
+        plantImage.setIcon(plant.getImage());
+        updateWaterLevel(plant.getWaterLevel());
     }
 
 

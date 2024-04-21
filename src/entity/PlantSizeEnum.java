@@ -11,9 +11,7 @@ public enum PlantSizeEnum {
 	PlantSizeEnum(String size) {
 
 		this.size = size;
-
 	}
-
 	public String getSize() {
 		return size;
 	}

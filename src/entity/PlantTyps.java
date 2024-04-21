@@ -9,6 +9,6 @@ public class PlantTyps {
 	public void creatPlant () {
 		
 		
-		plant= new Plant(bilderEnum, 0, bilderEnum, 50);
+		plant= new Plant(bilderEnum, 0, bilderEnum, 50, PlantSizeEnum.big);
 	}
 }

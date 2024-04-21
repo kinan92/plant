@@ -122,7 +122,9 @@ public class mainGUI extends JFrame {
         skipHour.addActionListener(l -> skipHourPressed());
         skipHour.setRolloverEnabled(true);
         skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
-
+       // skipHour.setRolloverIcon(new ImageIcon(skiphour.getImage().getScaledInstance(skiphour.getIconWidth()-5, skiphour.getIconHeight()-1, Image.SCALE_SMOOTH)));
+        
+      
         //Creates Vacation button
         JButton vacation = new JButton();
         vacation.setBorder(BorderFactory.createEmptyBorder());
@@ -154,7 +156,7 @@ public class mainGUI extends JFrame {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
-            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/h.png");
+            new MargePlantAndPotWidget("images/plants/moneyplant.png", "images/pots/bow-tie2.png");
         });
         System.out.println("Widget pressed.");
     }

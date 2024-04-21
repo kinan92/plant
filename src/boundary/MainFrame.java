@@ -28,6 +28,7 @@ public class MainFrame extends JFrame {
 		ImageIcon icon = new ImageIcon("images/icon.png");
 		setIconImage(icon.getImage());
 		initialize();
+	;	 
 	}
 
 	private void clickCreatePlantButton() {
@@ -57,6 +58,7 @@ public class MainFrame extends JFrame {
 		SetgroupLayoutHorizontal();
 		clickGetAPlantButton();
 		clickCreatePlantButton();
+		
 	}
 	
 	private void SetgroupLayoutVertical() {

@@ -45,7 +45,6 @@ public class MargePlantAndPotWidget extends JFrame {
 	        setShape(getImageShape(combinedImage));
 	        frameMover();
 	       
-	    
 	    }
 	    
 	    

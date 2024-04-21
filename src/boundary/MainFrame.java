@@ -1,7 +1,6 @@
 package boundary;
 
 import controller.Controller;
-import entity.Plant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +25,6 @@ public class MainFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(width, height));
         pack();
         setVisible(true);
-
     }
 
     public void addPlantView()
@@ -34,8 +32,7 @@ public class MainFrame extends JFrame {
         System.out.println("hej");
         this.getContentPane().removeAll();
         this.revalidate();
-
-        plantView = new PlantView(width, height, controller, controller.getCurrentPlant());
+        plantView = new PlantView(width, height, controller);
         this.setContentPane(plantView);
         this.repaint();
     }

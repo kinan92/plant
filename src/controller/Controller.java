@@ -8,22 +8,24 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
+import java.util.TimerTask;
+
 import boundary.MainMenu;
 import boundary.PlantView;
+
 import javax.swing.*;
 
 public class Controller {
 	private ArrayList<Plant> listOffPlant = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
-	private PlantView plantView;
+	private PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
-	private Plant currentPlant;
-	private PlantSizeEnum currentPlantSize;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -32,19 +34,8 @@ public class Controller {
 
 		loadPlantTypes();
 		test();
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
 		startWaterDecreaseTimer();
-		Plant initialPlant = new Plant("Rose", 1, "images/plants/moneyplant.png", 50, PlantSizeEnum.big);
-		setCurrentPlant(initialPlant);
-
-
-	}
-
-	public void setCurrentPlant(Plant newPlant) {
-		this.currentPlant = newPlant;
-	}
-
-	public Plant getCurrentPlant() {
-		return currentPlant;
 	}
 
 	private void startAgeTimer(){
@@ -99,13 +90,7 @@ public class Controller {
 	}
 
 	public void waterPlant(){
-		currentPlant.waterPlant();
-		plantView.updatePlantDetails(currentPlant);
-	}
-
-	public void switchToNewPlant(Plant newPlant){
-		currentPlant = newPlant;
-		plantView.updatePlantDetails(newPlant);
+		plant.waterPlant();
 	}
 	// Gets the current plant water level
 	public int getPlantWaterLevel(){

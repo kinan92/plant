@@ -26,8 +26,6 @@ public class MainFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(width, height));
         pack();
         setVisible(true);
-        Plant initialPlant = new Plant("Rose", 1, "images/plants/moneyplant.png", 50);
-        controller.setCurrentPlant(initialPlant);
 
     }
 

@@ -8,13 +8,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.TimerTask;
-
 import boundary.MainMenu;
 import boundary.PlantView;
-
 import javax.swing.*;
 
 public class Controller {
@@ -27,6 +23,7 @@ public class Controller {
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private Plant currentPlant;
+	private PlantSizeEnum currentPlantSize;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -36,6 +33,9 @@ public class Controller {
 		loadPlantTypes();
 		test();
 		startWaterDecreaseTimer();
+		Plant initialPlant = new Plant("Rose", 1, "images/plants/moneyplant.png", 50, PlantSizeEnum.big);
+		setCurrentPlant(initialPlant);
+
 
 	}
 
@@ -103,7 +103,7 @@ public class Controller {
 		plantView.updatePlantDetails(currentPlant);
 	}
 
-	public void swithToNewPlant(Plant newPlant){
+	public void switchToNewPlant(Plant newPlant){
 		currentPlant = newPlant;
 		plantView.updatePlantDetails(newPlant);
 	}

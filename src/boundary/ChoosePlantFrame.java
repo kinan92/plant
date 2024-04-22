@@ -35,7 +35,6 @@ public class ChoosePlantFrame extends JFrame{
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
         );
         add(scroll);
-        //add(navigation());
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);

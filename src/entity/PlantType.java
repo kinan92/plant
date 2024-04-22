@@ -3,7 +3,7 @@ package entity;
 public class PlantType {
     private String plantTypeName;
     private String plantTypeNameAlternative;
-    private String defaultPlantImage;
+    private String grownPlantImage;
     private String plantImageButton;
     private String plantImageButtonHover;
     private String plantInformation;
@@ -12,7 +12,7 @@ public class PlantType {
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
-        this.defaultPlantImage = defaultPlantImage;
+        this.grownPlantImage = defaultPlantImage;
         this.plantImageButton = plantImageButton;
         this.plantImageButtonHover = plantImageButtonHover;
         this.plantInformation = plantInformation;
@@ -26,9 +26,9 @@ public class PlantType {
         return  plantTypeNameAlternative;
     }
 
-    public String getDefaultPlantImage()
+    public String getGrownPlantImage()
     {
-        return defaultPlantImage;
+        return grownPlantImage;
     }
 
     public String getPlantImageButton()

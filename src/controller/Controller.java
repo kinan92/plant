@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.TimerTask;
 
 import boundary.MainMenu;
 import boundary.PlantView;
@@ -65,7 +63,7 @@ public class Controller {
 		{
 			System.out.println(pt.getPlantTypeName());
 			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getDefaultPlantImage());
+			System.out.println(pt.getGrownPlantImage());
 			System.out.println(pt.getPlantImageButton());
 			System.out.println(pt.getPlantInformation());
 			System.out.println();

@@ -14,7 +14,8 @@ public class ChoosePlantFrame extends JFrame{
     int height = 470;
     private ArrayList<String> plantImages = new ArrayList<>();
     private ArrayList<String> plantHoverImages = new ArrayList<>();
-    //Constructor will receive controller and an ArrayList of PlantType when created
+
+    //Creates ChoosePlantFrame JFrame
     public ChoosePlantFrame(ArrayList<String> plantImages, ArrayList<String> plantHoverImages)
     {
         this.plantImages = plantImages;
@@ -29,6 +30,7 @@ public class ChoosePlantFrame extends JFrame{
         setLocationRelativeTo(null);
         setResizable(false);
 
+        //Creates a scrollbar to enable scrolling for the plants
         JScrollPane scroll = new JScrollPane(
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
@@ -42,6 +44,7 @@ public class ChoosePlantFrame extends JFrame{
         setVisible(true);
     }
 
+    //Loops through all PlantTypes and creates a button for each of them
     public JPanel plants()
     {
         JPanel plants = new JPanel();
@@ -56,7 +59,6 @@ public class ChoosePlantFrame extends JFrame{
             System.out.println(plantImages.get(i));
             plant.setIcon(new ImageIcon(plantImages.get(i)));
             ImageIcon shadow = new ImageIcon(plantHoverImages.get(i));
-
 
             plant.setFocusPainted(false);
             plant.setRolloverEnabled(true);

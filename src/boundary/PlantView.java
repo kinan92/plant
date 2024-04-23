@@ -5,18 +5,22 @@ import javax.swing.*;
 import java.awt.*;
 
 public class PlantView extends JPanel {
-
     private JLabel plantName;
     int width;
     int height;
     private JProgressBar waterBar;
     private Controller controller;
+    //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
+
+    //ImageIcons for the various buttons
     private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
    private JButton waterPlant;
+
+   //Creates the base PlantView panel, sets rules for the panel and adds other panels
     public PlantView(int width, int height, Controller controller)
     {
         super(null);
@@ -37,28 +41,9 @@ public class PlantView extends JPanel {
         add(sideButtons, BorderLayout.EAST);
     }
 
-    public JPanel healthBar()
-    {
-        JPanel healthBarPanel = new JPanel();
-        healthBarPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        setPreferredSize(new Dimension(62, height));
-
-        c.weightx = 0;
-        c.weighty = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 3, 10, 3);
-        JLabel healthBar = new JLabel();
-        healthBar.setIcon(new ImageIcon("images/healthbar.png"));
-        healthBarPanel.add(healthBar, c);
-
-        return healthBarPanel;
-    }
-
+    //Creates a JPanel with various buttons
     public JPanel sideButtons()
     {
-
         JPanel sideButtons = new JPanel();
         sideButtons.setBackground(Color.LIGHT_GRAY);
         sideButtons.setPreferredSize(new Dimension(220, (height / 5) * 3));
@@ -72,9 +57,7 @@ public class PlantView extends JPanel {
         c.gridy = 0;
         c.anchor = GridBagConstraints.LINE_END;
         sideButtons.add(timeLabel, c);
-
-         */
-
+ */
 
         //Creates Plant Storage button
         JButton getPlant = new JButton();
@@ -152,13 +135,16 @@ public class PlantView extends JPanel {
         return sideButtons;
     }
 
+    //Method that is called when the Plant Collection button is pressed
+    //Method is a work in progress and currently has no functionality.
+    //When functionality is added this method will open the user's Plant Storage
     private void getPlantPressed()
     {
         System.out.println("Plant Collection pressed.");
     }
 
-
-
+    //Method used when the Widget button is pressed
+    //Method creates a widget of the currently open plant
     private void widgetPressed()
     {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
@@ -170,7 +156,8 @@ public class PlantView extends JPanel {
         System.out.println("Widget pressed.");
     }
 
-
+    //Method will be called when the Skip Hour button is pressed
+    //Method is a work in progress, functionality will be added later
     private void skipHourPressed()
     {
         /*
@@ -182,13 +169,16 @@ public class PlantView extends JPanel {
          */
     }
 
-
-
+    //Method used when Vacation button is pressed
+    //Method is a work in progress
+    //When method is done this method will allow the user to set the program to vacation mode
     private void vacationPressed()
     {
         System.out.println("Vacation pressed.");
     }
 
+    //Method used when water button is pressed
+    //Method is a work in progress
     private void waterPressed()
     {
         System.out.println("Water pressed.");
@@ -197,6 +187,7 @@ public class PlantView extends JPanel {
         System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
+    //NameView creates a JPanel containing the active plant's name, species name and age
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();
@@ -204,6 +195,8 @@ public class PlantView extends JPanel {
         nameView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        //Creates JLabel with the active plant's name
+        //Name will later be replaced by a name from the active plant object
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
@@ -211,6 +204,8 @@ public class PlantView extends JPanel {
         plantName.setFont(new Font("Calibri", Font.PLAIN, 26));
         nameView.add(plantName, c);
 
+        //Creates JLabel with the active plant's species
+        //Species will later be replaced by a species name from the active plant object
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 1;
@@ -221,6 +216,7 @@ public class PlantView extends JPanel {
         return nameView;
     }
 
+    //Creates a JPanel that shows the plant and adds other JPanels that shows the plant's name and water care and levels
     public JPanel plantView()
     {
         JPanel plantView = new JPanel();
@@ -228,12 +224,16 @@ public class PlantView extends JPanel {
         plantView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        //Calls to add a NameView JPanel
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 0;
         plantView.add(nameView(), c);
 
+        //Adds Plant image to JPanel
+        //The ImageIcons used are just for testing and will later be replaced with
+        //ImageIcons made from Strings taken from the active plant object
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
@@ -245,6 +245,7 @@ public class PlantView extends JPanel {
         plantView.add(plantPot, c);
         plantView.add(plantBackground, c);
 
+        //Adds PlantCare JPanel
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
@@ -255,6 +256,8 @@ public class PlantView extends JPanel {
         return plantView;
     }
 
+    //Creates a JPanel containing a button for watering a plant,
+    //and a healthbar showing if the active plant needs watering
     private JPanel plantCare()
     {
         JPanel plantView = new JPanel();

@@ -77,10 +77,10 @@ public class PlantPanel extends JPanel {
 
     private JPanel plantCare()
     {
-        JPanel plantView = new JPanel();
-        plantView.setSize(new Dimension(256, 50));
-        plantView.setLayout(new GridBagLayout());
-        plantView.setBackground(Color.GRAY);
+        JPanel plantCare = new JPanel();
+        plantCare.setSize(new Dimension(256, 50));
+        plantCare.setLayout(new GridBagLayout());
+        plantCare.setBackground(Color.GRAY);
         GridBagConstraints c = new GridBagConstraints();
 
         /*JButton waterPlant = new JButton("Water plant");
@@ -91,8 +91,8 @@ public class PlantPanel extends JPanel {
         waterPlant.setContentAreaFilled(false);
         waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));
         waterPlant.setPreferredSize(new Dimension(45, 45));
-        plantView.add(waterPlant, c);
-        //waterPlant.addActionListener(l -> waterPressed());
+        plantCare.add(waterPlant, c);
+        waterPlant.addActionListener(l -> plantView.waterPressed());
         waterPlant.setRolloverEnabled(true);
         waterPlant.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
 
@@ -102,15 +102,19 @@ public class PlantPanel extends JPanel {
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 0, 0, 0);
-        plantView.add(waterPlant, c);
+        plantCare.add(waterPlant, c);
 
         waterBar = new JProgressBar(0, 100);
         waterBar.setValue(0);
         waterBar.setStringPainted(true);
         c.gridx = 0;
         c.gridy = 1;
-        plantView.add(waterBar, c);
+        plantCare.add(waterBar, c);
 
-        return plantView;
+        return plantCare;
+    }
+
+    public void updateWaterLevel(int waterLevel){
+        waterBar.setValue(waterLevel);
     }
 }

@@ -16,7 +16,6 @@ public class MainFrame extends JFrame {
     public MainFrame(Controller controller)
     {
         this.controller = controller;
-        setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);

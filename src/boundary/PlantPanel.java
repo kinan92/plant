@@ -121,13 +121,15 @@ public class PlantPanel extends JPanel {
     //has been watered. Currently this only calls methods that play sound effects but may later
     //include things such as new sprites or animations
     public void updateWaterLevel(int waterLevel){
-        waterSoundEffect();
-        waterBar.setValue(waterLevel);
-
-        if (waterLevel == 100)
+        if (plantView.getSoundEffectSetting())
         {
-            plantHappySoundEffect();
+            waterSoundEffect();
+            if (waterLevel == 100)
+            {
+                plantHappySoundEffect();
+            }
         }
+        waterBar.setValue(waterLevel);
     }
 
     //Method that plays a watering sound effect when plant is watered

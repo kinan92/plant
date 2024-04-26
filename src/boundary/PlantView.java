@@ -8,11 +8,12 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlantView extends JPanel {
-    private JLabel plantName;
     int width;
     int height;
     PlantPanel plantPanel;
+    boolean soundEffectSetting;
     private Controller controller;
+    SettingsView settingsView;
     //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
 
@@ -30,6 +31,7 @@ public class PlantView extends JPanel {
         this.width = width;
         this.height = height;
         this.controller = controller;
+        soundEffectSetting = true;
         System.out.println("hej plantview");
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
@@ -42,6 +44,8 @@ public class PlantView extends JPanel {
 
         SideButtons sideButtons = new SideButtons(width, height, this);
         add(sideButtons, BorderLayout.EAST);
+
+        settingsView = new SettingsView(width, height, this);
     }
 
     //Method that is called when the Plant Collection button is pressed
@@ -49,7 +53,10 @@ public class PlantView extends JPanel {
     //When functionality is added this method will open the user's Plant Storage
     public void getPlantPressed()
     {
-        buttonPressedSoundEffect();
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
         System.out.println("Plant Collection pressed.");
     }
 
@@ -57,7 +64,10 @@ public class PlantView extends JPanel {
     //Method creates a widget of the currently open plant
     public void widgetPressed()
     {
-        buttonPressedSoundEffect();
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
@@ -72,7 +82,10 @@ public class PlantView extends JPanel {
     public void skipHourPressed()
     {
         System.out.println("Skip hour pressed.");
-        buttonPressedSoundEffect();
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
         /*int hoursToSkip = 1;
         controller.skipTime(hoursToSkip);
         System.out.println("Skipped " + hoursToSkip + " hour(s).");
@@ -86,7 +99,11 @@ public class PlantView extends JPanel {
     public void vacationPressed()
     {
         System.out.println("Vacation pressed.");
-        buttonPressedSoundEffect();
+
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
     }
 
     //Method used when water button is pressed
@@ -97,6 +114,11 @@ public class PlantView extends JPanel {
         controller.waterPlant();
         plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
         System.out.println("Water level: " + controller.getPlantWaterLevel());
+    }
+
+    public void settingsPressed()
+    {
+        settingsView.setVisible(true);
     }
 
     private void buttonPressedSoundEffect()
@@ -114,5 +136,15 @@ public class PlantView extends JPanel {
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void setSoundEffectSetting(boolean setting)
+    {
+        soundEffectSetting = setting;
+    }
+
+    public boolean getSoundEffectSetting()
+    {
+        return soundEffectSetting;
     }
 }

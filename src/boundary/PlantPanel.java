@@ -1,7 +1,10 @@
 package boundary;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class PlantPanel extends JPanel {
     int width;
@@ -114,7 +117,52 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
+    //Updates the water health bar and calls other methods to show the user that the plant
+    //has been watered. Currently this only calls methods that play sound effects but may later
+    //include things such as new sprites or animations
     public void updateWaterLevel(int waterLevel){
+        waterSoundEffect();
         waterBar.setValue(waterLevel);
+
+        if (waterLevel == 100)
+        {
+            plantHappySoundEffect();
+        }
+    }
+
+    //Method that plays a watering sound effect when plant is watered
+    private void waterSoundEffect()
+    {
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/water_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //Method that plays a happy sound effect when plant is 100% watered
+    private void plantHappySoundEffect()
+    {
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/twinkle_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

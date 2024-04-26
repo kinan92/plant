@@ -1,8 +1,11 @@
 package boundary;
 import controller.Controller;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class PlantView extends JPanel {
     private JLabel plantName;
@@ -46,6 +49,7 @@ public class PlantView extends JPanel {
     //When functionality is added this method will open the user's Plant Storage
     public void getPlantPressed()
     {
+        buttonPressedSoundEffect();
         System.out.println("Plant Collection pressed.");
     }
 
@@ -53,6 +57,7 @@ public class PlantView extends JPanel {
     //Method creates a widget of the currently open plant
     public void widgetPressed()
     {
+        buttonPressedSoundEffect();
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
@@ -66,9 +71,9 @@ public class PlantView extends JPanel {
     //Method is a work in progress, functionality will be added later
     public void skipHourPressed()
     {
-        /*
         System.out.println("Skip hour pressed.");
-        int hoursToSkip = 1;
+        buttonPressedSoundEffect();
+        /*int hoursToSkip = 1;
         controller.skipTime(hoursToSkip);
         System.out.println("Skipped " + hoursToSkip + " hour(s).");
 
@@ -81,6 +86,7 @@ public class PlantView extends JPanel {
     public void vacationPressed()
     {
         System.out.println("Vacation pressed.");
+        buttonPressedSoundEffect();
     }
 
     //Method used when water button is pressed
@@ -93,5 +99,20 @@ public class PlantView extends JPanel {
         System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
-
+    private void buttonPressedSoundEffect()
+    {
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

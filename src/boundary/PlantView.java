@@ -1,11 +1,13 @@
 package boundary;
 import controller.Controller;
+import entity.Plant;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class PlantView extends JPanel {
     int width;
@@ -13,6 +15,7 @@ public class PlantView extends JPanel {
     PlantPanel plantPanel;
     boolean soundEffectSetting;
     private Controller controller;
+    private JLabel creationTimeLabel;
     SettingsView settingsView;
     //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
@@ -25,7 +28,7 @@ public class PlantView extends JPanel {
    private JButton waterPlant;
 
    //Creates the base PlantView panel, sets rules for the panel and adds other panels
-    public PlantView(int width, int height, Controller controller)
+    public PlantView(int width, int height, Controller controller, Plant plant)
     {
         super(null);
         this.width = width;
@@ -38,6 +41,8 @@ public class PlantView extends JPanel {
         this.setLayout(borderLayout);
         this.setBackground(Color.ORANGE);
 
+        creationTimeLabel = new JLabel("Created at: " + plant.getCreationTime());
+        add(creationTimeLabel, BorderLayout.NORTH);
 
         plantPanel = new PlantPanel(width, height, this);
         add(plantPanel, BorderLayout.WEST);
@@ -46,6 +51,10 @@ public class PlantView extends JPanel {
         add(sideButtons, BorderLayout.EAST);
 
         settingsView = new SettingsView(width, height, this);
+    }
+
+    public void updateCreationTime(Plant plant){
+        creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
     }
 
     //Method that is called when the Plant Collection button is pressed
@@ -81,16 +90,21 @@ public class PlantView extends JPanel {
     //Method is a work in progress, functionality will be added later
     public void skipHourPressed()
     {
-        System.out.println("Skip hour pressed.");
+        int hoursToSkip = 1;
+        Plant currentPlant = controller.getCurrentPlant();
+        if (currentPlant != null){
+            LocalDateTime newCreationTime = currentPlant.getCreationTime().plusHours(hoursToSkip);
+            controller.skipTime(hoursToSkip);
+            controller.updatePlantCreationTime(currentPlant, newCreationTime);
+            System.out.println("Skipped " + hoursToSkip + " hours.");
+        } else {
+            System.out.println("Error: No current plant found");
+        }
+
         if (soundEffectSetting)
         {
             buttonPressedSoundEffect();
         }
-        /*int hoursToSkip = 1;
-        controller.skipTime(hoursToSkip);
-        System.out.println("Skipped " + hoursToSkip + " hour(s).");
-
-         */
     }
 
     //Method used when Vacation button is pressed
@@ -113,7 +127,7 @@ public class PlantView extends JPanel {
         System.out.println("Water pressed.");
         controller.waterPlant();
         plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
-        System.out.println("Water level: " + controller.getPlantWaterLevel());
+        // System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
     public void settingsPressed()

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
 import boundary.PlantView;
@@ -27,12 +28,13 @@ public class Controller {
 
 	public Controller() {
 		//this.window = new MainMenu(this);
-		mainFrame = new MainFrame(this);
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, LocalDateTime.now());
+		mainFrame = new MainFrame(this, plant);
 		mainFrame.addMainMenu();
+		maingui = new PlantView(550, 435, this, plant);
 
 		loadPlantTypes();
 		test();
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
 		listOffPlants.add(plant);
 		// startWaterDecreaseTimer();
 		// startAgeTimer();
@@ -139,6 +141,13 @@ public class Controller {
 		return plant.getWaterLevel();
 	}
 
+	public Plant getCurrentPlant(){
+		if(plant == null){
+			System.out.println("No current plant is set");
+		}
+		return plant;
+	}
+
 	private void adjustPlantBasedOnWaterLevel(Plant plant){
 		if (plant.getWaterLevel() < 10){
 			System.out.println(plant.getName() + " needs water");
@@ -197,7 +206,13 @@ public class Controller {
 			return;
 		}
 
+		LocalDateTime currentTime = LocalDateTime.now();
+
 		for (Plant plant : listOffPlants){
+			LocalDateTime newCreationTime = plant.getCreationTime().plusHours(hours);
+			plant.setCreationTime(newCreationTime);
+			updatePlantCreationTime(plant, newCreationTime);
+
 			int ageIncrement = hours / 24;
 			plant.incrementAge(ageIncrement);
 
@@ -207,6 +222,16 @@ public class Controller {
 		}
 
 		notifyTimeSkipped(hours);
+	}
+
+	public void updatePlantCreationTime(Plant plant, LocalDateTime newCreationTime){
+		if (plant == null){
+			System.out.println("Plant is null, cannot update creation time");
+			return;
+		}
+		plant.setCreationTime(newCreationTime);
+		maingui.updateCreationTime(plant);
+		System.out.println("Updated plant creation time to: " + newCreationTime.toString());
 	}
 
 	private void createPlant()

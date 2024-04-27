@@ -9,17 +9,17 @@ public class Plant {
 	private String name;
 	private int age;
 	private ImageIcon image ;
-	private LocalDateTime dateAndTime;
+	private LocalDateTime creationTime;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
 
-	public Plant(String name, int age, String imagePath, int initialWaterLevel) {
+	public Plant(String name, int age, String imagePath, int initialWaterLevel, LocalDateTime creationTime) {
 		super();
 		this.name = name;
 		this.age = age;
 		this.image = new ImageIcon(imagePath);
-		this.dateAndTime = dateAndTime;
+		this.creationTime = creationTime;
 		this.waterLevel = initialWaterLevel;
 	}
 
@@ -70,11 +70,11 @@ public class Plant {
 		this.image = image;
 	}
 	
-	public LocalDateTime getDateAndTime() {
-		return dateAndTime;
+	public LocalDateTime getCreationTime() {
+		return creationTime;
 	}
-	public void setDateAndTime(LocalDateTime dateAndTime) {
-		this.dateAndTime = dateAndTime;
+	public void setCreationTime(LocalDateTime newCreationTime) {
+		this.creationTime = newCreationTime;
 	}
 
 }

@@ -9,14 +9,13 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import boundary.MainMenu;
 import boundary.PlantView;
 
 import javax.swing.*;
 
 public class Controller {
-	private ArrayList<Plant> listOffPlant = new ArrayList<>();
+	private ArrayList<Plant> listOffPlants = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
 	private PlantView maingui;
@@ -24,6 +23,7 @@ public class Controller {
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
+	private boolean isPaused = false;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -33,29 +33,73 @@ public class Controller {
 		loadPlantTypes();
 		test();
 		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
-		startWaterDecreaseTimer();
+		listOffPlants.add(plant);
+		// startWaterDecreaseTimer();
+		// startAgeTimer();
 	}
 
-	private void startAgeTimer(){
-		ageTimer = new Timer(86400000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				updateAge();
-			}
-		});
-		ageTimer.start();
-	}
-
-	private void updateAge(){
-		for (Plant plant : listOffPlant){
-			plant.incrementAge();
+	public void pausTime(){
+		if(!isPaused){
+			isPaused = true;
+			stopAgeTimer();
+			System.out.println("Tid är pausad");
 		}
 	}
 
+	public void resumeTime(){
+		if (isPaused){
+			isPaused = false;
+			startAgeTimer();
+			System.out.println("Tiden återupptas");
+		}
+	}
 	public void stopAgeTimer(){
 		if (ageTimer != null){
 			ageTimer.stop();
+			ageTimer = null;
+		}
+		if(waterDecreaseTimer != null){
+			waterDecreaseTimer.stop();
+			waterDecreaseTimer = null;
 		}
 	}
+
+	public void addPlant(Plant newPlant){
+		listOffPlants.add(newPlant);
+	}
+
+	private void startAgeTimer(){
+		if (ageTimer == null){
+			ageTimer = new Timer(1000, new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if (!isPaused){
+						incrementAgeForALlPlants();
+					}
+				}
+			});
+			ageTimer.start();
+		}
+
+		if (waterDecreaseTimer == null){
+			waterDecreaseTimer = new Timer(6000, new ActionListener() {
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if(!isPaused){
+						decreaseWaterLevelForAllPlants();
+					}
+				}
+			});
+			waterDecreaseTimer.start();
+		}
+	}
+
+	private void updateAge(){
+		for (Plant plant : listOffPlants){
+			plant.incrementAge(1);
+		}
+	}
+
+
 
 	private void test()
 	{
@@ -73,7 +117,7 @@ public class Controller {
 	public void startWaterDecreaseTimer(){
 		waterDecreaseTimer = new Timer(60000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				plant.decreaseWaterLevel();
+				plant.decreaseWaterLevel(1);
 			}
 		});
 		waterDecreaseTimer.start();
@@ -93,6 +137,20 @@ public class Controller {
 	// Gets the current plant water level
 	public int getPlantWaterLevel(){
 		return plant.getWaterLevel();
+	}
+
+	private void adjustPlantBasedOnWaterLevel(Plant plant){
+		if (plant.getWaterLevel() < 10){
+			System.out.println(plant.getName() + " needs water");
+			// Add additional logic for low water levels
+		} else if (plant.getWaterLevel() > 100){
+			System.out.println(plant.getName() + " is overwatered");
+			// Add additional logic for overwatered plants
+		}
+	}
+
+	private void notifyTimeSkipped(int hours){
+		System.out.println("Time skipped by " + hours + " hours.");
 	}
 
 
@@ -134,6 +192,21 @@ public class Controller {
 	}
 
 	public void skipTime(int hours){
+		if (hours <= 0){
+			System.out.println("Skipped time requires a positive number of hours");
+			return;
+		}
+
+		for (Plant plant : listOffPlants){
+			int ageIncrement = hours / 24;
+			plant.incrementAge(ageIncrement);
+
+            plant.decreaseWaterLevel(hours);
+
+			adjustPlantBasedOnWaterLevel(plant);
+		}
+
+		notifyTimeSkipped(hours);
 	}
 
 	private void createPlant()
@@ -152,5 +225,23 @@ public class Controller {
 	public void showPlantView()
 	{
 		mainFrame.addPlantView();
+	}
+
+	public void incrementAgeForALlPlants(){
+		for (int i = 0; i < listOffPlants.size(); i++){
+			Plant plant = listOffPlants.get(i);
+			if(plant != null){
+				plant.incrementAge(1);
+			}
+		}
+	}
+
+	public void decreaseWaterLevelForAllPlants(){
+		for (int i = 0; i < listOffPlants.size(); i++){
+			Plant plant = listOffPlants.get(i);
+			if(plant != null) {
+				plant.decreaseWaterLevel(10);
+			}
+		}
 	}
 }

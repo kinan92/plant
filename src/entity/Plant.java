@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.Image;
 import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
@@ -28,12 +27,12 @@ public class Plant {
 		waterLevel += WATER_INCREMENT;
 	}
 
-	public void incrementAge(){
-		this.age++;
+	public void incrementAge(int age){
+		this.age += age;
 	}
 
 
-	public void decreaseWaterLevel(){
+	public void decreaseWaterLevel(int level){
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}
@@ -42,6 +41,14 @@ public class Plant {
 
 	public int getWaterLevel(){
 		return this.waterLevel;
+	}
+
+	public boolean needsWater(){
+		return waterLevel < 10;
+	}
+
+	public boolean isOverWatered(){
+		return waterLevel > 100;
 	}
 
 	public String getName() {

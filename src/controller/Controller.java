@@ -206,8 +206,6 @@ public class Controller {
 			return;
 		}
 
-		LocalDateTime currentTime = LocalDateTime.now();
-
 		for (Plant plant : listOffPlants){
 			LocalDateTime newCreationTime = plant.getCreationTime().plusHours(hours);
 			plant.setCreationTime(newCreationTime);
@@ -220,6 +218,7 @@ public class Controller {
 
 			adjustPlantBasedOnWaterLevel(plant);
 		}
+		maingui.updateElapsedTime();
 
 		notifyTimeSkipped(hours);
 	}

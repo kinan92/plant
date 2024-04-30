@@ -117,6 +117,10 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
+    public JProgressBar getWaterBar(){
+        return waterBar;
+    }
+
     //Updates the water health bar and calls other methods to show the user that the plant
     //has been watered. Currently this only calls methods that play sound effects but may later
     //include things such as new sprites or animations

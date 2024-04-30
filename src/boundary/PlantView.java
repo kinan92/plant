@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class PlantView extends JPanel {
@@ -17,6 +18,8 @@ public class PlantView extends JPanel {
     private Controller controller;
     private JLabel creationTimeLabel;
     SettingsView settingsView;
+    private Timer updateTimer;
+    private Plant currentPlant;
     //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
 
@@ -25,7 +28,7 @@ public class PlantView extends JPanel {
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
-   private JButton waterPlant;
+    private JButton waterPlant;
 
    //Creates the base PlantView panel, sets rules for the panel and adds other panels
     public PlantView(int width, int height, Controller controller, Plant plant)
@@ -34,6 +37,7 @@ public class PlantView extends JPanel {
         this.width = width;
         this.height = height;
         this.controller = controller;
+        this.currentPlant = plant;
         soundEffectSetting = true;
         System.out.println("hej plantview");
         this.setSize(width, height);
@@ -41,9 +45,10 @@ public class PlantView extends JPanel {
         this.setLayout(borderLayout);
         this.setBackground(Color.ORANGE);
 
-        creationTimeLabel = new JLabel("Created at: " + plant.getCreationTime());
+        creationTimeLabel = new JLabel("Elapsed time: 0 days, 0 hours, 0 minutes");
         add(creationTimeLabel, BorderLayout.NORTH);
 
+        startUpdateTimer();
         plantPanel = new PlantPanel(width, height, this);
         add(plantPanel, BorderLayout.WEST);
 
@@ -51,6 +56,25 @@ public class PlantView extends JPanel {
         add(sideButtons, BorderLayout.EAST);
 
         settingsView = new SettingsView(width, height, this);
+    }
+
+    public void startUpdateTimer(){
+        updateTimer = new Timer(1000, e -> updateElapsedTime());
+        updateTimer.start();
+    }
+    public void updateElapsedTime(){
+        if (currentPlant != null){
+            LocalDateTime creationTime = currentPlant.getCreationTime();
+            LocalDateTime now = LocalDateTime.now();
+            Duration duration = Duration.between(creationTime, now);
+
+            long days = duration.toDays();
+            long hours = duration.toHours() % 24;
+            long minutes = duration.toMinutes() % 60;
+            long seconds = duration.getSeconds() % 60;
+
+            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds");
+        }
     }
 
     public void updateCreationTime(Plant plant){
@@ -97,6 +121,8 @@ public class PlantView extends JPanel {
             controller.skipTime(hoursToSkip);
             controller.updatePlantCreationTime(currentPlant, newCreationTime);
             System.out.println("Skipped " + hoursToSkip + " hours.");
+
+            updatePlantDetails(currentPlant);
         } else {
             System.out.println("Error: No current plant found");
         }
@@ -105,6 +131,15 @@ public class PlantView extends JPanel {
         {
             buttonPressedSoundEffect();
         }
+    }
+
+    public void updatePlantDetails(Plant plant){
+        this.currentPlant = plant;
+        creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
+        JProgressBar waterBar = plantPanel.getWaterBar();
+        waterBar.setValue(plant.getWaterLevel());
+        add(waterBar, BorderLayout.SOUTH);
+        updateElapsedTime();
     }
 
     //Method used when Vacation button is pressed

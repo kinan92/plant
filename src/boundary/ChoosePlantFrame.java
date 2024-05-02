@@ -12,11 +12,11 @@ public class ChoosePlantFrame extends JFrame{
     private Controller controller;
     int width = 550;
     int height = 470;
-    private ArrayList<String> plantImages = new ArrayList<>();
-    private ArrayList<String> plantHoverImages = new ArrayList<>();
+    private ArrayList<ImageIcon> plantImages;
+    private ArrayList<ImageIcon> plantHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(ArrayList<String> plantImages, ArrayList<String> plantHoverImages)
+    public ChoosePlantFrame(ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
     {
         this.plantImages = plantImages;
         this.plantHoverImages = plantHoverImages;
@@ -57,8 +57,8 @@ public class ChoosePlantFrame extends JFrame{
             plant.setBorder(BorderFactory.createEmptyBorder());
             plant.setContentAreaFilled(false);
             System.out.println(plantImages.get(i));
-            plant.setIcon(new ImageIcon(plantImages.get(i)));
-            ImageIcon shadow = new ImageIcon(plantHoverImages.get(i));
+            plant.setIcon(plantImages.get(i));
+            ImageIcon shadow = plantHoverImages.get(i);
 
             plant.setFocusPainted(false);
             plant.setRolloverEnabled(true);

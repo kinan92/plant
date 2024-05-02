@@ -156,8 +156,8 @@ public class Controller {
 
 	public void choosePlantFrame()
 	{
-		ArrayList<String> plantImage = new ArrayList<>();
-		ArrayList<String> plantImageHover = new ArrayList<>();
+		ArrayList<ImageIcon> plantImage = new ArrayList<>();
+		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)

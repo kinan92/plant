@@ -1,28 +1,29 @@
 package boundary;
 import controller.Controller;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 public class PlantView extends JPanel {
-
-    private JLabel plantName;
     int width;
     int height;
-    private JProgressBar waterBar;
+    private PlantPanel plantPanel;
+    boolean soundEffectSetting;
     private Controller controller;
-    private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
-    private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
-    private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
-    private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
-    private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
-   private JButton waterPlant;
+    SettingsView settingsView;
+
+
+   //Creates the base PlantView panel, sets rules for the panel and adds other panels
     public PlantView(int width, int height, Controller controller)
     {
         super(null);
         this.width = width;
         this.height = height;
         this.controller = controller;
+        soundEffectSetting = true;
         System.out.println("hej plantview");
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
@@ -30,273 +31,113 @@ public class PlantView extends JPanel {
         this.setBackground(Color.ORANGE);
 
 
-        JPanel plantView = plantView();
-        add(plantView, BorderLayout.WEST);
+        plantPanel = new PlantPanel(width, height, this);
+        add(plantPanel, BorderLayout.WEST);
 
-        JPanel sideButtons = sideButtons();
+        SideButtons sideButtons = new SideButtons(width, height, this);
         add(sideButtons, BorderLayout.EAST);
+
+        settingsView = new SettingsView(width, height, this);
     }
 
-    public JPanel healthBar()
+    //Method that is called when the Plant Collection button is pressed
+    //Method is a work in progress and currently has no functionality.
+    //When functionality is added this method will open the user's Plant Storage
+    public void getPlantPressed()
     {
-        JPanel healthBarPanel = new JPanel();
-        healthBarPanel.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-        setPreferredSize(new Dimension(62, height));
-
-        c.weightx = 0;
-        c.weighty = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.insets = new Insets(10, 3, 10, 3);
-        JLabel healthBar = new JLabel();
-        healthBar.setIcon(new ImageIcon("images/healthbar.png"));
-        healthBarPanel.add(healthBar, c);
-
-        return healthBarPanel;
-    }
-
-    public JPanel sideButtons()
-    {
-
-        JPanel sideButtons = new JPanel();
-        sideButtons.setBackground(Color.LIGHT_GRAY);
-        sideButtons.setPreferredSize(new Dimension(220, (height / 5) * 3));
-        sideButtons.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        // creates the time indication
-        /*
-        JLabel timeLabel = new JLabel("Time: ");
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.LINE_END;
-        sideButtons.add(timeLabel, c);
-
-         */
-
-
-        //Creates Plant Storage button
-        JButton getPlant = new JButton();
-        getPlant.setBorder(BorderFactory.createEmptyBorder());
-        getPlant.setContentAreaFilled(false);
-        getPlant.setIcon(storage);
-        getPlant.setPreferredSize(new Dimension(208, 60));
-
-        //Sets location for Plant Storage button
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-
-        //Adds Plant Storage button to panel and adds actionlistener
-        sideButtons.add(getPlant, c);
-        getPlant.addActionListener(l -> getPlantPressed());
-        getPlant.setRolloverEnabled(true);
-        getPlant.setRolloverIcon(new ImageIcon("images/buttons/storage_hover.png"));
-
-        //Creates Widget button
-        JButton widget = new JButton();
-        widget.setBorder(BorderFactory.createEmptyBorder());
-        widget.setContentAreaFilled(false);
-        widget.setIcon(widgetImage);
-        widget.setPreferredSize(new Dimension(208, 60));
-
-        //Sets location for Widget button
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 1;
-
-        //Adds Widget button to panel and adds actionlistener
-        sideButtons.add(widget, c);
-        widget.addActionListener(l -> widgetPressed());
-        widget.setRolloverEnabled(true);
-        widget.setRolloverIcon(new ImageIcon("images/buttons/widget_hover.png"));
-
-        //Creates Skip Hour button
-        JButton skipHour = new JButton();
-        skipHour.setBorder(BorderFactory.createEmptyBorder());
-        skipHour.setContentAreaFilled(false);
-        skipHour.setIcon(skiphour);
-        skipHour.setPreferredSize(new Dimension(208, 60));
-
-        //Sets location for Skip Hour button
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 2;
-
-        //Adds Skip Hour button to panel and adds actionlistener
-        sideButtons.add(skipHour, c);
-        skipHour.addActionListener(l -> skipHourPressed());
-        skipHour.setRolloverEnabled(true);
-        skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
-        // skipHour.setRolloverIcon(new ImageIcon(skiphour.getImage().getScaledInstance(skiphour.getIconWidth()-5, skiphour.getIconHeight()-1, Image.SCALE_SMOOTH)));
-
-        //Creates Vacation button
-        JButton vacation = new JButton();
-        vacation.setBorder(BorderFactory.createEmptyBorder());
-        vacation.setContentAreaFilled(false);
-        vacation.setIcon(vacationImage);
-        vacation.setPreferredSize(new Dimension(208, 60));
-
-        //Sets location for Vacation button
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 3;
-
-        //Adds Vacation button to panel and adds actionlistener
-        sideButtons.add(vacation, c);
-        vacation.addActionListener(l -> vacationPressed());
-        vacation.setRolloverEnabled(true);
-        vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));
-
-        return sideButtons;
-    }
-
-    private void getPlantPressed()
-    {
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
         System.out.println("Plant Collection pressed.");
     }
 
-
-
-    private void widgetPressed()
+    //Method used when the Widget button is pressed
+    //Method creates a widget of the currently open plant
+    public void widgetPressed()
     {
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
-            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",waterPlant);
+            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",plantPanel.getWaterPlantButton());
             
         });
+    	
         System.out.println("Widget pressed.");
     }
 
-
-    private void skipHourPressed()
+    //Method will be called when the Skip Hour button is pressed
+    //Method is a work in progress, functionality will be added later
+    public void skipHourPressed()
     {
-        /*
         System.out.println("Skip hour pressed.");
-        int hoursToSkip = 1;
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
+        /*int hoursToSkip = 1;
         controller.skipTime(hoursToSkip);
         System.out.println("Skipped " + hoursToSkip + " hour(s).");
 
          */
     }
 
-
-
-    private void vacationPressed()
+    //Method used when Vacation button is pressed
+    //Method is a work in progress
+    //When method is done this method will allow the user to set the program to vacation mode
+    public void vacationPressed()
     {
         System.out.println("Vacation pressed.");
+
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
     }
 
-    private void waterPressed()
+    //Method used when water button is pressed
+    //Method is a work in progress
+    public void waterPressed()
     {
         System.out.println("Water pressed.");
         controller.waterPlant();
-        updateWaterLevel(controller.getPlantWaterLevel());
+        plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
         System.out.println("Water level: " + controller.getPlantWaterLevel());
     }
 
-    public JPanel nameView()
+    public void settingsPressed()
     {
-        JPanel nameView = new JPanel();
-        nameView.setPreferredSize(new Dimension(256, height / 7));
-        nameView.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        c.weightx = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        JLabel plantName = new JLabel("Bob");
-        plantName.setFont(new Font("Calibri", Font.PLAIN, 26));
-        nameView.add(plantName, c);
-
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 1;
-        JLabel plantSpecies = new JLabel("Species: Elefantöra");
-        plantSpecies.setFont(new Font("Calibri", Font.PLAIN, 16));
-        nameView.add(plantSpecies, c);
-
-        return nameView;
+        settingsView.setVisible(true);
     }
 
-    public JPanel plantView()
+    private void buttonPressedSoundEffect()
     {
-        JPanel plantView = new JPanel();
-        plantView.setPreferredSize(new Dimension(256, height));
-        plantView.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        plantView.add(nameView(), c);
-
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
-        c.gridx = 0;
-        c.gridy = 2;
-        JLabel plantImage = new JLabel(elefantöra);
-        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
-        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
-        plantView.add(plantImage, c);
-        plantView.add(plantPot, c);
-        plantView.add(plantBackground, c);
-
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
-        c.gridx = 0;
-        c.gridy = 3;
-        JPanel plantCare = plantCare();
-        plantView.add(plantCare, c);
-
-        return plantView;
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private JPanel plantCare()
+    public void setSoundEffectSetting(boolean setting)
     {
-        JPanel plantView = new JPanel();
-        plantView.setSize(new Dimension(256, 50));
-        plantView.setLayout(new GridBagLayout());
-        plantView.setBackground(Color.GRAY);
-        GridBagConstraints c = new GridBagConstraints();
-
-        /*JButton waterPlant = new JButton("Water plant");
-        waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
-
-       waterPlant = new JButton();
-        waterPlant.setBorder(BorderFactory.createEmptyBorder());
-        waterPlant.setContentAreaFilled(false);
-        waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));
-        waterPlant.setPreferredSize(new Dimension(45, 45));
-        plantView.add(waterPlant, c);
-        waterPlant.addActionListener(l -> waterPressed());
-        waterPlant.setRolloverEnabled(true);
-        waterPlant.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
-
-        c.weightx = 0;
-        c.weighty = 0;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.insets = new Insets(0, 0, 0, 0);
-        plantView.add(waterPlant, c);
-
-        waterBar = new JProgressBar(0, 100);
-        waterBar.setValue(0);
-        waterBar.setStringPainted(true);
-        c.gridx = 0;
-        c.gridy = 1;
-        plantView.add(waterBar, c);
-
-        return plantView;
+        soundEffectSetting = setting;
     }
 
-    public void updateWaterLevel(int waterLevel){
-        waterBar.setValue(waterLevel);
+    public boolean getSoundEffectSetting()
+    {
+        return soundEffectSetting;
     }
-
-
 }

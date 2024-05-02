@@ -19,15 +19,15 @@ public class WidgetShapeButton extends JButton {
 	
 	
 
-	public WidgetShapeButton(JButton button) {
+	public WidgetShapeButton(JButton addWaterbutton) {
 		super();
 
 	
-		 Icon icon = button.getIcon();
+		 Icon icon = addWaterbutton.getIcon();
         // Convert the icon to a BufferedImage
-        BufferedImage image = new BufferedImage(button.getIcon().getIconWidth(), button.getIcon().getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(addWaterbutton.getIcon().getIconWidth(), addWaterbutton.getIcon().getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
-         icon.paintIcon(button, g2d, 0, 0);
+         icon.paintIcon(addWaterbutton, g2d, 0, 0);
          g2d.dispose();
 
          buttonShape = ButtonShape(image);

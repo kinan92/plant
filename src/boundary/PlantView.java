@@ -57,6 +57,9 @@ public class PlantView extends JPanel {
 
         settingsView = new SettingsView(width, height, this);
     }
+    public Controller getController(){
+        return controller;
+    }
 
     public void startUpdateTimer(){
         updateTimer = new Timer(1000, e -> updateElapsedTime());
@@ -138,8 +141,10 @@ public class PlantView extends JPanel {
         creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
         JProgressBar waterBar = plantPanel.getWaterBar();
         waterBar.setValue(plant.getWaterLevel());
-        add(waterBar, BorderLayout.SOUTH);
+        waterBar.repaint();
         updateElapsedTime();
+
+
     }
 
     //Method used when Vacation button is pressed

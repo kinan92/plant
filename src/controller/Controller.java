@@ -25,10 +25,11 @@ public class Controller {
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
+	LocalDateTime creationTime = LocalDateTime.of(2024,5,1,12,0,0);
 
 	public Controller() {
 		//this.window = new MainMenu(this);
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, LocalDateTime.now());
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, creationTime);
 		mainFrame = new MainFrame(this, plant);
 		mainFrame.addMainMenu();
 		maingui = new PlantView(550, 435, this, plant);

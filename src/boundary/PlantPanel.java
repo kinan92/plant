@@ -108,7 +108,7 @@ public class PlantPanel extends JPanel {
         plantCare.add(waterPlant, c);
 
         waterBar = new JProgressBar(0, 100);
-        waterBar.setValue(0);
+        waterBar.setValue(plantView.getController().getPlantWaterLevel());
         waterBar.setStringPainted(true);
         c.gridx = 0;
         c.gridy = 1;
@@ -118,8 +118,9 @@ public class PlantPanel extends JPanel {
     }
 
     public JProgressBar getWaterBar(){
-        return waterBar;
+        return this.waterBar;
     }
+
 
     //Updates the water health bar and calls other methods to show the user that the plant
     //has been watered. Currently this only calls methods that play sound effects but may later

@@ -12,8 +12,12 @@ public class PlantPanel extends JPanel {
     JPanel plantPanel;
     PlantView plantView;
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
-    private JButton waterPlant;
-    private JProgressBar waterBar;
+
+    private JButton waterPlantButton;
+    
+	private JProgressBar waterBar;
+
+
 
     public PlantPanel(int width, int height, PlantView plantView)
     {
@@ -89,15 +93,19 @@ public class PlantPanel extends JPanel {
         /*JButton waterPlant = new JButton("Water plant");
         waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
 
-        waterPlant = new JButton();
-        waterPlant.setBorder(BorderFactory.createEmptyBorder());
-        waterPlant.setContentAreaFilled(false);
-        waterPlant.setIcon(new ImageIcon("images/buttons/water.png"));
-        waterPlant.setPreferredSize(new Dimension(45, 45));
-        plantCare.add(waterPlant, c);
-        waterPlant.addActionListener(l -> plantView.waterPressed());
-        waterPlant.setRolloverEnabled(true);
-        waterPlant.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
+
+        waterPlantButton = new JButton();
+        waterPlantButton.setBorder(BorderFactory.createEmptyBorder());
+        waterPlantButton.setContentAreaFilled(false);
+        waterPlantButton.setIcon(new ImageIcon("images/buttons/water.png"));
+        waterPlantButton.setPreferredSize(new Dimension(45, 45));
+        plantCare.add(waterPlantButton, c);
+        waterPlantButton.addActionListener(l -> plantView.waterPressed());
+        waterPlantButton.setRolloverEnabled(true);
+        waterPlantButton.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
+
+
+
 
         c.weightx = 0;
         c.weighty = 0;
@@ -105,7 +113,10 @@ public class PlantPanel extends JPanel {
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 0, 0, 0);
-        plantCare.add(waterPlant, c);
+
+        plantCare.add(waterPlantButton, c);
+
+
 
         waterBar = new JProgressBar(0, 100);
         waterBar.setValue(0);
@@ -167,4 +178,9 @@ public class PlantPanel extends JPanel {
             throw new RuntimeException(e);
         }
     }
+
+    public JButton getWaterPlantButton() {
+ 		return waterPlantButton;
+ 	}
+    
 }

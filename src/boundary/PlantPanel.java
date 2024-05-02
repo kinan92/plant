@@ -12,9 +12,12 @@ public class PlantPanel extends JPanel {
     JPanel plantPanel;
     PlantView plantView;
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
+
     private JButton waterPlantButton;
     
 	private JProgressBar waterBar;
+
+
 
     public PlantPanel(int width, int height, PlantView plantView)
     {
@@ -90,6 +93,7 @@ public class PlantPanel extends JPanel {
         /*JButton waterPlant = new JButton("Water plant");
         waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
 
+
         waterPlantButton = new JButton();
         waterPlantButton.setBorder(BorderFactory.createEmptyBorder());
         waterPlantButton.setContentAreaFilled(false);
@@ -100,13 +104,19 @@ public class PlantPanel extends JPanel {
         waterPlantButton.setRolloverEnabled(true);
         waterPlantButton.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
 
+
+
+
         c.weightx = 0;
         c.weighty = 0;
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 0, 0, 0);
+
         plantCare.add(waterPlantButton, c);
+
+
 
         waterBar = new JProgressBar(0, 100);
         waterBar.setValue(0);
@@ -168,8 +178,9 @@ public class PlantPanel extends JPanel {
             throw new RuntimeException(e);
         }
     }
+
     public JButton getWaterPlantButton() {
  		return waterPlantButton;
  	}
-
+    
 }

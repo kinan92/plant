@@ -80,7 +80,7 @@ public class SideButtons extends JPanel {
         skipHour.addActionListener(l -> plantView.skipHourPressed());
         skipHour.setRolloverEnabled(true);
         skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
-       
+
         //Creates Vacation button
         JButton vacation = new JButton();
         vacation.setBorder(BorderFactory.createEmptyBorder());

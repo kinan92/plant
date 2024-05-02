@@ -10,10 +10,22 @@ import java.io.IOException;
 public class PlantView extends JPanel {
     int width;
     int height;
+
     private PlantPanel plantPanel;
     boolean soundEffectSetting;
     private Controller controller;
     SettingsView settingsView;
+
+
+    //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
+    private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
+
+    //ImageIcons for the various buttons
+    private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
+    private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
+    private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
+    private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
+   private JButton waterPlant;
 
 
    //Creates the base PlantView panel, sets rules for the panel and adds other panels

@@ -18,6 +18,7 @@ public class ChoosePlantFrame extends JFrame{
     //Creates ChoosePlantFrame JFrame
     public ChoosePlantFrame(ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
     {
+        System.out.println("You're in ChoosePlantFrame");
         this.plantImages = plantImages;
         this.plantHoverImages = plantHoverImages;
 
@@ -28,7 +29,7 @@ public class ChoosePlantFrame extends JFrame{
         ImageIcon icon = new ImageIcon("images/icon.png");
         setIconImage(icon.getImage());
         setLocationRelativeTo(null);
-        setResizable(false);
+        setResizable(true);
 
         //Creates a scrollbar to enable scrolling for the plants
         JScrollPane scroll = new JScrollPane(
@@ -41,6 +42,9 @@ public class ChoosePlantFrame extends JFrame{
         JScrollPane scroller = new JScrollPane(plants);
         this.getContentPane().add(scroller, BorderLayout.CENTER);
 
+        JPanel navigation = navigation();
+        add(navigation, BorderLayout.SOUTH);
+
         setVisible(true);
     }
 
@@ -49,27 +53,62 @@ public class ChoosePlantFrame extends JFrame{
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, plantImages.size()));
+        plants.setPreferredSize(new Dimension(width, (height / 10) * 7));
 
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantImages.size(); i++)
         {
-            JButton plant = new JButton();
-            plant.setBorder(BorderFactory.createEmptyBorder());
-            plant.setContentAreaFilled(false);
+            JButton plantBtn = new JButton();
+            plantBtn.setBorder(BorderFactory.createEmptyBorder());
+            plantBtn.setContentAreaFilled(false);
             System.out.println(plantImages.get(i));
-            plant.setIcon(plantImages.get(i));
+            plantBtn.setIcon(plantImages.get(i));
             ImageIcon shadow = plantHoverImages.get(i);
 
-            plant.setFocusPainted(false);
-            plant.setRolloverEnabled(true);
-            plant.setRolloverIcon(shadow);
+            plantBtn.setFocusPainted(false);
+            plantBtn.setRolloverEnabled(true);
+            plantBtn.setRolloverIcon(shadow);
 
             //ActionListener that will return the ArrayList number when the plant is pressed
             int plantNumber = i;
-            plant.addActionListener(l -> plantPressed(plantNumber));
-            plants.add(plant);
+            plantBtn.addActionListener(l -> plantPressed(plantNumber));
+            plants.add(plantBtn);
         }
         return plants;
+    }
+
+    /**
+     * @author Petri Närhi */
+    public JPanel navigation()
+    {
+        JPanel navigation = new JPanel();
+        navigation.setLayout(new FlowLayout());
+        navigation.setBackground(Color.ORANGE);
+        navigation.setPreferredSize(new Dimension(width, (height / 10)));
+
+        //Loops through plantImages and creates buttons with the images
+        JButton backBtn = new JButton();
+        backBtn.setBorder(BorderFactory.createEmptyBorder());
+        backBtn.setContentAreaFilled(false);
+        backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
+
+
+        backBtn.setFocusPainted(false);
+        backBtn.setRolloverEnabled(true);
+        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
+
+        //ActionListener that will return the ArrayList number when the plant is pressed
+        backBtn.addActionListener(l -> backPressed());
+        backBtn.setLocation(100,100);
+        navigation.add(backBtn);
+        navigation.setVisible(true);
+
+        return navigation;
+    }
+
+    /**
+     * @author Petri Närhi */
+    private void backPressed() {
     }
 
     //This method will be replaced by a method that calls a method in the Controller to notify

@@ -1,6 +1,6 @@
 package entity;
 
-public enum PlantSizeEnum {
+public enum PlantStateEnum {
 	
 	little("Little"),
 	big("Big"),
@@ -8,7 +8,7 @@ public enum PlantSizeEnum {
 
 	private final String size;
 
-	PlantSizeEnum(String size) {
+	PlantStateEnum(String size) {
 
 		this.size = size;
 

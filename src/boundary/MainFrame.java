@@ -11,10 +11,11 @@ public class MainFrame extends JFrame {
     PlantView plantView;
     Controller controller;
 
+    //Creates a MainFrame for the whole program
+    //and sets settings for the MainFrame
     public MainFrame(Controller controller)
     {
         this.controller = controller;
-        setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
@@ -27,9 +28,10 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    //Called from the Controller to clear the MainFrame and add
+    //a PlantView JPanel
     public void addPlantView()
     {
-        System.out.println("hej");
         this.getContentPane().removeAll();
         this.revalidate();
         plantView = new PlantView(width, height, controller);
@@ -37,6 +39,7 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
+    //Adds MainMenu JPanel to the MainFrame
     public void addMainMenu()
     {
         MainMenu mainMenu = new MainMenu(width, height, controller);

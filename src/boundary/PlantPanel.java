@@ -54,6 +54,7 @@ public class PlantPanel extends JPanel {
         this.add(plantCare, c);
     }
 
+
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();

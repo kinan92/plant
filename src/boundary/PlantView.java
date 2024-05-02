@@ -1,6 +1,7 @@
 package boundary;
 import controller.Controller;
 import entity.Plant;
+import entity.Player;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -14,6 +15,7 @@ public class PlantView extends JPanel {
     int width;
     int height;
     PlantPanel plantPanel;
+    private JLabel coinLabel;
     boolean soundEffectSetting;
     private Controller controller;
     private JLabel creationTimeLabel;
@@ -45,8 +47,11 @@ public class PlantView extends JPanel {
         this.setLayout(borderLayout);
         this.setBackground(Color.ORANGE);
 
-        creationTimeLabel = new JLabel("Elapsed time: 0 days, 0 hours, 0 minutes");
+        creationTimeLabel = new JLabel("Elapsed time: 0 days, 0 h, 0 min, 0 sec");
         add(creationTimeLabel, BorderLayout.NORTH);
+
+        coinLabel = new JLabel("Coins: 0");
+        this.add(coinLabel, BorderLayout.NORTH);
 
         startUpdateTimer();
         plantPanel = new PlantPanel(width, height, this);
@@ -76,8 +81,14 @@ public class PlantView extends JPanel {
             long minutes = duration.toMinutes() % 60;
             long seconds = duration.getSeconds() % 60;
 
-            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " hours, " + minutes + " minutes, " + seconds + " seconds");
+            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
         }
+    }
+
+    public void updatePlayerCoins(){
+        Player player = controller.getPlayer();
+        int coins = player.getCoins();
+        coinLabel.setText("Coins: " + coins);
     }
 
     public void updateCreationTime(Plant plant){
@@ -117,19 +128,24 @@ public class PlantView extends JPanel {
     //Method is a work in progress, functionality will be added later
     public void skipHourPressed()
     {
-        int hoursToSkip = 1;
-        Plant currentPlant = controller.getCurrentPlant();
-        if (currentPlant != null){
-            LocalDateTime newCreationTime = currentPlant.getCreationTime().plusHours(hoursToSkip);
-            controller.skipTime(hoursToSkip);
-            controller.updatePlantCreationTime(currentPlant, newCreationTime);
-            System.out.println("Skipped " + hoursToSkip + " hours.");
+        Player player = controller.getPlayer();
+        int cost = 50;
+        if (player.spendCoins(cost)){
+            int hoursToSkip = 1;
+            Plant currentPlant = controller.getCurrentPlant();
 
-            updatePlantDetails(currentPlant);
+            if (currentPlant != null){
+                LocalDateTime newCreationTime = currentPlant.getCreationTime().plusHours(hoursToSkip);
+                controller.skipTime(hoursToSkip);
+                controller.updatePlantCreationTime(currentPlant, newCreationTime);
+                System.out.println("Skipped " + hoursToSkip + " hours.");
+                updatePlantDetails(currentPlant);
+            } else {
+                System.out.println("Error: No current plant found");
+            }
         } else {
-            System.out.println("Error: No current plant found");
+            System.out.println("Insufficient coins to skip time");
         }
-
         if (soundEffectSetting)
         {
             buttonPressedSoundEffect();

@@ -15,7 +15,7 @@ import boundary.PlantView;
 import javax.swing.*;
 
 public class Controller {
-	private ArrayList<Plant> listOffPlants = new ArrayList<>();
+	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
 	private PlantView maingui;
@@ -32,10 +32,17 @@ public class Controller {
 
 		loadPlantTypes();
 		test();
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50);
-		listOffPlants.add(plant);
+		/*Chinese Money Plant
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
+		listOfPlants.add(plant);*/
 		// startWaterDecreaseTimer();
 		// startAgeTimer();
+	}
+
+	public void createPlant(String name, int age, String imagePath, int initialWaterLevel, PlantType type) {
+		Plant newPlant = new Plant(name, age, imagePath, initialWaterLevel, type, PlantStateEnum.little);
+		listOfPlants.add(newPlant);
+		plant = newPlant;
 	}
 
 	public void pausTime(){
@@ -64,10 +71,6 @@ public class Controller {
 		}
 	}
 
-	public void addPlant(Plant newPlant){
-		listOffPlants.add(newPlant);
-	}
-
 	private void startAgeTimer(){
 		if (ageTimer == null){
 			ageTimer = new Timer(1000, new ActionListener() {
@@ -94,7 +97,7 @@ public class Controller {
 	}
 
 	private void updateAge(){
-		for (Plant plant : listOffPlants){
+		for (Plant plant : listOfPlants){
 			plant.incrementAge(1);
 		}
 	}
@@ -197,7 +200,7 @@ public class Controller {
 			return;
 		}
 
-		for (Plant plant : listOffPlants){
+		for (Plant plant : listOfPlants){
 			int ageIncrement = hours / 24;
 			plant.incrementAge(ageIncrement);
 
@@ -207,14 +210,6 @@ public class Controller {
 		}
 
 		notifyTimeSkipped(hours);
-	}
-
-	private void createPlant()
-	{
-		/*
-		plant = new Plant(maingui.plantView().getName(), 0,  plant.getImage(), null);
-
-		 */
 	}
 
 	public ArrayList<PlantType> getPlantTypes()
@@ -228,8 +223,8 @@ public class Controller {
 	}
 
 	public void incrementAgeForALlPlants(){
-		for (int i = 0; i < listOffPlants.size(); i++){
-			Plant plant = listOffPlants.get(i);
+		for (int i = 0; i < listOfPlants.size(); i++){
+			Plant plant = listOfPlants.get(i);
 			if(plant != null){
 				plant.incrementAge(1);
 			}
@@ -237,8 +232,8 @@ public class Controller {
 	}
 
 	public void decreaseWaterLevelForAllPlants(){
-		for (int i = 0; i < listOffPlants.size(); i++){
-			Plant plant = listOffPlants.get(i);
+		for (int i = 0; i < listOfPlants.size(); i++){
+			Plant plant = listOfPlants.get(i);
 			if(plant != null) {
 				plant.decreaseWaterLevel(10);
 			}

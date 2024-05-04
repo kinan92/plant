@@ -53,7 +53,7 @@ public class ChoosePlantFrame extends JFrame{
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, plantImages.size()));
-        plants.setPreferredSize(new Dimension(width, (height / 10) * 7));
+        plants.setPreferredSize(new Dimension((width*9/10), (height / 10) * 7));
 
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantImages.size(); i++)

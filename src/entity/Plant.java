@@ -13,14 +13,18 @@ public class Plant {
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
+	private PlantType type;
+	private PlantStateEnum state;
 
-	public Plant(String name, int age, String imagePath, int initialWaterLevel) {
+	public Plant(String name, int age, String imagePath, int initialWaterLevel, PlantType type, PlantStateEnum state) {
 		super();
 		this.name = name;
 		this.age = age;
 		this.image = new ImageIcon(imagePath);
 		this.dateAndTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
+		this.type = type;
+		this.state = state;
 	}
 
 	public void waterPlant(){
@@ -77,4 +81,19 @@ public class Plant {
 		this.dateAndTime = dateAndTime;
 	}
 
+	public PlantType getType() {
+		return type;
+	}
+
+	public void setType(PlantType type) {
+		this.type = type;
+	}
+
+	public PlantStateEnum getState() {
+		return state;
+	}
+
+	public void setState(PlantStateEnum state) {
+		this.state = state;
+	}
 }

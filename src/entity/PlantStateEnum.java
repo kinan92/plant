@@ -6,15 +6,15 @@ public enum PlantStateEnum {
 	big("Big"),
 	dead("dead");
 
-	private final String size;
+	private final String state;
 
-	PlantStateEnum(String size) {
+	PlantStateEnum(String state) {
 
-		this.size = size;
+		this.state = state;
 
 	}
 
-	public String getSize() {
-		return size;
+	public String getState() {
+		return state;
 	}
 }

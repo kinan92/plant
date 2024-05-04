@@ -13,15 +13,19 @@ public class PlantType {
     private String plantTypeName;
     private String plantTypeNameAlternative;
     private ImageIcon grownPlantImage;
+    private ImageIcon littlePlantImage;
+    private ImageIcon deadPlantImage;
     private ImageIcon plantImageButton;
     private ImageIcon plantImageButtonHover;
     private String plantInformation;
 
-    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation)
+    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String littlePlantImage, String deadPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation)
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
         this.grownPlantImage = new ImageIcon(grownPlantImage);
+        this.littlePlantImage = new ImageIcon(littlePlantImage);
+        this.deadPlantImage = new ImageIcon(deadPlantImage);
         this.plantImageButton = new ImageIcon(plantImageButton);
         this.plantImageButtonHover = new ImageIcon(plantImageButtonHover);
         this.plantInformation = plantInformation;

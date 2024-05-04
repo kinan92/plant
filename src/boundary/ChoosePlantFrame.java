@@ -116,6 +116,7 @@ public class ChoosePlantFrame extends JFrame{
     //correspond to an index in the PlantType ArrayList)
     private void plantPressed(int plant)
     {
+        controller.createPlant(plant);
         System.out.println(plant);
     }
 }

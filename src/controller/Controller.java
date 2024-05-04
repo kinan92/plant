@@ -39,8 +39,11 @@ public class Controller {
 		// startAgeTimer();
 	}
 
-	public void createPlant(String name, int age, String imagePath, int initialWaterLevel, PlantType type) {
-		Plant newPlant = new Plant(name, age, imagePath, initialWaterLevel, type, PlantStateEnum.little);
+	public void createPlant(int i) {
+		String imagePath, int initialWaterLevel, PlantType type;
+		String name = plantTypes.get(i).getPlantTypeName();
+
+		Plant newPlant = new Plant(name, 0, imagePath, initialWaterLevel, type, PlantStateEnum.little);
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 	}

@@ -39,16 +39,16 @@ public class PlantView extends JPanel {
         this.controller = controller;
         this.currentPlant = plant;
         soundEffectSetting = true;
-        System.out.println("hej plantview");
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         this.setBackground(Color.ORANGE);
 
-        creationTimeLabel = new JLabel("Elapsed time: 0 days, 0 h, 0 min, 0 sec");
+        creationTimeLabel = new JLabel("Elapsed time: Calculating...");
         add(creationTimeLabel, BorderLayout.NORTH);
-
         startUpdateTimer();
+        updateElapsedTime();
+
         plantPanel = new PlantPanel(width, height, this);
         add(plantPanel, BorderLayout.WEST);
 
@@ -56,6 +56,7 @@ public class PlantView extends JPanel {
         add(sideButtons, BorderLayout.EAST);
 
         settingsView = new SettingsView(width, height, this);
+
     }
     public Controller getController(){
         return controller;
@@ -120,11 +121,9 @@ public class PlantView extends JPanel {
         int hoursToSkip = 1;
         Plant currentPlant = controller.getCurrentPlant();
         if (currentPlant != null){
-            LocalDateTime newCreationTime = currentPlant.getCreationTime().plusHours(hoursToSkip);
+            LocalDateTime newCreationTime = currentPlant.getCreationTime().minusHours(hoursToSkip);
             controller.skipTime(hoursToSkip);
             controller.updatePlantCreationTime(currentPlant, newCreationTime);
-            System.out.println("Skipped " + hoursToSkip + " hours.");
-
             updatePlantDetails(currentPlant);
         } else {
             System.out.println("Error: No current plant found");
@@ -143,8 +142,6 @@ public class PlantView extends JPanel {
         waterBar.setValue(plant.getWaterLevel());
         waterBar.repaint();
         updateElapsedTime();
-
-
     }
 
     //Method used when Vacation button is pressed

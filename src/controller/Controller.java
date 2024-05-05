@@ -25,7 +25,7 @@ public class Controller {
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
-	LocalDateTime creationTime = LocalDateTime.of(2024,5,1,12,0,0);
+	LocalDateTime creationTime = LocalDateTime.now().minusDays(4).plusHours(5);
 
 	public Controller() {
 		//this.window = new MainMenu(this);

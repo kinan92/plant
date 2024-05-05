@@ -25,7 +25,7 @@ public class ChoosePlantFrame extends JFrame{
 
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
         setIconImage(icon.getImage());

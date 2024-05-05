@@ -11,7 +11,8 @@ public class PlantPanel extends JPanel {
     int height;
     JPanel plantPanel;
     PlantView plantView;
-    private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
+    private ImageIcon currentPlant;
+    private ImageIcon currentPot;
 
     private JButton waterPlantButton;
     
@@ -43,7 +44,7 @@ public class PlantPanel extends JPanel {
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
-        JLabel plantImage = new JLabel(elefantöra);
+        JLabel plantImage = new JLabel(currentPlant);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
         this.add(plantImage, c);
@@ -182,5 +183,5 @@ public class PlantPanel extends JPanel {
     public JButton getWaterPlantButton() {
  		return waterPlantButton;
  	}
-    
+
 }

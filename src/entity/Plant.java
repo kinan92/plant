@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.*;
 import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
@@ -8,13 +9,14 @@ public class Plant {
 	
 	private String name;
 	private int age;
-	private ImageIcon image ;
+	private ImageIcon image;
 	private LocalDateTime dateAndTime;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
 	private PlantType type;
 	private PlantStateEnum state;
+	private ImageIcon pot;
 
 	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime) {
 		super();
@@ -29,6 +31,7 @@ public class Plant {
 			case big -> this.image = type.getGrownPlantImage();
 			case dead -> this.image = type.getDeadPlantImage();
 		}
+		pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
 	}
 
 	public void waterPlant(){
@@ -99,6 +102,14 @@ public class Plant {
 
 	public void setState(PlantStateEnum state) {
 		this.state = state;
+	}
+
+	public ImageIcon getPot() {
+		return pot;
+	}
+
+	public void setPot(ImageIcon pot) {
+		this.pot = pot;
 	}
 
 	//for test purposes

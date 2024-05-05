@@ -51,7 +51,7 @@ public class Controller {
 		} while (name == null || name.isEmpty());
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime);
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
@@ -251,5 +251,15 @@ public class Controller {
 				plant.decreaseWaterLevel(10);
 			}
 		}
+	}
+
+	//Getters and setters for plant to show and
+	// change the current plant that is shown in PlantView
+	public Plant getPlant() {
+		return plant;
+	}
+
+	public void setPlant(Plant plant) {
+		this.plant = plant;
 	}
 }

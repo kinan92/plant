@@ -14,6 +14,7 @@ public class PlantPanel extends JPanel {
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
     private JButton waterPlant;
     private JProgressBar waterBar;
+    private JLabel creationTimeLabel;
 
     public PlantPanel(int width, int height, PlantView plantView)
     {
@@ -41,10 +42,12 @@ public class PlantPanel extends JPanel {
         c.gridy = 2;
         JLabel plantImage = new JLabel(elefantöra);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
+        creationTimeLabel = new JLabel("Elapsed time: 0 days, 0 h, 0 min, 0 sec");
         JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
         this.add(plantImage, c);
         this.add(plantPot, c);
         this.add(plantBackground, c);
+        this.add(creationTimeLabel, c);
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;

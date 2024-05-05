@@ -19,22 +19,20 @@ public class Controller {
 	private ArrayList<Plant> listOffPlants = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
-	private PlantView plantView;
+	private PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
 	LocalDateTime creationTime = LocalDateTime.of(2024,5,1,12,0,0);
-	private Player player;
 
 	public Controller() {
 		//this.window = new MainMenu(this);
 		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, creationTime);
 		mainFrame = new MainFrame(this, plant);
 		mainFrame.addMainMenu();
-		plantView = new PlantView(550, 435, this, plant);
-		player = new Player();
+		maingui = new PlantView(550, 435, this, plant);
 
 		loadPlantTypes();
 		test();
@@ -71,15 +69,6 @@ public class Controller {
 
 	public void addPlant(Plant newPlant){
 		listOffPlants.add(newPlant);
-		Player player = getPlayer();
-		player.addCoins(100);
-		plantView.updatePlayerCoins();
-
-		System.out.println("Added new plant, coins awarded");
-	}
-
-	public Player getPlayer(){
-		return player;
 	}
 
 	private void startAgeTimer(){
@@ -230,7 +219,7 @@ public class Controller {
 
 			adjustPlantBasedOnWaterLevel(plant);
 		}
-		plantView.updateElapsedTime();
+		maingui.updateElapsedTime();
 
 		notifyTimeSkipped(hours);
 	}
@@ -241,7 +230,7 @@ public class Controller {
 			return;
 		}
 		plant.setCreationTime(newCreationTime);
-		plantView.updateCreationTime(plant);
+		maingui.updateCreationTime(plant);
 		System.out.println("Updated plant creation time to: " + newCreationTime.toString());
 	}
 

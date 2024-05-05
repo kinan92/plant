@@ -31,7 +31,7 @@ public class Plant {
 			case big -> this.image = type.getGrownPlantImage();
 			case dead -> this.image = type.getDeadPlantImage();
 		}
-		pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
+		this.pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
 	}
 
 	public void waterPlant(){

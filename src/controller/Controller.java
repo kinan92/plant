@@ -8,9 +8,12 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
 import boundary.PlantView;
+import java.util.Random;
 
 import javax.swing.*;
 
@@ -24,6 +27,7 @@ public class Controller {
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
+	private Random random = new Random();
 
 	public Controller() {
 		//this.window = new MainMenu(this);
@@ -40,12 +44,18 @@ public class Controller {
 	}
 
 	public void createPlant(int i) {
-		String imagePath, int initialWaterLevel, PlantType type;
-		String name = plantTypes.get(i).getPlantTypeName();
-
-		Plant newPlant = new Plant(name, 0, imagePath, initialWaterLevel, type, PlantStateEnum.little);
+		PlantType type = plantTypes.get(i);
+		String name;
+		do {
+			name = JOptionPane.showInputDialog("Give your plant a name!");
+		} while (name == null || name.isEmpty());
+		int initialWaterLevel = random.nextInt(100);
+		LocalDateTime dateAndTime = LocalDateTime.now();
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime);
 		listOfPlants.add(newPlant);
+		System.out.println("Old: " + plant);
 		plant = newPlant;
+		System.out.println("New: " + plant);
 	}
 
 	public void pausTime(){
@@ -172,7 +182,7 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		ChoosePlantFrame choosePlantFrame = new ChoosePlantFrame(plantImage, plantImageHover);
+		ChoosePlantFrame choosePlantFrame = new ChoosePlantFrame(this, plantImage, plantImageHover);
 	}
 
 	//Reads PlantTypes from the plantTypes textfile, creates an object of them and adds them to the plantTypes ArrayList
@@ -187,7 +197,7 @@ public class Controller {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}

@@ -16,8 +16,9 @@ public class ChoosePlantFrame extends JFrame{
     private ArrayList<ImageIcon> plantHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
     {
+        this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
         this.plantImages = plantImages;
         this.plantHoverImages = plantHoverImages;

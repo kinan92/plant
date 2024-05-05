@@ -19,7 +19,7 @@ public class PlantType {
     private ImageIcon plantImageButtonHover;
     private String plantInformation;
 
-    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String littlePlantImage, String deadPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation)
+    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation, String littlePlantImage, String deadPlantImage)
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
@@ -57,5 +57,18 @@ public class PlantType {
     public ImageIcon getPlantImageButtonHover()
     {
         return plantImageButtonHover;
+    }
+
+    public ImageIcon getLittlePlantImage() {
+        return littlePlantImage;
+    }
+
+    public ImageIcon getDeadPlantImage() {
+        return deadPlantImage;
+    }
+
+    //for test purposes
+    public String toString() {
+        return ("Type: " + plantTypeName + ", aka " + plantTypeNameAlternative + ". " + plantInformation);
     }
 }

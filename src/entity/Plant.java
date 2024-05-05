@@ -16,15 +16,19 @@ public class Plant {
 	private PlantType type;
 	private PlantStateEnum state;
 
-	public Plant(String name, int age, String imagePath, int initialWaterLevel, PlantType type, PlantStateEnum state) {
+	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime) {
 		super();
 		this.name = name;
 		this.age = age;
-		this.image = new ImageIcon(imagePath);
 		this.dateAndTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
 		this.type = type;
 		this.state = state;
+		switch (state) {
+			case little -> this.image = type.getLittlePlantImage();
+			case big -> this.image = type.getGrownPlantImage();
+			case dead -> this.image = type.getDeadPlantImage();
+		}
 	}
 
 	public void waterPlant(){
@@ -95,5 +99,10 @@ public class Plant {
 
 	public void setState(PlantStateEnum state) {
 		this.state = state;
+	}
+
+	//for test purposes
+	public String toString() {
+		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
 	}
 }

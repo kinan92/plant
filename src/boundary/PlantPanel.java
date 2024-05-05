@@ -13,6 +13,8 @@ public class PlantPanel extends JPanel {
     PlantView plantView;
     private ImageIcon currentPlant;
     private ImageIcon currentPot;
+    private String currentPlantName;
+    private String currentPlantSpecies;
 
     private JButton waterPlantButton;
     
@@ -44,9 +46,11 @@ public class PlantPanel extends JPanel {
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
+        currentPlant = plantView.getCurrentPlant();
         JLabel plantImage = new JLabel(currentPlant);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
-        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+        currentPot = plantView.getCurrentPot();
+        JLabel plantPot = new JLabel(currentPot);
         this.add(plantImage, c);
         this.add(plantPot, c);
         this.add(plantBackground, c);
@@ -69,14 +73,16 @@ public class PlantPanel extends JPanel {
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
-        JLabel plantName = new JLabel("Bob");
+        currentPlantName = plantView.getCurrentPlantName();
+        JLabel plantName = new JLabel(currentPlantName);
         plantName.setFont(new Font("Calibri", Font.PLAIN, 26));
         nameView.add(plantName, c);
 
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 1;
-        JLabel plantSpecies = new JLabel("Species: Elefantöra");
+        currentPlantSpecies = plantView.getCurrentPlantSpecies();
+        JLabel plantSpecies = new JLabel(currentPlantSpecies);
         plantSpecies.setFont(new Font("Calibri", Font.PLAIN, 16));
         nameView.add(plantSpecies, c);
 

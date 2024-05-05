@@ -156,4 +156,38 @@ public class PlantView extends JPanel {
     {
         return soundEffectSetting;
     }
+
+    //for display in the PlantPanel
+    public ImageIcon getCurrentPlant() {
+        try {
+            return controller.getPlant().getImage();
+        } catch (NullPointerException e) {
+            return new ImageIcon("images/plants/default_plant.png");
+        }
+    }
+
+    public ImageIcon getCurrentPot() {
+        try {
+            return controller.getPlant().getPot();
+        } catch (NullPointerException e) {
+            return new ImageIcon("images/pots/default_pot.png");
+        }
+    }
+
+    public String getCurrentPlantName() {
+        try {
+            return controller.getPlant().getName();
+        } catch (NullPointerException e) {
+            return "No Plant Created";
+        }
+    }
+
+    public String getCurrentPlantSpecies() {
+        try {
+            String species = controller.getPlant().getType().getPlantTypeNameAlternative();
+            return ("Species: " + species);
+        } catch (NullPointerException e) {
+            return "Create a plant to show it here!";
+        }
+    }
 }

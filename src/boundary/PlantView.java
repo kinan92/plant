@@ -190,4 +190,12 @@ public class PlantView extends JPanel {
             return "Create a plant to show it here!";
         }
     }
+
+    public int getCurrentPlantWaterLevel() {
+        try {
+            return controller.getPlant().getWaterLevel();
+        } catch (NullPointerException e) {
+            return 0;
+        }
+    }
 }

@@ -15,6 +15,7 @@ public class PlantPanel extends JPanel {
     private ImageIcon currentPot;
     private String currentPlantName;
     private String currentPlantSpecies;
+    private int currentPlantWaterLevel;
 
     private JButton waterPlantButton;
     
@@ -126,7 +127,8 @@ public class PlantPanel extends JPanel {
 
 
         waterBar = new JProgressBar(0, 100);
-        waterBar.setValue(0);
+        currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
+        waterBar.setValue(currentPlantWaterLevel);
         waterBar.setStringPainted(true);
         c.gridx = 0;
         c.gridy = 1;

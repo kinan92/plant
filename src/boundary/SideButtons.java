@@ -16,17 +16,6 @@ public class SideButtons extends JPanel {
         this.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        // creates the time indication
-        /*
-        JLabel timeLabel = new JLabel("Time: ");
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = GridBagConstraints.LINE_END;
-        sideButtons.add(timeLabel, c);
-
-         */
-
-
         //Creates Plant Storage button
         JButton getPlant = new JButton();
         getPlant.setBorder(BorderFactory.createEmptyBorder());

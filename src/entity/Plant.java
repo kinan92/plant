@@ -32,7 +32,7 @@ public class Plant {
 	}
 
 
-	public void decreaseWaterLevel(int level){
+	public void decreaseWaterLevel(){
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}

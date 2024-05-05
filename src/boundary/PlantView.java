@@ -19,7 +19,7 @@ public class PlantView extends JPanel {
     private JLabel creationTimeLabel;
     SettingsView settingsView;
     private Timer updateTimer;
-    private Plant currentPlant;
+    private Plant plant;
     //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
 
@@ -37,7 +37,7 @@ public class PlantView extends JPanel {
         this.width = width;
         this.height = height;
         this.controller = controller;
-        this.currentPlant = plant;
+        this.plant = plant;
         soundEffectSetting = true;
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
@@ -67,8 +67,8 @@ public class PlantView extends JPanel {
         updateTimer.start();
     }
     public void updateElapsedTime(){
-        if (currentPlant != null){
-            LocalDateTime creationTime = currentPlant.getCreationTime();
+        if (plant != null){
+            LocalDateTime creationTime = plant.getCreationTime();
             LocalDateTime now = LocalDateTime.now();
             Duration duration = Duration.between(creationTime, now);
 
@@ -136,7 +136,7 @@ public class PlantView extends JPanel {
     }
 
     public void updatePlantDetails(Plant plant){
-        this.currentPlant = plant;
+        this.plant = plant;
         creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
         JProgressBar waterBar = plantPanel.getWaterBar();
         waterBar.setValue(plant.getWaterLevel());
@@ -180,11 +180,7 @@ public class PlantView extends JPanel {
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch (UnsupportedAudioFileException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
             throw new RuntimeException(e);
         }
     }

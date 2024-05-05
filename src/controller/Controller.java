@@ -3,14 +3,13 @@ package controller;
 import boundary.*;
 import entity.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import boundary.MainMenu;
+import java.util.List;
+
 import boundary.PlantView;
 
 import javax.swing.*;
@@ -18,7 +17,6 @@ import javax.swing.*;
 public class Controller {
 	private ArrayList<Plant> listOffPlants = new ArrayList<>();
 	private Plant plant;
-	private MainMenu window;
 	private PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
@@ -28,7 +26,6 @@ public class Controller {
 	LocalDateTime creationTime = LocalDateTime.now().minusDays(4).plusHours(5);
 
 	public Controller() {
-		//this.window = new MainMenu(this);
 		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, creationTime);
 		mainFrame = new MainFrame(this, plant);
 		mainFrame.addMainMenu();
@@ -73,25 +70,20 @@ public class Controller {
 
 	private void startAgeTimer(){
 		if (ageTimer == null){
-			ageTimer = new Timer(1000, new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (!isPaused){
-						incrementAgeForALlPlants();
-					}
-				}
-			});
+			ageTimer = new Timer(1000, e -> {
+                if (!isPaused){
+                    incrementAgeForALlPlants();
+                }
+            });
 			ageTimer.start();
 		}
 
 		if (waterDecreaseTimer == null){
-			waterDecreaseTimer = new Timer(6000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(!isPaused){
-						decreaseWaterLevelForAllPlants();
-					}
-				}
-			});
+			waterDecreaseTimer = new Timer(6000, e -> {
+                if(!isPaused){
+                    decreaseWaterLevelForAllPlants();
+                }
+            });
 			waterDecreaseTimer.start();
 		}
 	}
@@ -118,11 +110,7 @@ public class Controller {
 	}
 
 	public void startWaterDecreaseTimer(){
-		waterDecreaseTimer = new Timer(60000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				plant.decreaseWaterLevel(1);
-			}
-		});
+		waterDecreaseTimer = new Timer(60000, e -> plant.decreaseWaterLevel());
 		waterDecreaseTimer.start();
 
 	}
@@ -215,7 +203,7 @@ public class Controller {
 			int ageIncrement = hours / 24;
 			plant.incrementAge(ageIncrement);
 
-            plant.decreaseWaterLevel(hours);
+            plant.decreaseWaterLevel();
 
 			adjustPlantBasedOnWaterLevel(plant);
 		}
@@ -242,7 +230,7 @@ public class Controller {
 		 */
 	}
 
-	public ArrayList<PlantType> getPlantTypes()
+	public List<PlantType> getPlantTypes()
 	{
 		return plantTypes;
 	}
@@ -254,18 +242,18 @@ public class Controller {
 
 	public void incrementAgeForALlPlants(){
 		for (int i = 0; i < listOffPlants.size(); i++){
-			Plant plant = listOffPlants.get(i);
-			if(plant != null){
-				plant.incrementAge(1);
+			Plant allPlants = listOffPlants.get(i);
+			if(allPlants != null){
+				allPlants.incrementAge(1);
 			}
 		}
 	}
 
 	public void decreaseWaterLevelForAllPlants(){
 		for (int i = 0; i < listOffPlants.size(); i++){
-			Plant plant = listOffPlants.get(i);
-			if(plant != null) {
-				plant.decreaseWaterLevel(10);
+			Plant allPlants = listOffPlants.get(i);
+			if(allPlants != null) {
+				allPlants.decreaseWaterLevel();
 			}
 		}
 	}

@@ -49,13 +49,13 @@ public class Controller {
 		do {
 			name = JOptionPane.showInputDialog("Give your plant a name!");
 		} while (name == null || name.isEmpty());
-		int initialWaterLevel = random.nextInt(100);
+		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime);
 		listOfPlants.add(newPlant);
-		System.out.println("Old: " + plant);
 		plant = newPlant;
-		System.out.println("New: " + plant);
+		System.out.println("New plant! " + plant);
+		showPlantView();
 	}
 
 	public void pausTime(){

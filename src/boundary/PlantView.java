@@ -75,7 +75,7 @@ public class PlantView extends JPanel {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
-            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",plantPanel.getWaterPlantButton());
+            new WidgetFX( getCurrentPlant(),getCurrentPot(),plantPanel.getWaterPlantButton());
             
         });
     	

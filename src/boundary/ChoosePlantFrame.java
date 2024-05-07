@@ -4,24 +4,24 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Array;
 import java.util.ArrayList;
-import java.util.List;
 
 public class ChoosePlantFrame extends JFrame{
     private Controller controller;
     int width = 550;
     int height = 470;
-    private ArrayList<ImageIcon> plantImages;
-    private ArrayList<ImageIcon> plantHoverImages;
+    private ArrayList<ImageIcon> plantBtnImages;
+    private ArrayList<ImageIcon> plantBtnHoverImages;
+    private ArrayList<ImageIcon> potBtnImages;
+    private ArrayList<ImageIcon> potBtnHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, ArrayList<ImageIcon> potImages, ArrayList<ImageIcon> potHoverImages)
     {
         this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
-        this.plantImages = plantImages;
-        this.plantHoverImages = plantHoverImages;
+        this.plantBtnImages = plantBtnImages;
+        this.plantBtnHoverImages = plantBtnHoverImages;
 
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");
@@ -53,18 +53,18 @@ public class ChoosePlantFrame extends JFrame{
     public JPanel plants()
     {
         JPanel plants = new JPanel();
-        plants.setLayout(new GridLayout(2, plantImages.size()));
+        plants.setLayout(new GridLayout(2, plantBtnImages.size()));
         plants.setPreferredSize(new Dimension((width*9/10), (height / 10) * 7));
 
         //Loops through plantImages and creates buttons with the images
-        for (int i = 0; i < plantImages.size(); i++)
+        for (int i = 0; i < plantBtnImages.size(); i++)
         {
             JButton plantBtn = new JButton();
             plantBtn.setBorder(BorderFactory.createEmptyBorder());
             plantBtn.setContentAreaFilled(false);
-            System.out.println(plantImages.get(i));
-            plantBtn.setIcon(plantImages.get(i));
-            ImageIcon shadow = plantHoverImages.get(i);
+            System.out.println(plantBtnImages.get(i));
+            plantBtn.setIcon(plantBtnImages.get(i));
+            ImageIcon shadow = plantBtnHoverImages.get(i);
 
             plantBtn.setFocusPainted(false);
             plantBtn.setRolloverEnabled(true);

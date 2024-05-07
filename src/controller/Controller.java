@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
@@ -174,6 +175,8 @@ public class Controller {
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
+		ArrayList<ImageIcon> potBtnImage = new ArrayList<>();
+		ArrayList<ImageIcon> potBtnImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)
@@ -205,6 +208,32 @@ public class Controller {
 		} catch( IOException e ) {
 			System.out.println( "readPlantType: " + e );
 		}
+	}
+
+	/**
+	 * Reads pot image filepaths from pots.txt and returns an arraylist
+	 * to use in the Create Plant function
+	 * @return arraylist of pots
+	 * @author Petri Närhi
+	 * */
+	private ArrayList<ImageIcon> loadPotImages()
+	{
+		ArrayList<ImageIcon> potList = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader( new FileReader("files/pots.txt"));
+			ImageIcon pot;
+			String imagePath = br.readLine();
+
+			while(imagePath != null) {
+				pot = new ImageIcon(imagePath);
+				potList.add(pot);
+				imagePath = br.readLine();
+			}
+			br.close();
+		} catch( IOException e ) {
+			System.out.println( "loadPotImages: " + e );
+		}
+		return potList;
 	}
 
 	public void skipTime(int hours){

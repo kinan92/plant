@@ -8,29 +8,27 @@ import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChoosePlantFrame extends JFrame{
+public class ChoosePlantFrame extends JPanel {
     private Controller controller;
-    int width = 550;
-    int height = 470;
+    int width;
+    int height;
     private ArrayList<ImageIcon> plantImages;
     private ArrayList<ImageIcon> plantHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages, int width, int height)
     {
+        super(null);
         this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
         this.plantImages = plantImages;
         this.plantHoverImages = plantHoverImages;
+        this.width = width;
+        this.height = height;
 
         setLayout(new BorderLayout());
-        setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
-        setIconImage(icon.getImage());
-        setLocationRelativeTo(null);
-        setResizable(true);
 
         //Creates a scrollbar to enable scrolling for the plants
         JScrollPane scroll = new JScrollPane(
@@ -41,7 +39,7 @@ public class ChoosePlantFrame extends JFrame{
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
-        this.getContentPane().add(scroller, BorderLayout.CENTER);
+        this.add(scroller, BorderLayout.CENTER);
 
         JPanel navigation = navigation();
         add(navigation, BorderLayout.SOUTH);
@@ -54,7 +52,7 @@ public class ChoosePlantFrame extends JFrame{
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, plantImages.size()));
-        plants.setPreferredSize(new Dimension((width*9/10), (height / 10) * 7));
+        plants.setPreferredSize(new Dimension((width*9/10), (height / 10) * 5));
 
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantImages.size(); i++)
@@ -109,7 +107,9 @@ public class ChoosePlantFrame extends JFrame{
 
     /**
      * @author Petri Närhi */
-    private void backPressed() {
+    private void backPressed()
+    {
+        controller.showMainMenu();
     }
 
     //This method will be replaced by a method that calls a method in the Controller to notify

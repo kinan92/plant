@@ -1,5 +1,6 @@
 package boundary;
 import controller.Controller;
+import javafx.application.Application;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -75,6 +76,7 @@ public class PlantView extends JPanel {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
+    		Application.launch(WidgetJavaFXApplication.class);
             new WidgetFX( getCurrentPlant(),getCurrentPot(),plantPanel.getWaterPlantButton());
             
         });

@@ -6,6 +6,7 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Shape;
 import java.awt.geom.Area;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 import javax.swing.Icon;
@@ -18,15 +19,15 @@ public class WidgetShapeButton extends JButton {
 	
 	
 
-	public WidgetShapeButton(JButton addWaterbutton) {
+	public WidgetShapeButton(JButton button) {
 		super();
 
 	
-		 Icon icon = addWaterbutton.getIcon();
+		 Icon icon = button.getIcon();
         // Convert the icon to a BufferedImage
-        BufferedImage image = new BufferedImage(addWaterbutton.getIcon().getIconWidth(), addWaterbutton.getIcon().getIconHeight(), BufferedImage.TYPE_INT_ARGB);
+        BufferedImage image = new BufferedImage(button.getIcon().getIconWidth(), button.getIcon().getIconHeight(), BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2d = image.createGraphics();
-         icon.paintIcon(addWaterbutton, g2d, 0, 0);
+         icon.paintIcon(button, g2d, 0, 0);
          g2d.dispose();
 
          buttonShape = ButtonShape(image);

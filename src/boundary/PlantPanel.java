@@ -16,12 +16,10 @@ public class PlantPanel extends JPanel {
     private String currentPlantName;
     private String currentPlantSpecies;
     private int currentPlantWaterLevel;
-
     private JButton waterPlantButton;
-    
 	private JProgressBar waterBar;
-
-
+    JLayeredPane plantWindow;
+    JLabel sparkle;
 
     public PlantPanel(int width, int height, PlantView plantView)
     {
@@ -29,6 +27,8 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
+        currentPlant = plantView.getCurrentPlant();
+        currentPot = plantView.getCurrentPot();
 
         plantPanel = new JPanel();
         this.setPreferredSize(new Dimension(256, height));
@@ -47,14 +47,10 @@ public class PlantPanel extends JPanel {
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
-        currentPlant = plantView.getCurrentPlant();
-        JLabel plantImage = new JLabel(currentPlant);
-        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
-        currentPot = plantView.getCurrentPot();
-        JLabel plantPot = new JLabel(currentPot);
-        this.add(plantImage, c);
-        this.add(plantPot, c);
-        this.add(plantBackground, c);
+
+        JLayeredPane plantWindow = getPlantWindow();
+        this.add(plantWindow, c);
+
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
@@ -63,6 +59,30 @@ public class PlantPanel extends JPanel {
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
     }
+
+    private JLayeredPane getPlantWindow() {
+        plantWindow = new JLayeredPane();
+        plantWindow.setLayout(new BorderLayout());
+        plantWindow.setPreferredSize(new Dimension(256, 320));
+        plantWindow.setBounds(0, 0, 256, 320);
+        plantWindow.setBackground(Color.ORANGE);
+
+        JLabel plantImage = new JLabel(currentPlant);
+        plantImage.setBounds(0, 0, 256, 320);
+        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
+        plantBackground.setBounds(0, 0, 256, 320);
+        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+        plantPot.setBounds(0, 0, 256, 320);
+        sparkle = new JLabel();
+        sparkle.setBounds(0, 0, 256, 320);
+
+        plantWindow.add(sparkle, 1);
+        plantWindow.add(plantImage, 2);
+        plantWindow.add(plantPot, 3);
+        plantWindow.add(plantBackground, 4);
+        return plantWindow;
+    }
+
 
     public JPanel nameView()
     {
@@ -98,10 +118,6 @@ public class PlantPanel extends JPanel {
         plantCare.setBackground(Color.GRAY);
         GridBagConstraints c = new GridBagConstraints();
 
-        /*JButton waterPlant = new JButton("Water plant");
-        waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
-
-
         waterPlantButton = new JButton();
         waterPlantButton.setBorder(BorderFactory.createEmptyBorder());
         waterPlantButton.setContentAreaFilled(false);
@@ -112,19 +128,13 @@ public class PlantPanel extends JPanel {
         waterPlantButton.setRolloverEnabled(true);
         waterPlantButton.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
 
-
-
-
         c.weightx = 0;
         c.weighty = 0;
         c.gridx = 0;
         c.gridy = 0;
         c.fill = GridBagConstraints.HORIZONTAL;
         c.insets = new Insets(0, 0, 0, 0);
-
         plantCare.add(waterPlantButton, c);
-
-
 
         waterBar = new JProgressBar(0, 100);
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
@@ -137,22 +147,30 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
-    //Updates the water health bar and calls other methods to show the user that the plant
-    //has been watered. Currently this only calls methods that play sound effects but may later
-    //include things such as new sprites or animations
-    public void updateWaterLevel(int waterLevel){
+    /**
+     * @author Elvira Grubb
+     * @param waterLevel Instance variable of the percentage of water the current plant object is at
+     * Method is called when the watering button is pressed. It updates the water levels visually by
+     * calling other methods to update the water bar, play sound effects, and animations
+     */
+    public void updateWaterLevel(int waterLevel)
+    {
         if (plantView.getSoundEffectSetting())
         {
             waterSoundEffect();
             if (waterLevel == 100)
             {
+                plantSparkleAnimation();
                 plantHappySoundEffect();
             }
         }
         waterBar.setValue(waterLevel);
     }
 
-    //Method that plays a watering sound effect when plant is watered
+    /**
+     * @author Elvira Grubb
+     * Method that plays a watering sound effect
+     */
     private void waterSoundEffect()
     {
         AudioInputStream audioInputStream = null;
@@ -170,7 +188,10 @@ public class PlantPanel extends JPanel {
         }
     }
 
-    //Method that plays a happy sound effect when plant is 100% watered
+    /**
+     * @author Elvira Grubb
+     * Method that plays a happy sparkle sound effect
+     */
     private void plantHappySoundEffect()
     {
         AudioInputStream audioInputStream = null;
@@ -186,6 +207,25 @@ public class PlantPanel extends JPanel {
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @author Elvira Grubb
+     * This method starts a new thread to play the sparkle animation gif
+     */
+    public void plantSparkleAnimation()
+    {
+        new Thread(()->
+        {
+            sparkle.setIcon(new ImageIcon("images/animation/sparkle_animation.gif"));
+            try {
+                Thread.sleep(2500);
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            sparkle.setIcon(null);
+        }).start();
     }
 
     public JButton getWaterPlantButton() {

@@ -4,12 +4,14 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     int width = 550;
     int height = 435;
     PlantView plantView;
     Controller controller;
+    ChoosePlantFrame choosePlantFrame;
 
     //Creates a MainFrame for the whole program
     //and sets settings for the MainFrame
@@ -36,6 +38,15 @@ public class MainFrame extends JFrame {
         this.revalidate();
         plantView = new PlantView(width, height, controller);
         this.setContentPane(plantView);
+        this.repaint();
+    }
+
+    public void addChoosePlantView(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
+    {
+        this.getContentPane().removeAll();
+        this.revalidate();
+        choosePlantFrame = new ChoosePlantFrame(controller, plantImage, plantImageHover, width, height);
+        this.setContentPane(choosePlantFrame);
         this.repaint();
     }
 

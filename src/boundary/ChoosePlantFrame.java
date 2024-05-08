@@ -6,32 +6,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ChoosePlantFrame extends JFrame{
+public class ChoosePlantFrame extends JPanel {
     private Controller controller;
-    int width = 550;
-    int height = 470;
+    private int width;
+    private int height;
     private ArrayList<ImageIcon> plantBtnImages;
     private ArrayList<ImageIcon> plantBtnHoverImages;
     private ArrayList<ImageIcon> potBtnImages;
     private ArrayList<ImageIcon> potBtnHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages, int width, int height)
     {
+        super(null);
         this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
         this.plantBtnImages = plantBtnImages;
         this.plantBtnHoverImages = plantBtnHoverImages;
         //this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
+        this.width = width;
+        this.height = height;
 
         setLayout(new BorderLayout());
-        setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
-        setIconImage(icon.getImage());
-        setLocationRelativeTo(null);
-        setResizable(true);
 
         //Creates a scrollbar to enable scrolling for the plants
         JScrollPane scroll = new JScrollPane(
@@ -42,7 +40,7 @@ public class ChoosePlantFrame extends JFrame{
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
-        this.getContentPane().add(scroller, BorderLayout.CENTER);
+        this.add(scroller, BorderLayout.CENTER);
 
         JPanel navigation = navigation();
         add(navigation, BorderLayout.SOUTH);
@@ -110,7 +108,9 @@ public class ChoosePlantFrame extends JFrame{
 
     /**
      * @author Petri Närhi */
-    private void backPressed() {
+    private void backPressed()
+    {
+        controller.showMainMenu();
     }
 
     //This method will be replaced by a method that calls a method in the Controller to notify

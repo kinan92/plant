@@ -183,7 +183,12 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		ChoosePlantFrame choosePlantFrame = new ChoosePlantFrame(this, plantImage, plantImageHover);
+		mainFrame.addChoosePlantView(plantImage, plantImageHover);
+	}
+
+	public void showMainMenu()
+	{
+		mainFrame.addMainMenu();
 	}
 
 	//Reads PlantTypes from the plantTypes textfile, creates an object of them and adds them to the plantTypes ArrayList

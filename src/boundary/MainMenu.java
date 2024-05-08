@@ -30,8 +30,6 @@ public class MainMenu extends JPanel {
 		this.controller = controller;
 		this.setSize(width, height);
 		this.setLayout(new BorderLayout());
-		/*groupLayout = new GroupLayout(this);
-		this.setLayout(groupLayout);*/
 		JLabel background = new JLabel();
 		background.setIcon(new ImageIcon("images/main_menu_background.png"));
 

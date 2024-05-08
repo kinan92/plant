@@ -104,7 +104,7 @@ public class SideButtons extends JPanel {
         /*vacation.setBorder(BorderFactory.createEmptyBorder());
         vacation.setContentAreaFilled(false);
         vacation.setIcon(vacationImage);*/
-        vacation.setPreferredSize(new Dimension(208, 60));
+        settings.setPreferredSize(new Dimension(150, 30));
 
 
         c.weightx = 0;
@@ -114,6 +114,23 @@ public class SideButtons extends JPanel {
         //Adds Vacation button to panel and adds actionlistener
         this.add(settings, c);
         settings.addActionListener(l -> plantView.settingsPressed());
+        /*vacation.setRolloverEnabled(true);
+        vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));*/
+
+        JButton mainMenu = new JButton("Main Menu");
+        mainMenu.setPreferredSize(new Dimension(150, 30));
+        /*vacation.setBorder(BorderFactory.createEmptyBorder());
+        vacation.setContentAreaFilled(false);
+        vacation.setIcon(vacationImage);*/
+
+
+        c.weightx = 0;
+        c.gridx = 0;
+        c.gridy = 5;
+
+        //Adds Vacation button to panel and adds actionlistener
+        this.add(mainMenu, c);
+        mainMenu.addActionListener(l -> plantView.mainMenuPressed());
         /*vacation.setRolloverEnabled(true);
         vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));*/
     }

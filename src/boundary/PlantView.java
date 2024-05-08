@@ -131,17 +131,21 @@ public class PlantView extends JPanel {
 		 */
 	}
 
+
 	// Method used when Vacation button is pressed
 	// Method is a work in progress
 	// When method is done this method will allow the user to set the program to
 	// vacation mode
 	public void vacationPressed() {
 		System.out.println("Vacation pressed.");
-
-		if (soundEffectSetting) {
-			buttonPressedSoundEffect();
-		}
 	}
+    public void mainMenuPressed()
+    {
+        controller.showMainMenu();
+        if (soundEffectSetting) {
+        	buttonPressedSoundEffect();
+        }
+    }
 
 	// Method used when water button is pressed
 	// Method is a work in progress

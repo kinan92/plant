@@ -118,6 +118,11 @@ public class PlantView extends JPanel {
         settingsView.setVisible(true);
     }
 
+    public void mainMenuPressed()
+    {
+        controller.showMainMenu();
+    }
+
     private void buttonPressedSoundEffect()
     {
         AudioInputStream audioInputStream = null;

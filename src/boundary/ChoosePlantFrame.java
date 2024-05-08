@@ -16,7 +16,7 @@ public class ChoosePlantFrame extends JPanel {
     private ArrayList<ImageIcon> potBtnHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantImages, ArrayList<ImageIcon> plantHoverImages, int width, int height)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
     {
         super(null);
         this.controller = controller;

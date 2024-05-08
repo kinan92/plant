@@ -18,6 +18,7 @@ public class WidgetCreatorJFX extends Pane {
 	private BufferedImage plantBufferedImage;
 	private BufferedImage potBufferedImage;
 	private BufferedImage combinedImage;
+	
 
 	public WidgetCreatorJFX(ImageIcon plantImageIcon, ImageIcon potImageIcon) {
 		// Load plant and pot images
@@ -37,7 +38,7 @@ public class WidgetCreatorJFX extends Pane {
         
 
 		// Display the merged image
-		this.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
+		//this.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		this.getChildren().add(imageView);
 	}
 

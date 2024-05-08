@@ -1,5 +1,7 @@
 package boundary;
 
+import java.awt.geom.Area;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -13,32 +15,46 @@ public class WidgetJavaFXApplication extends Application {
     private  ImageIcon currentPot;
     private  JButton waterPlantButton;
     private WidgetFX widgetFX;
-    
-public void WidgetJavaFXApplication(ImageIcon plantImageIcon , ImageIcon potImageIcon, JButton addWaterbutton) {
+  private WidgetCreatorJFX widgetCreator;
+public void WidgetJavaFXApplication(Area theShapeOfThecombinedImage,ImageIcon plantImageIcon , ImageIcon potImageIcon, JButton addWaterbutton) {
 	this.currentPlant= plantImageIcon;
 	this.currentPot=potImageIcon;
 	this.waterPlantButton=addWaterbutton;
-	this.widgetFX=new WidgetFX( currentPlant,currentPot,waterPlantButton);
+	this.widgetFX=new WidgetFX(theShapeOfThecombinedImage, currentPlant,currentPot,waterPlantButton);
+	this.widgetCreator= new WidgetCreatorJFX(plantImageIcon, potImageIcon);
 }
 
+public static void main(String[] args) {
+	launch(args);
+}
 	
     @Override
     public void start(Stage primaryStage)throws Exception  {
-        // Create a StackPane as the root node
-        StackPane root = new StackPane();
-        
-        // Create a Scene with the root node
-        Scene scene = new Scene(root, 400, 300);
-        
-        // Set the scene to the primary stage
-        primaryStage.setScene(scene);
-        
-        // Set the title of the primary stage
-        primaryStage.setTitle("JavaFX Application");
-        
-        // Show the primary stage
-        primaryStage.show();
-    }
+    	  WidgetBarMenu wbm = new WidgetBarMenu();
+
+          // Create a Scene with the root node
+          Scene scene = new Scene(wbm);
+         
+          
+          // Set the scene to the primary stage
+          primaryStage.setScene(scene);
+          // Set the title of the primary stage
+          primaryStage.setTitle("JavaFX Application");
+
+          // Show the primary stage
+          primaryStage.show();
+      //    Stage secondStage =new Stage();
+          
+          
+      //    Scene scene2 = new Scene(widgetCreator);
+       //   secondStage.setScene(scene2);
+          // Set the title of the primary stage
+       //   secondStage.setTitle("JavaFX Application");
+
+          // Show the primary stage
+     //     secondStage.show();
+      }
+      
 
 	
 }

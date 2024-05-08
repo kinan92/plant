@@ -4,9 +4,13 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
+
 import javax.swing.ImageIcon;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Area;
+
 
 
 public class WidgetFX extends JFrame {
@@ -15,7 +19,7 @@ public class WidgetFX extends JFrame {
     private int mouseY;
     private WidgetCreatorJFX  wCJFX ;
     
-    public WidgetFX(ImageIcon plantImageIcon , ImageIcon potImageIcon, JButton addWaterbutton) {
+    public WidgetFX(Area theShapeOfThecombinedImage,ImageIcon plantImageIcon , ImageIcon potImageIcon, JButton addWaterbutton) {
         // Set up JFrame
         setUndecorated(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +55,7 @@ public class WidgetFX extends JFrame {
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
-        setShape(wCJFX.getImageShape());
+        setShape(theShapeOfThecombinedImage);
     }
     
     private void frameMover() {

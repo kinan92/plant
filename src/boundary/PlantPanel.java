@@ -3,17 +3,28 @@ package boundary;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import static java.lang.Thread.sleep;
+import static javax.swing.JLayeredPane.DEFAULT_LAYER;
 
 public class PlantPanel extends JPanel {
     int width;
     int height;
     JPanel plantPanel;
     PlantView plantView;
+    JLayeredPane plantWindow;
     private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
     private JButton waterPlant;
     private JProgressBar waterBar;
+    Timer timer;
+    boolean animation = false;
+    JLabel sparkle;
 
     public PlantPanel(int width, int height, PlantView plantView)
     {
@@ -22,7 +33,6 @@ public class PlantPanel extends JPanel {
         this.height = height;
         this.plantView = plantView;
 
-        plantPanel = new JPanel();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
 
@@ -35,16 +45,26 @@ public class PlantPanel extends JPanel {
         c.gridy = 0;
         this.add(nameView(), c);
 
-        c.fill = GridBagConstraints.HORIZONTAL;
+        /*c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
-        JLabel plantImage = new JLabel(elefantöra);
+        this.add(plantWindow(), c);*/
+        /*JLabel plantImage = new JLabel(elefantöra);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
         this.add(plantImage, c);
         this.add(plantPot, c);
-        this.add(plantBackground, c);
+        this.add(plantBackground, c);*/
+
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.weightx = 1;
+        c.gridx = 0;
+        c.gridy = 2;
+
+        JLayeredPane plantWindow = getPlantWindow();
+        this.add(plantWindow, c);
+
 
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
@@ -54,6 +74,28 @@ public class PlantPanel extends JPanel {
         this.add(plantCare, c);
     }
 
+    private JLayeredPane getPlantWindow() {
+        plantWindow = new JLayeredPane();
+        plantWindow.setLayout(new BorderLayout());
+        plantWindow.setPreferredSize(new Dimension(256, 320));
+        plantWindow.setBounds(0, 0, 256, 320);
+        plantWindow.setBackground(Color.ORANGE);
+
+        JLabel plantImage = new JLabel(elefantöra);
+        plantImage.setBounds(0, 0, 256, 320);
+        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
+        plantBackground.setBounds(0, 0, 256, 320);
+        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+        plantPot.setBounds(0, 0, 256, 320);
+        sparkle = new JLabel();
+        sparkle.setBounds(0, 0, 256, 320);
+
+        plantWindow.add(sparkle, 1);
+        plantWindow.add(plantImage, 2);
+        plantWindow.add(plantPot, 3);
+        plantWindow.add(plantBackground, 4);
+        return plantWindow;
+    }
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();
@@ -78,6 +120,11 @@ public class PlantPanel extends JPanel {
         return nameView;
     }
 
+    /**
+     * @author Elvira Grubb
+     * @return JPanel plantCare
+     * Method creates a JPanel that contains things pertaining to plant care, such as a watering button
+     */
     private JPanel plantCare()
     {
         JPanel plantCare = new JPanel();
@@ -85,9 +132,6 @@ public class PlantPanel extends JPanel {
         plantCare.setLayout(new GridBagLayout());
         plantCare.setBackground(Color.GRAY);
         GridBagConstraints c = new GridBagConstraints();
-
-        /*JButton waterPlant = new JButton("Water plant");
-        waterPlant.setFont(new Font("Montserrat", Font.PLAIN, 16));*/
 
         waterPlant = new JButton();
         waterPlant.setBorder(BorderFactory.createEmptyBorder());
@@ -117,22 +161,30 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
-    //Updates the water health bar and calls other methods to show the user that the plant
-    //has been watered. Currently this only calls methods that play sound effects but may later
-    //include things such as new sprites or animations
-    public void updateWaterLevel(int waterLevel){
+    /**
+     * @author Elvira Grubb
+     * @param waterLevel Instance variable of the percentage of water the current plant object is at
+     * Method is called when the watering button is pressed. It updates the water levels visually by
+     * calling other methods to update the water bar, play sound effects, and animations
+     */
+    public void updateWaterLevel(int waterLevel)
+    {
         if (plantView.getSoundEffectSetting())
         {
             waterSoundEffect();
             if (waterLevel == 100)
             {
+                plantSparkleAnimation();
                 plantHappySoundEffect();
             }
         }
         waterBar.setValue(waterLevel);
     }
 
-    //Method that plays a watering sound effect when plant is watered
+    /**
+     * @author Elvira Grubb
+     * Method that plays a watering sound effect
+     */
     private void waterSoundEffect()
     {
         AudioInputStream audioInputStream = null;
@@ -150,7 +202,10 @@ public class PlantPanel extends JPanel {
         }
     }
 
-    //Method that plays a happy sound effect when plant is 100% watered
+    /**
+     * @author Elvira Grubb
+     * Method that plays a happy sparkle sound effect
+     */
     private void plantHappySoundEffect()
     {
         AudioInputStream audioInputStream = null;
@@ -166,5 +221,24 @@ public class PlantPanel extends JPanel {
         } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * @author Elvira Grubb
+     * This method starts a new thread to play the sparkle animation gif
+     */
+    public void plantSparkleAnimation()
+    {
+        new Thread(()->
+        {
+            sparkle.setIcon(new ImageIcon("images/animation/sparkle_animation.gif"));
+            try {
+                Thread.sleep(2500);
+
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            sparkle.setIcon(null);
+        }).start();
     }
 }

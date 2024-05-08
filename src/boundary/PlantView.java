@@ -108,8 +108,7 @@ public class PlantView extends JPanel {
 
     //Method used when water button is pressed
     //Method is a work in progress
-    public void waterPressed()
-    {
+    public void waterPressed() {
         System.out.println("Water pressed.");
         controller.waterPlant();
         plantPanel.updateWaterLevel(controller.getPlantWaterLevel());

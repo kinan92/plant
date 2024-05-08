@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
@@ -210,6 +211,32 @@ public class Controller {
 		} catch( IOException e ) {
 			System.out.println( "readPlantType: " + e );
 		}
+	}
+
+	/**
+	 * Reads image file paths from a text file and returns an arraylist
+	 * can be used regardless of type of pictures
+	 * @return arraylist of images
+	 * @author Petri Närhi
+	 * */
+	private ArrayList<ImageIcon> getImageListFromFile(String filename)
+	{
+		ArrayList<ImageIcon> imageList = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader( new FileReader(filename));
+			ImageIcon image;
+			String imagePath = br.readLine();
+
+			while(imagePath != null) {
+				image = new ImageIcon(imagePath);
+				imageList.add(image);
+				imagePath = br.readLine();
+			}
+			br.close();
+		} catch( IOException e ) {
+			System.out.println( "getImageList: " + e );
+		}
+		return imageList;
 	}
 
 	public void skipTime(int hours){

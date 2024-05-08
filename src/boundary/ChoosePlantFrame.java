@@ -16,12 +16,13 @@ public class ChoosePlantFrame extends JFrame{
     private ArrayList<ImageIcon> potBtnHoverImages;
 
     //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, ArrayList<ImageIcon> potImages, ArrayList<ImageIcon> potHoverImages)
+    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages)
     {
         this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
         this.plantBtnImages = plantBtnImages;
         this.plantBtnHoverImages = plantBtnHoverImages;
+        //this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
 
         setLayout(new BorderLayout());
         setTitle("Virtual Plant Widgets");

@@ -175,8 +175,6 @@ public class Controller {
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
-		ArrayList<ImageIcon> potBtnImage = new ArrayList<>();
-		ArrayList<ImageIcon> potBtnImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)
@@ -211,29 +209,29 @@ public class Controller {
 	}
 
 	/**
-	 * Reads pot image filepaths from pots.txt and returns an arraylist
-	 * to use in the Create Plant function
-	 * @return arraylist of pots
+	 * Reads image file paths from a text file and returns an arraylist
+	 * can be used regardless of type of pictures
+	 * @return arraylist of images
 	 * @author Petri Närhi
 	 * */
-	private ArrayList<ImageIcon> loadPotImages()
+	private ArrayList<ImageIcon> getImageListFromFile(String filename)
 	{
-		ArrayList<ImageIcon> potList = new ArrayList<>();
+		ArrayList<ImageIcon> imageList = new ArrayList<>();
 		try {
-			BufferedReader br = new BufferedReader( new FileReader("files/pots.txt"));
-			ImageIcon pot;
+			BufferedReader br = new BufferedReader( new FileReader(filename));
+			ImageIcon image;
 			String imagePath = br.readLine();
 
 			while(imagePath != null) {
-				pot = new ImageIcon(imagePath);
-				potList.add(pot);
+				image = new ImageIcon(imagePath);
+				imageList.add(image);
 				imagePath = br.readLine();
 			}
 			br.close();
 		} catch( IOException e ) {
-			System.out.println( "loadPotImages: " + e );
+			System.out.println( "getImageList: " + e );
 		}
-		return potList;
+		return imageList;
 	}
 
 	public void skipTime(int hours){

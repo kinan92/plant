@@ -1,25 +1,22 @@
 package boundary;
 
 import controller.Controller;
-import entity.Plant;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     int width = 550;
     int height = 435;
     PlantView plantView;
     Controller controller;
-    Plant currentPlant;
+    ChoosePlantFrame choosePlantFrame;
 
     //Creates a MainFrame for the whole program
     //and sets settings for the MainFrame
-    public MainFrame(Controller controller, Plant initialPlant)
+    public MainFrame(Controller controller)
     {
-
-        this.currentPlant = initialPlant;
         this.controller = controller;
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -37,12 +34,19 @@ public class MainFrame extends JFrame {
     //a PlantView JPanel
     public void addPlantView()
     {
-        currentPlant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, LocalDateTime.now());
-
         this.getContentPane().removeAll();
         this.revalidate();
-        plantView = new PlantView(width, height, controller, currentPlant);
+        plantView = new PlantView(width, height, controller);
         this.setContentPane(plantView);
+        this.repaint();
+    }
+
+    public void addChoosePlantView(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
+    {
+        this.getContentPane().removeAll();
+        this.revalidate();
+        choosePlantFrame = new ChoosePlantFrame(controller, plantImage, plantImageHover, width, height);
+        this.setContentPane(choosePlantFrame);
         this.repaint();
     }
 

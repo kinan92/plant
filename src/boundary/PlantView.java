@@ -1,53 +1,35 @@
 package boundary;
 import controller.Controller;
-import entity.Plant;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class PlantView extends JPanel {
     int width;
     int height;
-    PlantPanel plantPanel;
+
+    private PlantPanel plantPanel;
     boolean soundEffectSetting;
     private Controller controller;
-    private JLabel creationTimeLabel;
     SettingsView settingsView;
-    private Timer updateTimer;
-    private Plant plant;
-    //Temporary ImageIcon of an image that will later be replaced by an image from the Plant class
-    private ImageIcon elefantöra = new ImageIcon("images/plants/moneyplant.png");
-
-    //ImageIcons for the various buttons
-    private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
-    private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
-    private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
-    private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
-    private JButton waterPlant;
 
    //Creates the base PlantView panel, sets rules for the panel and adds other panels
-    public PlantView(int width, int height, Controller controller, Plant plant)
+    public PlantView(int width, int height, Controller controller)
     {
         super(null);
         this.width = width;
         this.height = height;
         this.controller = controller;
-        this.plant = plant;
         soundEffectSetting = true;
+        System.out.println("hej plantview");
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         this.setBackground(Color.ORANGE);
 
-        creationTimeLabel = new JLabel("Elapsed time: Calculating...");
-        add(creationTimeLabel, BorderLayout.NORTH);
-        startUpdateTimer();
-        updateElapsedTime();
 
         plantPanel = new PlantPanel(width, height, this);
         add(plantPanel, BorderLayout.WEST);
@@ -56,33 +38,6 @@ public class PlantView extends JPanel {
         add(sideButtons, BorderLayout.EAST);
 
         settingsView = new SettingsView(width, height, this);
-
-    }
-    public Controller getController(){
-        return controller;
-    }
-
-    public void startUpdateTimer(){
-        updateTimer = new Timer(1000, e -> updateElapsedTime());
-        updateTimer.start();
-    }
-    public void updateElapsedTime(){
-        if (plant != null){
-            LocalDateTime creationTime = plant.getCreationTime();
-            LocalDateTime now = LocalDateTime.now();
-            Duration duration = Duration.between(creationTime, now);
-
-            long days = duration.toDays();
-            long hours = duration.toHours() % 24;
-            long minutes = duration.toMinutes() % 60;
-            long seconds = duration.getSeconds() % 60;
-
-            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
-        }
-    }
-
-    public void updateCreationTime(Plant plant){
-        creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
     }
 
     //Method that is called when the Plant Collection button is pressed
@@ -108,9 +63,10 @@ public class PlantView extends JPanel {
     	// test other plants      images/plants/snakeplant.png   images/plants/goldenbarrelcactus.png  images/plants/bunnyear.png  images/plants/moneyplant.png
     	SwingUtilities.invokeLater(() -> {
     									//plant	path						pot path
-            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",waterPlant);
+            new MargePlantAndPotWidget("images/plants/snakeplant.png", "images/pots/pot-with-bow-tie2.png",plantPanel.getWaterPlantButton());
             
         });
+    	
         System.out.println("Widget pressed.");
     }
 
@@ -118,30 +74,16 @@ public class PlantView extends JPanel {
     //Method is a work in progress, functionality will be added later
     public void skipHourPressed()
     {
-        int hoursToSkip = 1;
-        Plant currentPlant = controller.getCurrentPlant();
-        if (currentPlant != null){
-            LocalDateTime newCreationTime = currentPlant.getCreationTime().minusHours(hoursToSkip);
-            controller.skipTime(hoursToSkip);
-            controller.updatePlantCreationTime(currentPlant, newCreationTime);
-            updatePlantDetails(currentPlant);
-        } else {
-            System.out.println("Error: No current plant found");
-        }
-
+        System.out.println("Skip hour pressed.");
         if (soundEffectSetting)
         {
             buttonPressedSoundEffect();
         }
-    }
+        /*int hoursToSkip = 1;
+        controller.skipTime(hoursToSkip);
+        System.out.println("Skipped " + hoursToSkip + " hour(s).");
 
-    public void updatePlantDetails(Plant plant){
-        this.plant = plant;
-        creationTimeLabel.setText("Created at: " + plant.getCreationTime().toString());
-        JProgressBar waterBar = plantPanel.getWaterBar();
-        waterBar.setValue(plant.getWaterLevel());
-        waterBar.repaint();
-        updateElapsedTime();
+         */
     }
 
     //Method used when Vacation button is pressed
@@ -161,15 +103,24 @@ public class PlantView extends JPanel {
     //Method is a work in progress
     public void waterPressed()
     {
-        System.out.println("Water pressed.");
-        controller.waterPlant();
-        plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
-        // System.out.println("Water level: " + controller.getPlantWaterLevel());
+        try {
+            System.out.println("Water pressed.");
+            controller.waterPlant();
+            plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
+            System.out.println("Water level: " + controller.getPlantWaterLevel());
+        } catch (NullPointerException e) {
+            //JOptionPane.showMessageDialog(waterPlant, "No plant exists!");
+        }
     }
 
     public void settingsPressed()
     {
         settingsView.setVisible(true);
+    }
+
+    public void mainMenuPressed()
+    {
+        controller.showMainMenu();
     }
 
     private void buttonPressedSoundEffect()
@@ -180,7 +131,11 @@ public class PlantView extends JPanel {
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
-        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
             throw new RuntimeException(e);
         }
     }
@@ -193,5 +148,47 @@ public class PlantView extends JPanel {
     public boolean getSoundEffectSetting()
     {
         return soundEffectSetting;
+    }
+
+    //for display in the PlantPanel
+    public ImageIcon getCurrentPlant() {
+        try {
+            return controller.getPlant().getImage();
+        } catch (NullPointerException e) {
+            return new ImageIcon("images/plants/default_plant.png");
+        }
+    }
+
+    public ImageIcon getCurrentPot() {
+        try {
+            return controller.getPlant().getPot();
+        } catch (NullPointerException e) {
+            return new ImageIcon("images/pots/default_pot.png");
+        }
+    }
+
+    public String getCurrentPlantName() {
+        try {
+            return controller.getPlant().getName();
+        } catch (NullPointerException e) {
+            return "No Plant Created";
+        }
+    }
+
+    public String getCurrentPlantSpecies() {
+        try {
+            String species = controller.getPlant().getType().getPlantTypeNameAlternative();
+            return ("Species: " + species);
+        } catch (NullPointerException e) {
+            return "Create a plant to show it here!";
+        }
+    }
+
+    public int getCurrentPlantWaterLevel() {
+        try {
+            return controller.getPlant().getWaterLevel();
+        } catch (NullPointerException e) {
+            return 0;
+        }
     }
 }

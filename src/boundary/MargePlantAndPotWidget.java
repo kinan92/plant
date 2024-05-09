@@ -1,11 +1,23 @@
 package boundary;
 
+import java.awt.BorderLayout;
+import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Shape;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Area;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -19,12 +31,12 @@ public class MargePlantAndPotWidget extends JFrame {
 
 	    private int mouseX;
 	    private int mouseY;
-	    public MargePlantAndPotWidget(String plantImagePath, String potImagePath, JButton addWaterbutton) {
+	    public MargePlantAndPotWidget(String plantImagePath, String potImagePath, JButton button) {
 	        // Set up JFrame
 	        setUndecorated(true);
 	       	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	       this.wCreator= new WidgetCreator(plantImagePath, potImagePath);
-	       	wSB=new WidgetShapeButton(addWaterbutton);
+	       	wSB=new WidgetShapeButton(button);
 	       		
 
 	      
@@ -33,7 +45,7 @@ public class MargePlantAndPotWidget extends JFrame {
 	       	
 	       	System.out.println("WidgetCreator "+wCreator);
 	       	
-	       	panelButton.add(addWaterbutton);
+	       	panelButton.add(button);
 	       	
 	        Area area1 = new Area(wCreator.getTheMergedImage());
 	        
@@ -43,7 +55,7 @@ public class MargePlantAndPotWidget extends JFrame {
 	        
 	        System.out.println("area1 Bound "+area1.getBounds());
 	        
-	        addWaterbutton.setBounds(width, height, addWaterbutton.getPreferredSize().width, addWaterbutton.getPreferredSize().height);
+	        button.setBounds(width, height, button.getPreferredSize().width, button.getPreferredSize().height);
 	        Area area2 = new Area(wSB.getButtonShape());
 	        
 	        System.out.println("area2 Bound "+area2.getBounds());

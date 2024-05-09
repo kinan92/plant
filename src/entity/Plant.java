@@ -1,6 +1,5 @@
 package entity;
 
-import java.awt.*;
 import java.time.LocalDateTime;
 
 import javax.swing.ImageIcon;
@@ -9,29 +8,19 @@ public class Plant {
 	
 	private String name;
 	private int age;
-	private ImageIcon image;
-	private LocalDateTime dateAndTime;
+	private ImageIcon image ;
+	private LocalDateTime creationTime;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
-	private PlantType type;
-	private PlantStateEnum state;
-	private ImageIcon pot;
 
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime) {
+	public Plant(String name, int age, String imagePath, int initialWaterLevel, LocalDateTime creationTime) {
 		super();
 		this.name = name;
 		this.age = age;
-		this.dateAndTime = dateAndTime;
+		this.image = new ImageIcon(imagePath);
+		this.creationTime = creationTime;
 		this.waterLevel = initialWaterLevel;
-		this.type = type;
-		this.state = state;
-		switch (state) {
-			case little -> this.image = type.getLittlePlantImage();
-			case big -> this.image = type.getGrownPlantImage();
-			case dead -> this.image = type.getDeadPlantImage();
-		}
-		this.pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
 	}
 
 	public void waterPlant(){
@@ -43,7 +32,7 @@ public class Plant {
 	}
 
 
-	public void decreaseWaterLevel(int level){
+	public void decreaseWaterLevel(){
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}
@@ -81,39 +70,11 @@ public class Plant {
 		this.image = image;
 	}
 	
-	public LocalDateTime getDateAndTime() {
-		return dateAndTime;
+	public LocalDateTime getCreationTime() {
+		return creationTime;
 	}
-	public void setDateAndTime(LocalDateTime dateAndTime) {
-		this.dateAndTime = dateAndTime;
-	}
-
-	public PlantType getType() {
-		return type;
+	public void setCreationTime(LocalDateTime newCreationTime) {
+		this.creationTime = newCreationTime;
 	}
 
-	public void setType(PlantType type) {
-		this.type = type;
-	}
-
-	public PlantStateEnum getState() {
-		return state;
-	}
-
-	public void setState(PlantStateEnum state) {
-		this.state = state;
-	}
-
-	public ImageIcon getPot() {
-		return pot;
-	}
-
-	public void setPot(ImageIcon pot) {
-		this.pot = pot;
-	}
-
-	//for test purposes
-	public String toString() {
-		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
-	}
 }

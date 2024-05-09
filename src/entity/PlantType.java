@@ -1,33 +1,20 @@
 package entity;
 
-import javax.swing.*;
-
-/**
- * Stores the plant data regarding generic information
- * (generic = same for all plants of the type rather than specific plant)
- * @author Elvira Grubb (main)
- * @author Petri Närhi (edits)
- * */
-
 public class PlantType {
     private String plantTypeName;
     private String plantTypeNameAlternative;
-    private ImageIcon grownPlantImage;
-    private ImageIcon littlePlantImage;
-    private ImageIcon deadPlantImage;
-    private ImageIcon plantImageButton;
-    private ImageIcon plantImageButtonHover;
+    private String grownPlantImage;
+    private String plantImageButton;
+    private String plantImageButtonHover;
     private String plantInformation;
 
-    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation, String littlePlantImage, String deadPlantImage)
+    public PlantType(String plantTypeName, String plantTypeNameAlternative, String defaultPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation)
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
-        this.grownPlantImage = new ImageIcon(grownPlantImage);
-        this.littlePlantImage = new ImageIcon(littlePlantImage);
-        this.deadPlantImage = new ImageIcon(deadPlantImage);
-        this.plantImageButton = new ImageIcon(plantImageButton);
-        this.plantImageButtonHover = new ImageIcon(plantImageButtonHover);
+        this.grownPlantImage = defaultPlantImage;
+        this.plantImageButton = plantImageButton;
+        this.plantImageButtonHover = plantImageButtonHover;
         this.plantInformation = plantInformation;
     }
     public String getPlantTypeName()
@@ -39,12 +26,12 @@ public class PlantType {
         return  plantTypeNameAlternative;
     }
 
-    public ImageIcon getGrownPlantImage()
+    public String getGrownPlantImage()
     {
         return grownPlantImage;
     }
 
-    public ImageIcon getPlantImageButton()
+    public String getPlantImageButton()
     {
         return plantImageButton;
     }
@@ -54,21 +41,8 @@ public class PlantType {
         return plantInformation;
     }
 
-    public ImageIcon getPlantImageButtonHover()
+    public String getPlantImageButtonHover()
     {
         return plantImageButtonHover;
-    }
-
-    public ImageIcon getLittlePlantImage() {
-        return littlePlantImage;
-    }
-
-    public ImageIcon getDeadPlantImage() {
-        return deadPlantImage;
-    }
-
-    //for test purposes
-    public String toString() {
-        return ("Type: " + plantTypeName + ", aka " + plantTypeNameAlternative + ". " + plantInformation);
     }
 }

@@ -3,60 +3,40 @@ package controller;
 import boundary.*;
 import entity.*;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
-import boundary.MainMenu;
+import java.util.List;
+
 import boundary.PlantView;
-import java.util.Random;
 
 import javax.swing.*;
 
 public class Controller {
-	private ArrayList<Plant> listOfPlants = new ArrayList<>();
+	private ArrayList<Plant> listOffPlants = new ArrayList<>();
 	private Plant plant;
-	private MainMenu window;
 	private PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
-	private Random random = new Random();
+	LocalDateTime creationTime = LocalDateTime.now().minusDays(4).plusHours(5);
 
 	public Controller() {
-		//this.window = new MainMenu(this);
-		mainFrame = new MainFrame(this);
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",0, creationTime);
+		mainFrame = new MainFrame(this, plant);
 		mainFrame.addMainMenu();
+		maingui = new PlantView(550, 435, this, plant);
 
 		loadPlantTypes();
 		test();
-		/*Chinese Money Plant
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
-		listOfPlants.add(plant);*/
+		listOffPlants.add(plant);
 		// startWaterDecreaseTimer();
 		// startAgeTimer();
-	}
-
-	public void createPlant(int i) {
-		PlantType type = plantTypes.get(i);
-		String name;
-		do {
-			name = JOptionPane.showInputDialog("Give your plant a name!");
-		} while (name == null || name.isEmpty());
-		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
-		LocalDateTime dateAndTime = LocalDateTime.now();
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime); //ny planta är alltid liten
-		listOfPlants.add(newPlant);
-		plant = newPlant;
-		System.out.println("New plant! " + plant);
-		showPlantView();
 	}
 
 	public void pausTime(){
@@ -85,33 +65,32 @@ public class Controller {
 		}
 	}
 
+	public void addPlant(Plant newPlant){
+		listOffPlants.add(newPlant);
+	}
+
 	private void startAgeTimer(){
 		if (ageTimer == null){
-			ageTimer = new Timer(1000, new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (!isPaused){
-						incrementAgeForALlPlants();
-					}
-				}
-			});
+			ageTimer = new Timer(1000, e -> {
+                if (!isPaused){
+                    incrementAgeForALlPlants();
+                }
+            });
 			ageTimer.start();
 		}
 
 		if (waterDecreaseTimer == null){
-			waterDecreaseTimer = new Timer(6000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(!isPaused){
-						decreaseWaterLevelForAllPlants();
-					}
-				}
-			});
+			waterDecreaseTimer = new Timer(6000, e -> {
+                if(!isPaused){
+                    decreaseWaterLevelForAllPlants();
+                }
+            });
 			waterDecreaseTimer.start();
 		}
 	}
 
 	private void updateAge(){
-		for (Plant plant : listOfPlants){
+		for (Plant plant : listOffPlants){
 			plant.incrementAge(1);
 		}
 	}
@@ -132,11 +111,7 @@ public class Controller {
 	}
 
 	public void startWaterDecreaseTimer(){
-		waterDecreaseTimer = new Timer(60000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				plant.decreaseWaterLevel(1);
-			}
-		});
+		waterDecreaseTimer = new Timer(60000, e -> plant.decreaseWaterLevel());
 		waterDecreaseTimer.start();
 
 	}
@@ -156,6 +131,13 @@ public class Controller {
 		return plant.getWaterLevel();
 	}
 
+	public Plant getCurrentPlant(){
+		if(plant == null){
+			System.out.println("No current plant is set");
+		}
+		return plant;
+	}
+
 	private void adjustPlantBasedOnWaterLevel(Plant plant){
 		if (plant.getWaterLevel() < 10){
 			System.out.println(plant.getName() + " needs water");
@@ -173,8 +155,8 @@ public class Controller {
 
 	public void choosePlantFrame()
 	{
-		ArrayList<ImageIcon> plantImage = new ArrayList<>();
-		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
+		ArrayList<String> plantImage = new ArrayList<>();
+		ArrayList<String> plantImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)
@@ -183,12 +165,7 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		mainFrame.addChoosePlantView(plantImage, plantImageHover);
-	}
-
-	public void showMainMenu()
-	{
-		mainFrame.addMainMenu();
+		ChoosePlantFrame choosePlantFrame = new ChoosePlantFrame(plantImage, plantImageHover);
 	}
 
 	//Reads PlantTypes from the plantTypes textfile, creates an object of them and adds them to the plantTypes ArrayList
@@ -203,7 +180,7 @@ public class Controller {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}
@@ -245,19 +222,42 @@ public class Controller {
 			return;
 		}
 
-		for (Plant plant : listOfPlants){
+		for (Plant plant : listOffPlants){
+			LocalDateTime newCreationTime = plant.getCreationTime().plusHours(hours);
+			plant.setCreationTime(newCreationTime);
+			updatePlantCreationTime(plant, newCreationTime);
+
 			int ageIncrement = hours / 24;
 			plant.incrementAge(ageIncrement);
 
-            plant.decreaseWaterLevel(hours);
+            plant.decreaseWaterLevel();
 
 			adjustPlantBasedOnWaterLevel(plant);
 		}
+		maingui.updateElapsedTime();
 
 		notifyTimeSkipped(hours);
 	}
 
-	public ArrayList<PlantType> getPlantTypes()
+	public void updatePlantCreationTime(Plant plant, LocalDateTime newCreationTime){
+		if (plant == null){
+			System.out.println("Plant is null, cannot update creation time");
+			return;
+		}
+		plant.setCreationTime(newCreationTime);
+		maingui.updateCreationTime(plant);
+		System.out.println("Updated plant creation time to: " + newCreationTime.toString());
+	}
+
+	private void createPlant()
+	{
+		/*
+		plant = new Plant(maingui.plantView().getName(), 0,  plant.getImage(), null);
+
+		 */
+	}
+
+	public List<PlantType> getPlantTypes()
 	{
 		return plantTypes;
 	}
@@ -268,30 +268,20 @@ public class Controller {
 	}
 
 	public void incrementAgeForALlPlants(){
-		for (int i = 0; i < listOfPlants.size(); i++){
-			Plant plant = listOfPlants.get(i);
-			if(plant != null){
-				plant.incrementAge(1);
+		for (int i = 0; i < listOffPlants.size(); i++){
+			Plant allPlants = listOffPlants.get(i);
+			if(allPlants != null){
+				allPlants.incrementAge(1);
 			}
 		}
 	}
 
 	public void decreaseWaterLevelForAllPlants(){
-		for (int i = 0; i < listOfPlants.size(); i++){
-			Plant plant = listOfPlants.get(i);
-			if(plant != null) {
-				plant.decreaseWaterLevel(10);
+		for (int i = 0; i < listOffPlants.size(); i++){
+			Plant allPlants = listOffPlants.get(i);
+			if(allPlants != null) {
+				allPlants.decreaseWaterLevel();
 			}
 		}
-	}
-
-	//Getters and setters for plant to show and
-	// change the current plant that is shown in PlantView
-	public Plant getPlant() {
-		return plant;
-	}
-
-	public void setPlant(Plant plant) {
-		this.plant = plant;
 	}
 }

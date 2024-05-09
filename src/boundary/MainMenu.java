@@ -29,51 +29,28 @@ public class MainMenu extends JPanel {
 		this.height = height;
 		this.controller = controller;
 		this.setSize(width, height);
-		this.setLayout(new BorderLayout());
-		JLabel background = new JLabel();
-		background.setIcon(new ImageIcon("images/main_menu_background.png"));
-
-		background.setLayout(new GridBagLayout());
-		JButton createPlant = new JButton("Create Plant");
-		JButton openPlant = new JButton("Open Plant");
-		GridBagConstraints c = new GridBagConstraints();
-
-		createPlant.setPreferredSize(new Dimension(155, 55));
-		createPlant.addActionListener(l -> clickCreatePlantButton());
-		openPlant.setPreferredSize(new Dimension(155, 55));
-		openPlant.addActionListener(l -> clickGetAPlantButton());
-
-		c.weightx = 0;
-		c.gridx = 0;
-		c.gridy = 0;
-		background.add(createPlant, c);
-
-		c.weightx = 0;
-		c.gridx = 0;
-		c.gridy = 1;
-		background.add(openPlant, c);
-
-		this.add(background);
+		groupLayout = new GroupLayout(this);
+		this.setLayout(groupLayout);
+		this.setBackground(Color.ORANGE);
 
 		setVisible(true);
-		//initialize();
+		initialize();
 	}
 
 	private void clickCreatePlantButton() {
-		controller.choosePlantFrame();
-		/*createPlantButton.addActionListener(new ActionListener() {
+		createPlantButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				controller.choosePlantFrame();
 			}
-		});*/
+		});
 	}
 
 	private void clickGetAPlantButton() {
-		controller.showPlantView();
-		/*getAPlantButton.addActionListener(new ActionListener() {
+		getAPlantButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				 controller.showPlantView();
 			}
-		});*/
+		});
 	}
 
 

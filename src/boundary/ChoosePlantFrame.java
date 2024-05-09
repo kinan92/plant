@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ChoosePlantFrame extends JFrame{
+public class ChoosePlantFrame extends JPanel {
     private Controller controller;
     private int width;
     private int height;
@@ -26,25 +26,10 @@ public class ChoosePlantFrame extends JFrame{
         //this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
         this.width = width;
         this.height = height;
-    int width = 550;
-    int height = 470;
-    private ArrayList<String> plantImages = new ArrayList<>();
-    private ArrayList<String> plantHoverImages = new ArrayList<>();
-
-    //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(ArrayList<String> plantImages, ArrayList<String> plantHoverImages)
-    {
-        this.plantImages = plantImages;
-        this.plantHoverImages = plantHoverImages;
 
         setLayout(new BorderLayout());
-        setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
-        setIconImage(icon.getImage());
-        setLocationRelativeTo(null);
-        setResizable(false);
 
         //Creates a scrollbar to enable scrolling for the plants
         JScrollPane scroll = new JScrollPane(
@@ -55,7 +40,10 @@ public class ChoosePlantFrame extends JFrame{
 
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
-        this.getContentPane().add(scroller, BorderLayout.CENTER);
+        this.add(scroller, BorderLayout.CENTER);
+
+        JPanel navigation = navigation();
+        add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
     }
@@ -66,7 +54,6 @@ public class ChoosePlantFrame extends JFrame{
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, plantBtnImages.size()));
         plants.setPreferredSize(new Dimension((width*9/10), (height / 10) * 7));
-        plants.setLayout(new GridLayout(2, plantImages.size()));
 
         //Loops through plantImages and creates buttons with the images
         for (int i = 0; i < plantBtnImages.size(); i++)
@@ -77,23 +64,53 @@ public class ChoosePlantFrame extends JFrame{
             System.out.println(plantBtnImages.get(i));
             plantBtn.setIcon(plantBtnImages.get(i));
             ImageIcon shadow = plantBtnHoverImages.get(i);
-            JButton plant = new JButton();
-            plant.setBorder(BorderFactory.createEmptyBorder());
-            plant.setContentAreaFilled(false);
-            System.out.println(plantImages.get(i));
-            plant.setIcon(new ImageIcon(plantImages.get(i)));
-            ImageIcon shadow = new ImageIcon(plantHoverImages.get(i));
 
-            plant.setFocusPainted(false);
-            plant.setRolloverEnabled(true);
-            plant.setRolloverIcon(shadow);
+            plantBtn.setFocusPainted(false);
+            plantBtn.setRolloverEnabled(true);
+            plantBtn.setRolloverIcon(shadow);
 
             //ActionListener that will return the ArrayList number when the plant is pressed
             int plantNumber = i;
-            plant.addActionListener(l -> plantPressed(plantNumber));
-            plants.add(plant);
+            plantBtn.addActionListener(l -> plantPressed(plantNumber));
+            plants.add(plantBtn);
         }
         return plants;
+    }
+
+    /**
+     * @author Petri Närhi */
+    public JPanel navigation()
+    {
+        JPanel navigation = new JPanel();
+        navigation.setLayout(new FlowLayout());
+        navigation.setBackground(Color.ORANGE);
+        navigation.setPreferredSize(new Dimension(width, (height / 10)));
+
+        //Loops through plantImages and creates buttons with the images
+        JButton backBtn = new JButton();
+        backBtn.setBorder(BorderFactory.createEmptyBorder());
+        backBtn.setContentAreaFilled(false);
+        backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
+
+
+        backBtn.setFocusPainted(false);
+        backBtn.setRolloverEnabled(true);
+        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
+
+        //ActionListener that will return the ArrayList number when the plant is pressed
+        backBtn.addActionListener(l -> backPressed());
+        backBtn.setLocation(100,100);
+        navigation.add(backBtn);
+        navigation.setVisible(true);
+
+        return navigation;
+    }
+
+    /**
+     * @author Petri Närhi */
+    private void backPressed()
+    {
+        controller.showMainMenu();
     }
 
     //This method will be replaced by a method that calls a method in the Controller to notify
@@ -101,6 +118,7 @@ public class ChoosePlantFrame extends JFrame{
     //correspond to an index in the PlantType ArrayList)
     private void plantPressed(int plant)
     {
+        controller.createPlant(plant);
         System.out.println(plant);
     }
 }

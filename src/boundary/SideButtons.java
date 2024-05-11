@@ -8,7 +8,10 @@ public class SideButtons extends JPanel {
     private ImageIcon storage = new ImageIcon("images/buttons/storage.png");
     private ImageIcon vacationImage = new ImageIcon("images/buttons/vacation.png");
     private ImageIcon widgetImage = new ImageIcon("images/buttons/widget.png");
-    public SideButtons(int width, int height, PlantView plantView)
+    private JButton skipHour;
+    private JButton settings;
+
+	public SideButtons(int width, int height, PlantView plantView)
     {
         JPanel sideButtons = new JPanel();
         this.setBackground(Color.LIGHT_GRAY);
@@ -25,7 +28,7 @@ public class SideButtons extends JPanel {
         sideButtons.add(timeLabel, c);
 
          */
-
+        
 
         //Creates Plant Storage button
         JButton getPlant = new JButton();
@@ -64,7 +67,7 @@ public class SideButtons extends JPanel {
         widget.setRolloverIcon(new ImageIcon("images/buttons/widget_hover.png"));
 
         //Creates Skip Hour button
-        JButton skipHour = new JButton();
+        skipHour = new JButton();
         skipHour.setBorder(BorderFactory.createEmptyBorder());
         skipHour.setContentAreaFilled(false);
         skipHour.setIcon(skiphour);
@@ -100,7 +103,7 @@ public class SideButtons extends JPanel {
         vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));
 
 
-        JButton settings = new JButton("Settings");
+        settings = new JButton("Settings");
         /*vacation.setBorder(BorderFactory.createEmptyBorder());
         vacation.setContentAreaFilled(false);
         vacation.setIcon(vacationImage);*/
@@ -134,4 +137,13 @@ public class SideButtons extends JPanel {
         /*vacation.setRolloverEnabled(true);
         vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));*/
     }
+    
+    public JButton getSettings() {
+		return settings;
+	}
+
+	public JButton getSkipHour() {
+		return skipHour;
+	}
+
 }

@@ -1,60 +1,107 @@
 package boundary;
 
-import java.awt.geom.Area;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-
+import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.Pane;
+
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+/**
+ * this Class responsible for starting a JAVAFX Application it contain the main
+ * functionality to create a Widget
+ * @author kinan
+ */
 public class WidgetJavaFXApplication extends Application {
-	private  ImageIcon currentPlant;
-    private  ImageIcon currentPot;
-    private  JButton waterPlantButton;
-    private WidgetFX widgetFX;
-  private WidgetCreatorJFX widgetCreator;
-public void WidgetJavaFXApplication(Area theShapeOfThecombinedImage,ImageIcon plantImageIcon , ImageIcon potImageIcon, JButton addWaterbutton) {
-	this.currentPlant= plantImageIcon;
-	this.currentPot=potImageIcon;
-	this.waterPlantButton=addWaterbutton;
-	this.widgetFX=new WidgetFX(theShapeOfThecombinedImage, currentPlant,currentPot,waterPlantButton);
-	this.widgetCreator= new WidgetCreatorJFX(plantImageIcon, potImageIcon);
-}
 
-public static void main(String[] args) {
-	launch(args);
-}
+	private double xOffset = 0;
+	private double yOffset = 0;
+	private Controller controller;
+	private PlantView plantView;
+	private Stage stage;
+	private Stage barMenuStage;
+	private WidgetCreatorJFX widgetCreator;
+	private WidgetBarMenu widgetBarMenu;
+
+	public WidgetJavaFXApplication(Controller controller, Stage stage, PlantView plantView) {
+		this.controller = controller;
+		this.stage = stage;
+		this.plantView = plantView;
+	}
+
+	@Override
+	public void start(Stage primaryStage) {
+
+		widgetBarMenu = new WidgetBarMenu(plantView);
+		Scene BarMenuScene = new Scene(widgetBarMenu, Color.TRANSPARENT);
+
+		barMenuStage = new Stage();
+		barMenuStage.setScene(BarMenuScene);
+		barMenuStage.setTitle("BAR Menu ");
+		barMenuStage.initStyle(StageStyle.TRANSPARENT);
+
+		this.widgetCreator = new WidgetCreatorJFX(controller);
+		Scene wScene = new Scene(widgetCreator, Color.TRANSPARENT);
+
+		Stage widgetCreatorStage = new Stage();
+		widgetCreatorStage.setScene(wScene);
+		widgetCreatorStage.initStyle(StageStyle.TRANSPARENT);
+
+		frameMoverWidget(widgetCreatorStage, widgetCreator);
+		frameMoverProgressBar();		
+
+		barMenuStage.show();
+
+		widgetCreatorStage.show();
+	}
+
+	/**
+	 * This method responsible for creating a mover for the window
+	 * 
+	 * @author kinan
+	 * @param stage
+	 * @param root
+	 */
+	private void frameMoverWidget(Stage stage, Pane root) {
+		root.setOnMousePressed(event -> {
+			xOffset = event.getSceneX();
+			yOffset = event.getSceneY();
+			event.consume();
+		});
+		root.setOnMouseDragged(event -> {
+			stage.setX(event.getScreenX() - xOffset);
+			stage.setY(event.getScreenY() - yOffset);
+			event.consume();
+		});
+	}
+	/**
+	 * This method responsible for creating a mover for the ProgressBar 
+	 * 
+	 * @author kinan
+	 * @param stage
+	 * @param ProgressBar
+	 */
+	public void frameMoverProgressBar() {
+		System.out.println("you are here ProgressBar");
+		widgetBarMenu.getProgressBar().setOnMousePressed(event -> {
+            xOffset = event.getSceneX();
+            yOffset = event.getSceneY();
+            event.consume(); 
+        });
+		widgetBarMenu.getProgressBar().setOnMouseDragged(event -> {
+            double x = event.getScreenX() - xOffset;
+            double y = event.getScreenY() - yOffset;
+            barMenuStage.setX(x);
+            barMenuStage.setY(y);
+            event.consume(); 
+        });
+	}
 	
-    @Override
-    public void start(Stage primaryStage)throws Exception  {
-    	  WidgetBarMenu wbm = new WidgetBarMenu();
 
-          // Create a Scene with the root node
-          Scene scene = new Scene(wbm);
-         
-          
-          // Set the scene to the primary stage
-          primaryStage.setScene(scene);
-          // Set the title of the primary stage
-          primaryStage.setTitle("JavaFX Application");
+	public Stage getBarMenuStage() {
+		return barMenuStage;
+	}
 
-          // Show the primary stage
-          primaryStage.show();
-      //    Stage secondStage =new Stage();
-          
-          
-      //    Scene scene2 = new Scene(widgetCreator);
-       //   secondStage.setScene(scene2);
-          // Set the title of the primary stage
-       //   secondStage.setTitle("JavaFX Application");
-
-          // Show the primary stage
-     //     secondStage.show();
-      }
-      
-
-	
 }

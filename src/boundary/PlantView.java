@@ -1,14 +1,12 @@
 package boundary;
 
 import controller.Controller;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Area;
+import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,12 +14,15 @@ public class PlantView extends JPanel {
 	int width;
 	int height;
 	private PlantPanel plantPanel;
+
 	boolean soundEffectSetting;
 	private Controller controller;
 	private SettingsView settingsView;
+	private SideButtons sideButtons;
+	
+	private WidgetJavaFXApplication javaFXApp;
 
-	private WidgetCreatorJFX widgetCreator;
-	private Area theShapeOfThecombinedImage;
+	private static boolean isJavaFXInitialized = false;
 
 	// Creates the base PlantView panel, sets rules for the panel and adds other
 	// panels
@@ -37,18 +38,16 @@ public class PlantView extends JPanel {
 		this.setLayout(borderLayout);
 		this.setBackground(Color.ORANGE);
 
-		this.widgetCreator = new WidgetCreatorJFX(getCurrentPlant(), getCurrentPot());
-		System.out.println("Shape   " + widgetCreator.getImageShape());
-
-		this.theShapeOfThecombinedImage = widgetCreator.getImageShape();
-
 		plantPanel = new PlantPanel(width, height, this);
 		add(plantPanel, BorderLayout.WEST);
 
-		SideButtons sideButtons = new SideButtons(width, height, this);
+		sideButtons = new SideButtons(width, height, this);
 		add(sideButtons, BorderLayout.EAST);
 
 		settingsView = new SettingsView(width, height, this);
+
+		checkJavaFXToolKit();
+
 	}
 
 	// Method that is called when the Plant Collection button is pressed
@@ -61,59 +60,27 @@ public class PlantView extends JPanel {
 		System.out.println("Plant Collection pressed.");
 	}
 
-	// Method used when the Widget button is pressed
-	// Method creates a widget of the currently open plant
+	/**
+	 *  Method used when the Widget button is pressed
+	 *  Method creates a widget of the currently open plant
+	 *  it will cheack if the Plant and the images is not null and it will call the sendDataToJavaFX method 
+	 *  The Widget will start from here.
+	 *  @author kinan
+	 * 
+	 */
 	public void widgetPressed() {
 		SwingUtilities.invokeLater(() -> {
-		
-			
-			new WidgetFX(theShapeOfThecombinedImage, getCurrentPlant(), getCurrentPot(),
-					plantPanel.getWaterPlantButton());
-			
-			// Create an instance of WidgetJavaFXApplication
-			WidgetJavaFXApplication javaFXApp = new WidgetJavaFXApplication();
-
-			// Start the JavaFX application in a new thread
-			Thread javaFXThread = new Thread(() -> {
-				// Launch the JavaFX application
-				javafx.application.Application.launch(javaFXApp.getClass());
-			});
-			javaFXThread.start();
-
-		
+			if ((controller.getPlant() == null)
+					|| ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
+				System.out.println("you can't ctreat a Widget because the plant or the pot image is null");
+			} else {
+				sendDataToJavaFX(controller);
+			}
 		});
-		/*
-		 * 
-		 * try {
-		 * 
-		 * 
-		 * Platform.runLater(() -> {
-		 * 
-		 * WidgetJavaFXApplication x = new
-		 * WidgetJavaFXApplication(theShapeOfThecombinedImage, getCurrentPlant(),
-		 * getCurrentPot(), plantPanel.getWaterPlantButton()); x.start(new Stage()); //
-		 * Assuming WidgetJavaFXApplication extends Application });
-		 * 
-		 * 
-		 * SwingUtilities.invokeLater(() -> { // plant path pot path new
-		 * WidgetFX(theShapeOfThecombinedImage, getCurrentPlant(), getCurrentPot(),
-		 * plantPanel.getWaterPlantButton());
-		 * 
-		 * WidgetJavaFXApplication x = new
-		 * WidgetJavaFXApplication(theShapeOfThecombinedImage, getCurrentPlant(),
-		 * getCurrentPot(), plantPanel.getWaterPlantButton());
-		 * 
-		 * Application.launch(x.getClass());
-		 * 
-		 * }); } catch (Exception e) {
-		 * 
-		 * e.printStackTrace(); System.out.println(e.getMessage()); }
-		 */
 		if (soundEffectSetting) {
 
 			buttonPressedSoundEffect();
 		}
-
 		System.out.println("Widget pressed.");
 	}
 
@@ -131,7 +98,6 @@ public class PlantView extends JPanel {
 		 */
 	}
 
-
 	// Method used when Vacation button is pressed
 	// Method is a work in progress
 	// When method is done this method will allow the user to set the program to
@@ -139,13 +105,13 @@ public class PlantView extends JPanel {
 	public void vacationPressed() {
 		System.out.println("Vacation pressed.");
 	}
-    public void mainMenuPressed()
-    {
-        controller.showMainMenu();
-        if (soundEffectSetting) {
-        	buttonPressedSoundEffect();
-        }
-    }
+
+	public void mainMenuPressed() {
+		controller.showMainMenu();
+		if (soundEffectSetting) {
+			buttonPressedSoundEffect();
+		}
+	}
 
 	// Method used when water button is pressed
 	// Method is a work in progress
@@ -229,4 +195,66 @@ public class PlantView extends JPanel {
 			return 0;
 		}
 	}
+
+	
+	public PlantPanel getPlantPanelClass() {
+		return plantPanel;
+	}
+
+	public SideButtons getSideButtonsClass() {
+		return sideButtons;
+	}
+
+	public WidgetJavaFXApplication getJavaFXAppClass() {
+		return javaFXApp;
+	}
+	
+	/**
+	 * This method responsible for JavaFX ToolKit if the ToolKit is not itialized the Platform will start 
+	 * This method is called in the Constractor after creating the view ;
+	 * @author kinan
+	 */
+	
+	private void checkJavaFXToolKit() {
+		if (!isJavaFXInitialized) {
+			// Initialize JavaFX only if it hasn't been initialized yet
+			Platform.startup(() -> {
+				System.out.println("JavaFX initialization complete.");
+			});
+			isJavaFXInitialized = true;
+		} else {
+			System.out.println("JavaFX is already initialized.");
+		}
+	}
+
+	/**
+	 * This method responsible for sending data to the JavaFX Application
+	 * 
+	 * @author kinan
+	 * @param controller
+	 */
+	private void sendDataToJavaFX(Controller controller) {
+		Platform.runLater(() -> {
+			// Create an instance of the JavaFX application and pass the data
+			Stage stage = new Stage();
+			this.javaFXApp = new WidgetJavaFXApplication(controller, stage, this);
+			javaFXApp.start(stage);
+			updateButtonStatesIfWidgeIsON();
+
+		});
+	}
+
+	/**
+	 * this  Method responsible for updating the button states based on widget existence
+	 * @author kinan
+	 */
+	public void updateButtonStatesIfWidgeIsON() {
+		boolean isWidgetCreated = getJavaFXAppClass() != null;
+		// Disable or enable buttons based on the widget existence
+		getSideButtonsClass().getSkipHour().setEnabled(!isWidgetCreated);
+		getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
+		getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
+
+	}
+
 }

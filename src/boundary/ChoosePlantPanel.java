@@ -6,7 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ChoosePlantFrame extends JPanel {
+public class ChoosePlantPanel extends JPanel {
     private Controller controller;
     private int width;
     private int height;
@@ -15,8 +15,16 @@ public class ChoosePlantFrame extends JPanel {
     private ArrayList<ImageIcon> potBtnImages;
     private ArrayList<ImageIcon> potBtnHoverImages;
 
-    //Creates ChoosePlantFrame JFrame
-    public ChoosePlantFrame(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
+    /**
+     * @author Elvira Grubb
+     * @param controller The active controller class used in the program
+     * @param plantBtnImages An ArrayList of plantbutton images
+     * @param plantBtnHoverImages An ArrayList of plantbutton hover images
+     * @param width The width of the MainFrame
+     * @param height The height of the MainFrame
+     * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
+     */
+    public ChoosePlantPanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
     {
         super(null);
         this.controller = controller;
@@ -32,23 +40,30 @@ public class ChoosePlantFrame extends JPanel {
         ImageIcon icon = new ImageIcon("images/icon.png");
 
         //Creates a scrollbar to enable scrolling for the plants
-        JScrollPane scroll = new JScrollPane(
+        /*JScrollPane scroll = new JScrollPane(
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
                 ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
         );
-        add(scroll);
+        add(scroll);*/
 
+        //Adds plants JPanel with a scrollbar
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);
         this.add(scroller, BorderLayout.CENTER);
 
+        //Adds navigation JPanel
         JPanel navigation = navigation();
         add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
     }
 
-    //Loops through all PlantTypes and creates a button for each of them
+    /**
+     * @author Elvira Grubb
+     * @return JPanel plants
+     * Creates a JPanel that adds all PlantTypes by looping through the PlantButton ArrayList to
+     * create buttons of each PlantType
+     */
     public JPanel plants()
     {
         JPanel plants = new JPanel();
@@ -65,6 +80,7 @@ public class ChoosePlantFrame extends JPanel {
             plantBtn.setIcon(plantBtnImages.get(i));
             ImageIcon shadow = plantBtnHoverImages.get(i);
 
+            //Disables any default JButton effects
             plantBtn.setFocusPainted(false);
             plantBtn.setRolloverEnabled(true);
             plantBtn.setRolloverIcon(shadow);
@@ -113,9 +129,13 @@ public class ChoosePlantFrame extends JPanel {
         controller.showMainMenu();
     }
 
-    //This method will be replaced by a method that calls a method in the Controller to notify
-    //that a plant has been chosen and which plant has been chosen (via the index that will
-    //correspond to an index in the PlantType ArrayList)
+    /**
+     * @author Elvira Grubb
+     * @param plant An int corresponding to the PlantTypes
+     * This method will be replaced by a method that calls a method in the Controller to notify
+     * that a plant has been chosen and which plant has been chosen (via the index that will
+     *  correspond to an index in the PlantType ArrayList)
+     */
     private void plantPressed(int plant)
     {
         controller.createPlant(plant);

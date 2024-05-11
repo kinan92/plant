@@ -11,7 +11,7 @@ public class MainFrame extends JFrame {
     int height = 435;
     PlantView plantView;
     Controller controller;
-    ChoosePlantFrame choosePlantFrame;
+    ChoosePlantPanel choosePlantPanel;
 
     //Creates a MainFrame for the whole program
     //and sets settings for the MainFrame
@@ -45,8 +45,8 @@ public class MainFrame extends JFrame {
     {
         this.getContentPane().removeAll();
         this.revalidate();
-        choosePlantFrame = new ChoosePlantFrame(controller, plantImage, plantImageHover, width, height);
-        this.setContentPane(choosePlantFrame);
+        choosePlantPanel = new ChoosePlantPanel(controller, plantImage, plantImageHover, width, height);
+        this.setContentPane(choosePlantPanel);
         this.repaint();
     }
 

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class MainMenu extends JPanel {
-	JButton createPlantButton = new JButton("Create Plant");
+	JButton createPlantButton = new JButton();
 	JButton getAPlantButton = new JButton("Open Last Plant");
 	GroupLayout groupLayout;
 	Controller controller;
@@ -34,13 +34,22 @@ public class MainMenu extends JPanel {
 		background.setIcon(new ImageIcon("images/main_menu_background.png"));
 
 		background.setLayout(new GridBagLayout());
-		JButton createPlant = new JButton("Create Plant");
-		JButton openPlant = new JButton("Open Plant");
 		GridBagConstraints c = new GridBagConstraints();
 
-		createPlant.setPreferredSize(new Dimension(155, 55));
+		JButton createPlant = new JButton();
+		createPlant.setIcon(new ImageIcon("images/buttons/create_plant.png"));
+		createPlant.setBorder(BorderFactory.createEmptyBorder());
+		createPlant.setContentAreaFilled(false);
+		createPlant.setRolloverEnabled(true);
+		createPlant.setRolloverIcon(new ImageIcon("images/buttons/create_plant_hover.png"));
 		createPlant.addActionListener(l -> clickCreatePlantButton());
-		openPlant.setPreferredSize(new Dimension(155, 55));
+
+		JButton openPlant = new JButton();
+		openPlant.setIcon(new ImageIcon("images/buttons/open_last_plant.png"));
+		openPlant.setBorder(BorderFactory.createEmptyBorder());
+		openPlant.setContentAreaFilled(false);
+		openPlant.setRolloverEnabled(true);
+		openPlant.setRolloverIcon(new ImageIcon("images/buttons/open_last_plant_hover.png"));
 		openPlant.addActionListener(l -> clickGetAPlantButton());
 
 		c.weightx = 0;

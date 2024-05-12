@@ -36,7 +36,6 @@ public class PlantView extends JPanel {
 		this.setSize(width, height);
 		BorderLayout borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);
-		this.setBackground(Color.ORANGE);
 
 		plantPanel = new PlantPanel(width, height, this);
 		add(plantPanel, BorderLayout.WEST);
@@ -127,6 +126,10 @@ public class PlantView extends JPanel {
 	}
 
 	public void settingsPressed() {
+		if (soundEffectSetting)
+		{
+			buttonPressedSoundEffect();
+		}
 		settingsView.setVisible(true);
 	}
 

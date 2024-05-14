@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MainFrame extends JFrame {
     private int width = 550;
     private int height = 435;
-    private PlantView plantView;
+    PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
 

@@ -107,6 +107,12 @@ public class PlantView extends JPanel {
 		System.out.println("Vacation pressed.");
 	}
 
+	/**
+	 * @author Elvira Grubb
+	 * Method called when the Main Menu button is pressed. It calls on a method in controller
+     * to show the main menu in the mainframe, and plays the button sound effect if sound
+	 * is on in the settings
+	 */
 	public void mainMenuPressed() {
 		controller.showMainMenu();
 		if (soundEffectSetting) {
@@ -127,6 +133,11 @@ public class PlantView extends JPanel {
 		}
 	}
 
+	/**
+	 * @author Elvira Grubb
+	 * Method called when the settings button is pressed. If sound settings is on it
+	 * calls to the button sound effect method, then sets the settings menu to visible.
+	 */
 	public void settingsPressed() {
 		if (soundEffectSetting)
 		{
@@ -151,11 +162,19 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	public void setSoundEffectSetting(boolean setting) {
+	/**
+	 * @author Elvira Grubb
+	 * @param setting A boolean indicating whether the sound is on or off in the settings
+	 * Method called when the settings in the settings menu are saved to update whether
+	 * the sound is on or off
+	 */
+	public void setSoundEffectSetting(boolean setting)
+	{
 		soundEffectSetting = setting;
 	}
 
-	public boolean getSoundEffectSetting() {
+	public boolean getSoundEffectSetting()
+	{
 		return soundEffectSetting;
 	}
 

@@ -7,14 +7,17 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
-    int width = 550;
-    int height = 435;
-    PlantView plantView;
-    Controller controller;
-    ChoosePlantPanel choosePlantPanel;
+    private int width = 550;
+    private int height = 435;
+    private PlantView plantView;
+    private Controller controller;
+    private ChoosePlantPanel choosePlantPanel;
 
-    //Creates a MainFrame for the whole program
-    //and sets settings for the MainFrame
+    /**
+     * @author Elvira Grubb
+     * @param controller Current controller class used in the program
+     * This constructor creates a MainFrame for the whole program
+     */
     public MainFrame(Controller controller)
     {
         this.controller = controller;
@@ -30,8 +33,10 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    //Called from the Controller to clear the MainFrame and add
-    //a PlantView JPanel
+    /**
+     * @author Elvira Grubb
+     * This method clears the MainFrame and adds the PlantView panel
+     */
     public void addPlantView()
     {
         this.getContentPane().removeAll();
@@ -41,7 +46,13 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
-    public void addChoosePlantView(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
+    /**
+     * @author Elvira Grubb
+     * @param plantImage An ArrayList of all PlantType images
+     * @param plantImageHover An ArrayList of all PlantType hover images
+     * This method clears the MainFrame and adds ChoosePlantPanel
+     */
+    public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
     {
         this.getContentPane().removeAll();
         this.revalidate();
@@ -50,7 +61,10 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
-    //Adds MainMenu JPanel to the MainFrame
+    /**
+     * @author Elvira Grubb
+     * This method adds the MainMenu to the MainFrame
+     */
     public void addMainMenu()
     {
         MainMenu mainMenu = new MainMenu(width, height, controller);

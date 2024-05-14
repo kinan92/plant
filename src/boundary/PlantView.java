@@ -11,28 +11,30 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlantView extends JPanel {
-	int width;
-	int height;
+	private int width;
+	private int height;
 	private PlantPanel plantPanel;
-
 	boolean soundEffectSetting;
 	private Controller controller;
 	private SettingsView settingsView;
 	private SideButtons sideButtons;
-	
 	private WidgetJavaFXApplication javaFXApp;
-
 	private static boolean isJavaFXInitialized = false;
 
-	// Creates the base PlantView panel, sets rules for the panel and adds other
-	// panels
+	/**
+	 * @author Elvira Grubb
+	 * @param width Width of MainFrame
+	 * @param height Height of MainFrame
+	 * @param controller Active Controller object used in program
+	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
+	 * active plant, relevant information about the plant and buttons for taking care of the plant
+	 */
 	public PlantView(int width, int height, Controller controller) {
 		super(null);
 		this.width = width;
 		this.height = height;
 		this.controller = controller;
 		soundEffectSetting = true;
-		System.out.println("hej plantview");
 		this.setSize(width, height);
 		BorderLayout borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);

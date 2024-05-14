@@ -7,10 +7,10 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlantPanel extends JPanel {
-    int width;
-    int height;
-    JPanel plantPanel;
-    PlantView plantView;
+    private int width;
+    private int height;
+    private JPanel plantPanel;
+    private PlantView plantView;
     private ImageIcon currentPlant;
     private ImageIcon currentPot;
     private String currentPlantName;
@@ -18,40 +18,47 @@ public class PlantPanel extends JPanel {
     private int currentPlantWaterLevel;
     private JButton waterPlantButton;
 	private JProgressBar waterBar;
-    JLayeredPane plantWindow;
-    JLabel sparkle;
+    private JLayeredPane plantWindow;
+    private JLabel sparkle;
 
+    /**
+     * @author Elvira Grubb
+     * @param width Width of the MainFrame
+     * @param height Height of the MainFrame
+     * @param plantView The active PlantView class
+     * This constructor creates a PlantPanel, filling it with relevant JPanels to function
+     * as a window where the user can see their plant, relevant plant information, and plant care
+     */
     public PlantPanel(int width, int height, PlantView plantView)
     {
+        //Creates the panel and sets the current plant and its pot
         super(null);
         this.width = width;
         this.height = height;
         this.plantView = plantView;
         currentPlant = plantView.getCurrentPlant();
         currentPot = plantView.getCurrentPot();
-
-        plantPanel = new JPanel();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
 
+        //Creates nameView panel and adds with constraints
         this.add(nameView());
         GridBagConstraints c = new GridBagConstraints();
-
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 0;
         c.gridx = 0;
         c.gridy = 0;
         this.add(nameView(), c);
 
+        //Creates plantWindow JLayeredPane and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 2;
-
         JLayeredPane plantWindow = getPlantWindow();
         this.add(plantWindow, c);
 
-
+        //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
@@ -60,6 +67,12 @@ public class PlantPanel extends JPanel {
         this.add(plantCare, c);
     }
 
+    /**
+     * @author Elvira Grubb
+     * @return JLayeredPane plantWindow, a window where the user can see its active plant
+     * This method creates a JLayeredPane where the plant is shown by layering relevant
+     * images on top of each other
+     */
     private JLayeredPane getPlantWindow() {
         plantWindow = new JLayeredPane();
         plantWindow.setLayout(new BorderLayout());
@@ -83,7 +96,12 @@ public class PlantPanel extends JPanel {
         return plantWindow;
     }
 
-
+    /**
+     * @author Elvira Grubb
+     * @return A nameView JPanel
+     * This method creates a nameView JPanel where the user can see its active plant's name
+     * and species
+     */
     public JPanel nameView()
     {
         JPanel nameView = new JPanel();
@@ -110,6 +128,12 @@ public class PlantPanel extends JPanel {
         return nameView;
     }
 
+    /**
+     * @author Elvira Grubb
+     * @return A PlantCare JPanel
+     * This method creates a plantCare JPanel that shows the healthbar and buttons to
+     * take care of the user's active plant
+     */
     private JPanel plantCare()
     {
         JPanel plantCare = new JPanel();

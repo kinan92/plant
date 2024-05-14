@@ -39,13 +39,6 @@ public class ChoosePlantPanel extends JPanel {
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
 
-        //Creates a scrollbar to enable scrolling for the plants
-        /*JScrollPane scroll = new JScrollPane(
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
-        );
-        add(scroll);*/
-
         //Adds plants JPanel with a scrollbar
         JPanel plants = plants();
         JScrollPane scroller = new JScrollPane(plants);

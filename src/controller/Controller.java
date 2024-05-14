@@ -8,9 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
 import boundary.PlantView;
@@ -183,7 +181,7 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		mainFrame.addChoosePlantView(plantImage, plantImageHover);
+		mainFrame.addChoosePlantPanel(plantImage, plantImageHover);
 	}
 
 	public void showMainMenu()

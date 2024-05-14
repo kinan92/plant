@@ -67,6 +67,10 @@ public class PlantPanel extends JPanel {
         this.add(plantCare, c);
     }
 
+    public JProgressBar getWaterBar(){
+        return this.waterBar;
+    }
+
     /**
      * @author Elvira Grubb
      * @return JLayeredPane plantWindow, a window where the user can see its active plant

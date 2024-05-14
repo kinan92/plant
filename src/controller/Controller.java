@@ -57,21 +57,6 @@ public class Controller {
 		showPlantView();
 	}
 
-	public void pausTime(){
-		if(!isPaused){
-			isPaused = true;
-			stopAgeTimer();
-			System.out.println("Tid är pausad");
-		}
-	}
-
-	public void resumeTime(){
-		if (isPaused){
-			isPaused = false;
-			startAgeTimer();
-			System.out.println("Tiden återupptas");
-		}
-	}
 	public void stopAgeTimer(){
 		if (ageTimer != null){
 			ageTimer.stop();
@@ -114,8 +99,6 @@ public class Controller {
 		}
 	}
 
-
-
 	private void test()
 	{
 		for (PlantType pt : plantTypes)
@@ -136,7 +119,6 @@ public class Controller {
 			}
 		});
 		waterDecreaseTimer.start();
-
 	}
 
 	public void stopWaterDecreaseTimer(){
@@ -242,18 +224,18 @@ public class Controller {
 			System.out.println("Skipped time requires a positive number of hours");
 			return;
 		}
-
-		for (Plant plant : listOfPlants){
-			int ageIncrement = hours / 24;
-			plant.incrementAge(ageIncrement);
-
-            plant.decreaseWaterLevel(hours);
-
-			adjustPlantBasedOnWaterLevel(plant);
-		}
+		LocalDateTime newCreationTime = plant.getDateAndTime().plusHours(hours);
+		plant.setDateAndTime(newCreationTime);
+		int ageIncrement = hours / 24;
+		plant.incrementAge(ageIncrement);
+		plant.decreaseWaterLevel(1);
+		adjustPlantBasedOnWaterLevel(plant);
+		maingui.updateElapsedTime();
 
 		notifyTimeSkipped(hours);
 	}
+
+
 
 	public ArrayList<PlantType> getPlantTypes()
 	{
@@ -278,7 +260,7 @@ public class Controller {
 		for (int i = 0; i < listOfPlants.size(); i++){
 			Plant plant = listOfPlants.get(i);
 			if(plant != null) {
-				plant.decreaseWaterLevel(10);
+				plant.decreaseWaterLevel(1);
 			}
 		}
 	}

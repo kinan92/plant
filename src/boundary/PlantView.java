@@ -1,14 +1,17 @@
 package boundary;
 
 import controller.Controller;
-import javafx.application.Platform;
-import javafx.stage.Stage;
+import entity.Plant;
+//import javafx.application.Platform;
+//import javafx.stage.Stage;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class PlantView extends JPanel {
 	private int width;
@@ -17,7 +20,10 @@ public class PlantView extends JPanel {
 	boolean soundEffectSetting;
 	private Controller controller;
 	private SettingsView settingsView;
+	private Timer updateTimer;
 	private SideButtons sideButtons;
+	private JLabel creationTimeLabel;
+	private Plant plant;
 	private WidgetJavaFXApplication javaFXApp;
 	private static boolean isJavaFXInitialized = false;
 
@@ -29,15 +35,21 @@ public class PlantView extends JPanel {
 	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
 	 * active plant, relevant information about the plant and buttons for taking care of the plant
 	 */
-	public PlantView(int width, int height, Controller controller) {
+	public PlantView(int width, int height, Controller controller, Plant plant) {
 		super(null);
 		this.width = width;
 		this.height = height;
 		this.controller = controller;
 		soundEffectSetting = true;
+		this.plant = plant;
 		this.setSize(width, height);
 		BorderLayout borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);
+
+		creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
+		add(creationTimeLabel, BorderLayout.NORTH);
+		startUpdateTimer();
+		updateElapsedTime();
 
 		plantPanel = new PlantPanel(width, height, this);
 		add(plantPanel, BorderLayout.WEST);
@@ -85,18 +97,52 @@ public class PlantView extends JPanel {
 		System.out.println("Widget pressed.");
 	}
 
+	public void startUpdateTimer(){
+		updateTimer = new Timer(1000, e -> updateElapsedTime());
+		updateTimer.start();
+	}
+	public void updateElapsedTime(){
+		if (plant != null){
+			LocalDateTime creationTime = plant.getDateAndTime();
+			LocalDateTime now = LocalDateTime.now();
+			Duration duration = Duration.between(creationTime, now);
+
+			long days = duration.toDays();
+			long hours = duration.toHours() % 24;
+			long minutes = duration.toMinutes() % 60;
+			long seconds = duration.getSeconds() % 60;
+
+			creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
+		}
+	}
+
 	// Method will be called when the Skip Hour button is pressed
 	// Method is a work in progress, functionality will be added later
-	public void skipHourPressed() {
-		System.out.println("Skip hour pressed.");
-		if (soundEffectSetting) {
+	public void skipHourPressed()
+	{
+		int hoursToSkip = 1;
+		Plant currentPlant = controller.getPlant();
+		if (currentPlant != null){
+			LocalDateTime newCreationTime = currentPlant.getDateAndTime().minusHours(hoursToSkip);
+			controller.skipTime(hoursToSkip);
+			updatePlantDetails(currentPlant);
+		} else {
+			System.out.println("Error: No current plant found");
+		}
+
+		if (soundEffectSetting)
+		{
 			buttonPressedSoundEffect();
 		}
-		/*
-		 * int hoursToSkip = 1; controller.skipTime(hoursToSkip);
-		 * System.out.println("Skipped " + hoursToSkip + " hour(s).");
-		 * 
-		 */
+	}
+
+	public void updatePlantDetails(Plant plant){
+		this.plant = plant;
+		creationTimeLabel.setText("Created at: " + plant.getDateAndTime().toString());
+		JProgressBar waterBar = plantPanel.getWaterBar();
+		waterBar.setValue(plant.getWaterLevel());
+		waterBar.repaint();
+		updateElapsedTime();
 	}
 
 	// Method used when Vacation button is pressed
@@ -228,10 +274,12 @@ public class PlantView extends JPanel {
 	public SideButtons getSideButtonsClass() {
 		return sideButtons;
 	}
-
+/*
 	public WidgetJavaFXApplication getJavaFXAppClass() {
 		return javaFXApp;
 	}
+
+ */
 	
 	/**
 	 * This method responsible for JavaFX ToolKit if the ToolKit is not itialized the Platform will start 

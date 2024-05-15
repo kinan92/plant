@@ -55,16 +55,6 @@ public class Controller {
 		mainFrame.getPlantView().updatePlantDetails(plant);
 	}
 
-	public void stopAgeTimer(){
-		if (ageTimer != null){
-			ageTimer.stop();
-			ageTimer = null;
-		}
-		if(waterDecreaseTimer != null){
-			waterDecreaseTimer.stop();
-			waterDecreaseTimer = null;
-		}
-	}
 
 	private void startAgeTimer(){
 		if (ageTimer == null){
@@ -88,12 +78,6 @@ public class Controller {
 				}
 			});
 			waterDecreaseTimer.start();
-		}
-	}
-
-	private void updateAge(){
-		for (Plant plant : listOfPlants){
-			plant.incrementAge(1);
 		}
 	}
 
@@ -136,21 +120,9 @@ public class Controller {
 		return plant.getWaterLevel();
 	}
 
-	private void adjustPlantBasedOnWaterLevel(Plant plant){
-		if (plant.getWaterLevel() < 10){
-			System.out.println(plant.getName() + " needs water");
-			// Add additional logic for low water levels
-		} else if (plant.getWaterLevel() > 100){
-			System.out.println(plant.getName() + " is overwatered");
-			// Add additional logic for overwatered plants
-		}
-	}
-
 	private void notifyTimeSkipped(int hours){
 		System.out.println("Time skipped by " + hours + " hours.");
 	}
-
-
 	public void choosePlantFrame()
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();

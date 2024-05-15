@@ -6,6 +6,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+import static com.sun.javafx.iio.common.ImageTools.scaleImage;
+
 public class PlantPanel extends JPanel {
     private int width;
     private int height;
@@ -21,6 +23,7 @@ public class PlantPanel extends JPanel {
     private JLayeredPane plantWindow;
     private JLabel sparkle;
     private JLabel creationTimeLabel;
+    private JLabel plantImageLabel;
 
     /**
      * @author Elvira Grubb
@@ -37,10 +40,11 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
-        currentPlant = plantView.getCurrentPlant();
+        this.currentPlant = scaleImage(plantView.getCurrentPlant(), 256, 256);
         currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
+
 
         //Creates nameView panel and adds with constraints
         this.add(nameView());
@@ -65,7 +69,7 @@ public class PlantPanel extends JPanel {
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
     }
@@ -87,8 +91,8 @@ public class PlantPanel extends JPanel {
         plantWindow.setBounds(0, 0, 256, 320);
         plantWindow.setBackground(Color.ORANGE);
 
-        JLabel plantImage = new JLabel(currentPlant);
-        plantImage.setBounds(0, 0, 256, 320);
+        plantImageLabel = new JLabel(currentPlant);
+        plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
         JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
@@ -97,7 +101,7 @@ public class PlantPanel extends JPanel {
         sparkle.setBounds(0, 0, 256, 320);
 
         plantWindow.add(sparkle, 1);
-        plantWindow.add(plantImage, 2);
+        plantWindow.add(plantImageLabel, 2);
         plantWindow.add(plantPot, 3);
         plantWindow.add(plantBackground, 4);
         return plantWindow;
@@ -167,6 +171,7 @@ public class PlantPanel extends JPanel {
         c.insets = new Insets(0, 0, 0, 0);
         plantCare.add(waterPlantButton, c);
 
+
         waterBar = new JProgressBar(0, 100);
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
         waterBar.setValue(currentPlantWaterLevel);
@@ -176,6 +181,18 @@ public class PlantPanel extends JPanel {
         plantCare.add(waterBar, c);
 
         return plantCare;
+    }
+
+    public void updatePlantImage(ImageIcon newImage){
+        this.currentPlant = scaleImage(newImage, 256, 256);
+        plantImageLabel.setIcon(this.currentPlant);
+        repaint();
+    }
+
+    private ImageIcon scaleImage(ImageIcon icon, int width, int height){
+        Image image = icon.getImage();
+        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(scaledImage);
     }
 
     /**

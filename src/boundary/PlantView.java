@@ -141,6 +141,7 @@ public class PlantView extends JPanel {
 		this.plant = plant;
 		updateElapsedTime();
 		plantPanel.updateWaterLevel(plant.getWaterLevel());
+		plantPanel.updatePlantImage(plant.getImage());
 	}
 
 	// Method used when Vacation button is pressed
@@ -171,6 +172,7 @@ public class PlantView extends JPanel {
 			System.out.println("Water pressed.");
 			controller.waterPlant();
 			plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
+			updatePlantDetails(controller.getPlant());
 			System.out.println("Water level: " + controller.getPlantWaterLevel());
 		} catch (NullPointerException e) {
 			// JOptionPane.showMessageDialog(waterPlant, "No plant exists!");

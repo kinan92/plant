@@ -35,11 +35,16 @@ public class Plant {
 	}
 
 	public void waterPlant(){
-		waterLevel += WATER_INCREMENT;
+		if (waterLevel < 100){
+			waterLevel += WATER_INCREMENT;
+			updateState();
+		}
+
 	}
 
 	public void incrementAge(int age){
 		this.age += age;
+		updateState();
 	}
 
 
@@ -53,7 +58,7 @@ public class Plant {
 	public void updateState(){
 		if (waterLevel <= 0){
 			setState(PlantStateEnum.dead);
-		} else if (age >= 5){
+		} else if (waterLevel >= 75){
 			setState(PlantStateEnum.big);
 		} else {
 			setState(PlantStateEnum.little);
@@ -62,7 +67,17 @@ public class Plant {
 	}
 
 	private void updateImage(){
-
+		switch (state){
+			case little:
+				this.image = type.getLittlePlantImage();
+				break;
+			case big:
+				this.image = type.getGrownPlantImage();
+				break;
+			case dead:
+				this.image = type.getDeadPlantImage();
+				break;
+		}
 	}
 
 

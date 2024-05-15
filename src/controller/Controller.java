@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
-import boundary.PlantView;
 import java.util.Random;
 
 import javax.swing.*;
@@ -36,8 +35,8 @@ public class Controller {
 		/*Chinese Money Plant
 		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
 		listOfPlants.add(plant);*/
-		// startWaterDecreaseTimer();
-		// startAgeTimer();
+		startWaterDecreaseTimer();
+		startAgeTimer();
 	}
 
 	public void createPlant(int i) {
@@ -129,6 +128,8 @@ public class Controller {
 
 	public void waterPlant(){
 		plant.waterPlant();
+		mainFrame.getPlantView().updatePlantDetails(plant);
+
 	}
 	// Gets the current plant water level
 	public int getPlantWaterLevel(){
@@ -228,7 +229,9 @@ public class Controller {
 		int ageIncrement = hours / 24;
 		plant.incrementAge(ageIncrement);
 		plant.decreaseWaterLevel(1);
+		plant.updateState();
 		mainFrame.getPlantView().updateElapsedTime();
+		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
 	}
 

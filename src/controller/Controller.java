@@ -20,7 +20,6 @@ public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
-	PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	private Timer waterDecreaseTimer;
@@ -32,7 +31,6 @@ public class Controller {
 		//this.window = new MainMenu(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
-
 		loadPlantTypes();
 		test();
 		/*Chinese Money Plant
@@ -55,6 +53,7 @@ public class Controller {
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
 		showPlantView();
+		mainFrame.getPlantView().updatePlantDetails(plant);
 	}
 
 	public void stopAgeTimer(){
@@ -224,14 +223,12 @@ public class Controller {
 			System.out.println("Skipped time requires a positive number of hours");
 			return;
 		}
-		LocalDateTime newCreationTime = plant.getDateAndTime().plusHours(hours);
+		LocalDateTime newCreationTime = plant.getDateAndTime().minusHours(hours);
 		plant.setDateAndTime(newCreationTime);
 		int ageIncrement = hours / 24;
 		plant.incrementAge(ageIncrement);
 		plant.decreaseWaterLevel(1);
-		adjustPlantBasedOnWaterLevel(plant);
-		maingui.updateElapsedTime();
-
+		mainFrame.getPlantView().updateElapsedTime();
 		notifyTimeSkipped(hours);
 	}
 

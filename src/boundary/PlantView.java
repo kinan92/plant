@@ -2,8 +2,10 @@ package boundary;
 
 import controller.Controller;
 import entity.Plant;
-//import javafx.application.Platform;
-//import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.stage.Stage;
+import javafx.application.Platform;
+import javafx.stage.Stage;
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -35,13 +37,12 @@ public class PlantView extends JPanel {
 	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
 	 * active plant, relevant information about the plant and buttons for taking care of the plant
 	 */
-	public PlantView(int width, int height, Controller controller, Plant plant) {
+	public PlantView(int width, int height, Controller controller) {
 		super(null);
 		this.width = width;
 		this.height = height;
 		this.controller = controller;
 		soundEffectSetting = true;
-		this.plant = plant;
 		this.setSize(width, height);
 		BorderLayout borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);
@@ -62,6 +63,7 @@ public class PlantView extends JPanel {
 		checkJavaFXToolKit();
 
 	}
+
 
 	// Method that is called when the Plant Collection button is pressed
 	// Method is a work in progress and currently has no functionality.
@@ -123,7 +125,6 @@ public class PlantView extends JPanel {
 		int hoursToSkip = 1;
 		Plant currentPlant = controller.getPlant();
 		if (currentPlant != null){
-			LocalDateTime newCreationTime = currentPlant.getDateAndTime().minusHours(hoursToSkip);
 			controller.skipTime(hoursToSkip);
 			updatePlantDetails(currentPlant);
 		} else {
@@ -138,11 +139,8 @@ public class PlantView extends JPanel {
 
 	public void updatePlantDetails(Plant plant){
 		this.plant = plant;
-		creationTimeLabel.setText("Created at: " + plant.getDateAndTime().toString());
-		JProgressBar waterBar = plantPanel.getWaterBar();
-		waterBar.setValue(plant.getWaterLevel());
-		waterBar.repaint();
 		updateElapsedTime();
+		plantPanel.updateWaterLevel(plant.getWaterLevel());
 	}
 
 	// Method used when Vacation button is pressed
@@ -274,12 +272,12 @@ public class PlantView extends JPanel {
 	public SideButtons getSideButtonsClass() {
 		return sideButtons;
 	}
-/*
+
 	public WidgetJavaFXApplication getJavaFXAppClass() {
 		return javaFXApp;
 	}
 
- */
+
 	
 	/**
 	 * This method responsible for JavaFX ToolKit if the ToolKit is not itialized the Platform will start 

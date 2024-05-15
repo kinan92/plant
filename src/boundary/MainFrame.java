@@ -46,6 +46,10 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
+    public PlantView getPlantView(){
+        return plantView;
+    }
+
     /**
      * @author Elvira Grubb
      * @param plantImage An ArrayList of all PlantType images

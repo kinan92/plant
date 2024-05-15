@@ -47,6 +47,22 @@ public class Plant {
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}
+		updateState();
+	}
+
+	public void updateState(){
+		if (waterLevel <= 0){
+			setState(PlantStateEnum.dead);
+		} else if (age >= 5){
+			setState(PlantStateEnum.big);
+		} else {
+			setState(PlantStateEnum.little);
+		}
+		updateImage();
+	}
+
+	private void updateImage(){
+
 	}
 
 

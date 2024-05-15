@@ -20,6 +20,7 @@ public class PlantPanel extends JPanel {
 	private JProgressBar waterBar;
     private JLayeredPane plantWindow;
     private JLabel sparkle;
+    private JLabel creationTimeLabel;
 
     /**
      * @author Elvira Grubb
@@ -56,7 +57,9 @@ public class PlantPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 2;
         JLayeredPane plantWindow = getPlantWindow();
+        creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
+        this.add(creationTimeLabel, c);
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;

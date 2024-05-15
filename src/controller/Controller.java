@@ -39,6 +39,12 @@ public class Controller {
 		startAgeTimer();
 	}
 
+	/**
+	 * Creates a new plant object based on the choice of the user
+	 * called by a boundary class
+	 * @param i int, the index of the chosen plant in the GUI
+	 * @author Petri Närhi
+	 * */
 	public void createPlant(int i) {
 		PlantType type = plantTypes.get(i);
 		String name;
@@ -168,10 +174,11 @@ public class Controller {
 	/**
 	 * Reads image file paths from a text file and returns an arraylist
 	 * can be used regardless of type of pictures
+	 * @param filename a String of the file path
 	 * @return arraylist of images
 	 * @author Petri Närhi
 	 * */
-	private ArrayList<ImageIcon> getImageListFromFile(String filename)
+	public ArrayList<ImageIcon> getImageListFromFile(String filename)
 	{
 		ArrayList<ImageIcon> imageList = new ArrayList<>();
 		try {
@@ -237,12 +244,23 @@ public class Controller {
 		}
 	}
 
-	//Getters and setters for plant to show and
-	// change the current plant that is shown in PlantView
+	/**
+	 * Gets the current plant
+	 * to show the current plant that is shown in PlantView
+	 * and to be able to use the plant's methods in various classes
+	 * @return Plant
+	 * @author Petri Närhi
+	 * */
 	public Plant getPlant() {
 		return plant;
 	}
 
+	/**
+	 * Sets the current plant
+	 * to change the current plant that is shown in PlantView
+	 * @param plant the plant to replace the current plant
+	 * @author Petri Närhi
+	 * */
 	public void setPlant(Plant plant) {
 		this.plant = plant;
 	}

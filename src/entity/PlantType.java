@@ -5,8 +5,8 @@ import javax.swing.*;
 /**
  * Stores the plant data regarding generic information
  * (generic = same for all plants of the type rather than specific plant)
- * @author Elvira Grubb (main)
- * @author Petri Närhi (edits)
+ * @author Elvira Grubb
+ * @author Petri Närhi
  * */
 
 public class PlantType {
@@ -19,6 +19,19 @@ public class PlantType {
     private ImageIcon plantImageButtonHover;
     private String plantInformation;
 
+    /**
+     * Constructor for PlantType
+     * @param plantTypeName String, species scientific name
+     * @param plantTypeNameAlternative String, casual name
+     * @param grownPlantImage String, image path for the grown plant
+     * @param littlePlantImage String, image path for the little plant
+     * @param deadPlantImage String, image path for the dead plant
+     * @param plantImageButton String, image path for corresponding button
+     * @param plantImageButtonHover String, image path for hover button when mouse hovering
+     * @param plantInformation String, facts about the species
+     * @author Elvira Grubb
+     * @author Petri Närhi
+     * */
     public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation, String littlePlantImage, String deadPlantImage)
     {
         this.plantTypeName = plantTypeName;
@@ -39,6 +52,11 @@ public class PlantType {
         return  plantTypeNameAlternative;
     }
 
+    /**
+     * Getter for the grown plant image
+     * @return grownPlantImage ImageIcon
+     * @author Petri Närhi
+     * */
     public ImageIcon getGrownPlantImage()
     {
         return grownPlantImage;
@@ -59,15 +77,29 @@ public class PlantType {
         return plantImageButtonHover;
     }
 
+    /**
+     * Getter for the little plant image
+     * @return littlePlantImage ImageIcon
+     * @author Petri Närhi
+     * */
     public ImageIcon getLittlePlantImage() {
         return littlePlantImage;
     }
 
+    /**
+     * Getter for the dead plant image
+     * @return deadPlantImage ImageIcon
+     * @author Petri Närhi
+     * */
     public ImageIcon getDeadPlantImage() {
         return deadPlantImage;
     }
 
-    //for test purposes
+    /**
+     * To String method for test purposes
+     * @return String toString
+     * @author Petri Närhi
+     * */
     public String toString() {
         return ("Type: " + plantTypeName + ", aka " + plantTypeNameAlternative + ". " + plantInformation);
     }

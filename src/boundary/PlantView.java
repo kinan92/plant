@@ -224,8 +224,15 @@ public class PlantView extends JPanel {
 		return soundEffectSetting;
 	}
 
-	// for display in the PlantPanel
-	public ImageIcon getCurrentPlant() {
+	/**
+	 * Gets the current plant image from the current plant in controller
+	 * if no plant exists, returns a default empty image
+	 * for display in the PlantPanel
+	 * @return ImageIcon current plant
+	 * @author Petri Närhi
+	 * */
+	public ImageIcon getCurrentPlant()
+	{
 		try {
 			return controller.getPlant().getImage();
 		} catch (NullPointerException e) {
@@ -233,7 +240,15 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	public ImageIcon getCurrentPot() {
+	/**
+	 * Gets the current pot image from the current plant in controller
+	 * if no plant exists, returns a default empty image
+	 * for display in the PlantPanel
+	 * @return ImageIcon current pot
+	 * @author Petri Närhi
+	 * */
+	public ImageIcon getCurrentPot()
+	{
 		try {
 			return controller.getPlant().getPot();
 		} catch (NullPointerException e) {
@@ -241,7 +256,15 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	public String getCurrentPlantName() {
+	/**
+	 * Gets the current plant name from the current plant in controller
+	 * if no plant exists, returns a text that no plant is created
+	 * for display in the PlantPanel
+	 * @return String plant name
+	 * @author Petri Närhi
+	 * */
+	public String getCurrentPlantName()
+	{
 		try {
 			return controller.getPlant().getName();
 		} catch (NullPointerException e) {
@@ -249,7 +272,15 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	public String getCurrentPlantSpecies() {
+	/**
+	 * Gets the current plant type from the current plant in controller
+	 * if no plant exists, returns a default text
+	 * for display in the PlantPanel
+	 * @return String current plant species
+	 * @author Petri Närhi
+	 * */
+	public String getCurrentPlantSpecies()
+	{
 		try {
 			String species = controller.getPlant().getType().getPlantTypeNameAlternative();
 			return ("Species: " + species);
@@ -258,7 +289,15 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	public int getCurrentPlantWaterLevel() {
+	/**
+	 * Gets the current water level from the current plant in controller
+	 * if no plant exists, returns 0
+	 * for display in the PlantPanel
+	 * @return int plant water level
+	 * @author Petri Närhi
+	 * */
+	public int getCurrentPlantWaterLevel()
+	{
 		try {
 			return controller.getPlant().getWaterLevel();
 		} catch (NullPointerException e) {

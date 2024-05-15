@@ -31,7 +31,7 @@ public class ChoosePlantPanel extends JPanel {
         System.out.println("You're in ChoosePlantFrame");
         this.plantBtnImages = plantBtnImages;
         this.plantBtnHoverImages = plantBtnHoverImages;
-        //this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
+        this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
         this.width = width;
         this.height = height;
 
@@ -87,7 +87,10 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * @author Petri Närhi */
+     * Adds a navigation panel with a back button
+     * @return JPanel the navigation panel
+     * @author Petri Närhi
+     * */
     public JPanel navigation()
     {
         JPanel navigation = new JPanel();
@@ -116,7 +119,9 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * @author Petri Närhi */
+     * Called when actionlistener notices the back button has been pressed
+     * @author Petri Närhi
+     * */
     private void backPressed()
     {
         controller.showMainMenu();

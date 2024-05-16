@@ -184,7 +184,7 @@ public class PlantPanel extends JPanel {
     }
 
     public void updatePlantImage(ImageIcon newImage){
-        this.currentPlant = scaleImage(newImage, 256, 256);
+        this.currentPlant = newImage;
         plantImageLabel.setIcon(this.currentPlant);
         repaint();
     }

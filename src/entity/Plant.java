@@ -16,7 +16,7 @@ public class Plant {
 	private final int WATER_DECREMENT = 1;
 	private PlantType type;
 	private PlantStateEnum state;
-	private ImageIcon pot;
+	private Pot pot;
 
 	/**
 	 * Constructor for plant
@@ -30,7 +30,7 @@ public class Plant {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime) {
+	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -39,7 +39,7 @@ public class Plant {
 		this.type = type;
 		this.state = state;
 		updateStateImage(state);
-		this.pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
+		this.pot = pot; //läggs till som parameter sen när vi har ett "välj kruka"-fönster
 	}
 
 	/**
@@ -173,8 +173,9 @@ public class Plant {
 	 * @return pot ImageIcon
 	 * @author Petri Närhi
 	 * */
-	public ImageIcon getPot() {
-		return pot;
+	public ImageIcon getPot()
+	{
+		return pot.getPotImage();
 	}
 
 	/**
@@ -182,9 +183,11 @@ public class Plant {
 	 * @param pot ImageIcon
 	 * @author Petri Närhi
 	 * */
-	public void setPot(ImageIcon pot) {
-		this.pot = pot;
+	public void setPot(ImageIcon pot)
+	{
+		//this.pot = pot;
 	}
+
 
 	/**
 	 * To String method for test purposes

@@ -56,11 +56,11 @@ public class MainFrame extends JFrame {
      * @param plantImageHover An ArrayList of all PlantType hover images
      * This method clears the MainFrame and adds ChoosePlantPanel
      */
-    public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
+    public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover, ArrayList<ImageIcon> potImage, ArrayList<ImageIcon> potImageHover)
     {
         this.getContentPane().removeAll();
         this.revalidate();
-        choosePlantPanel = new ChoosePlantPanel(controller, plantImage, plantImageHover, width, height);
+        choosePlantPanel = new ChoosePlantPanel(controller, plantImage, plantImageHover, potImage, potImageHover, width, height);
         this.setContentPane(choosePlantPanel);
         this.repaint();
     }

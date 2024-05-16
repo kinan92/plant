@@ -14,6 +14,10 @@ public class ChoosePlantPanel extends JPanel {
     private ArrayList<ImageIcon> plantBtnHoverImages;
     private ArrayList<ImageIcon> potBtnImages;
     private ArrayList<ImageIcon> potBtnHoverImages;
+    private ArrayList<JButton> plantButtons = new ArrayList<>();
+    private ArrayList<JButton> potButtons = new ArrayList<>();
+    private int currentSelectedPlant;
+    private int currentSelectedPot;
 
     /**
      * @author Elvira Grubb
@@ -24,38 +28,26 @@ public class ChoosePlantPanel extends JPanel {
      * @param height The height of the MainFrame
      * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
      */
-    public ChoosePlantPanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
+    public ChoosePlantPanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, ArrayList<ImageIcon> potBtnImages, ArrayList<ImageIcon> potBtnHoverImages, int width, int height)
     {
         super(null);
         this.controller = controller;
         System.out.println("You're in ChoosePlantFrame");
         this.plantBtnImages = plantBtnImages;
         this.plantBtnHoverImages = plantBtnHoverImages;
-        this.potBtnImages = controller.getImageListFromFile("files/potButtons.txt");
+        this.potBtnImages = potBtnImages;
+        this.potBtnHoverImages = potBtnHoverImages;
         this.width = width;
         this.height = height;
+        currentSelectedPlant = -1;
+        currentSelectedPot = -1;
 
         setLayout(new BorderLayout());
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
 
-       /* JScrollPane scroll = new JScrollPane(
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
-        );
-        add(scroll);*/
-
-        JPanel plants = plants();
-        JScrollPane scroller = new JScrollPane(plants);
-        scroller.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        scroller.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_NEVER);
-        add(scroller, BorderLayout.CENTER);
-
-
-        //Adds plants JPanel with a scrollbar
-        /*JPanel plantAndPotsPanel = plantsAndPotsPanel();
-        JScrollPane scroller = new JScrollPane(plantAndPotsPanel);
-        this.add(scroller, BorderLayout.CENTER);*/
+        JPanel plantAndPotPanel = plantAndPotPanel();
+        this.add(plantAndPotPanel, BorderLayout.CENTER);
 
         //Adds navigation JPanel
         JPanel navigation = navigation();
@@ -70,13 +62,24 @@ public class ChoosePlantPanel extends JPanel {
      * Creates a JPanel that adds all PlantTypes by looping through the PlantButton ArrayList to
      * create buttons of each PlantType
      */
-    public JPanel plants()
+    public JPanel plantAndPotPanel()
     {
         JPanel plants = new JPanel();
-        plants.setLayout(new GridLayout(1, plantBtnImages.size()));
-        plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320 / 2));
+        plants.setLayout(new GridLayout(2, 1));
+        plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320));
+        plants.add(plantPanel());
+        plants.add(potPanel());
 
-        //Loops through plantImages and creates buttons with the images
+        return plants;
+    }
+
+    public JScrollPane plantPanel()
+    {
+        JPanel plantPanel = new JPanel();
+        plantPanel.setBackground(new java.awt.Color(184, 200, 177));
+        plantPanel.setLayout(new GridLayout(1, plantBtnImages.size()));
+        plantPanel.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320 / 2));
+
         for (int i = 0; i < plantBtnImages.size(); i++)
         {
             JButton plantBtn = new JButton();
@@ -90,13 +93,46 @@ public class ChoosePlantPanel extends JPanel {
             plantBtn.setRolloverEnabled(true);
             plantBtn.setRolloverIcon(shadow);
 
+            plantButtons.add(plantBtn);
             //ActionListener that will return the ArrayList number when the plant is pressed
             int plantNumber = i;
             plantBtn.addActionListener(l -> plantPressed(plantNumber));
-            plants.add(plantBtn);
+            plantPanel.add(plantBtn);
         }
-        
-        return plants;
+
+        JScrollPane scrollPlantPanel = new JScrollPane(plantPanel);
+        return scrollPlantPanel;
+    }
+
+    public JScrollPane potPanel()
+    {
+        JPanel potPanel = new JPanel();
+        potPanel.setBackground(new java.awt.Color(184, 200, 177));
+        potPanel.setLayout(new GridLayout(1, potBtnImages.size()));
+        potPanel.setPreferredSize(new Dimension(potBtnImages.size() * 132, 320 / 2));
+
+        for (int i = 0; i < potBtnImages.size(); i++)
+        {
+            JButton plantBtn = new JButton();
+            plantBtn.setSize(new Dimension(132, 160));
+            plantBtn.setBorder(BorderFactory.createEmptyBorder());
+            plantBtn.setContentAreaFilled(false);
+            plantBtn.setIcon(potBtnImages.get(i));
+            ImageIcon shadow = potBtnHoverImages.get(i);
+
+            plantBtn.setFocusPainted(false);
+            plantBtn.setRolloverEnabled(true);
+            plantBtn.setRolloverIcon(shadow);
+
+            potButtons.add(plantBtn);
+            //ActionListener that will return the ArrayList number when the plant is pressed
+            int potNumber = i;
+            plantBtn.addActionListener(l -> potPressed(potNumber));
+            potPanel.add(plantBtn);
+        }
+
+        JScrollPane scrollPotPanel = new JScrollPane(potPanel);
+        return scrollPotPanel;
     }
 
     /**
@@ -114,28 +150,24 @@ public class ChoosePlantPanel extends JPanel {
         JButton backBtn = new JButton();
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setContentAreaFilled(false);
-
-        ImageIcon backButton = new ImageIcon("images/buttons/back.png"); // load the image to a imageIcon
-        Image image = backButton.getImage(); // transform it
-        Image officialBackButton = image.getScaledInstance(35, 35,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        backButton = new ImageIcon(officialBackButton);
-        backBtn.setIcon(backButton);
+        backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
 
 
         backBtn.setFocusPainted(false);
         backBtn.setRolloverEnabled(true);
 
-        ImageIcon backButtonHover = new ImageIcon("images/buttons/back-hover.png"); // load the image to a imageIcon
-        Image imageHover = backButton.getImage(); // transform it
-        Image officialBackButtonHover = image.getScaledInstance(35, 35,  java.awt.Image.SCALE_SMOOTH); // scale it the smooth way
-        backButtonHover = new ImageIcon(officialBackButton);
-        backBtn.setIcon(backButton);
-        backBtn.setRolloverIcon(backButtonHover);
+        backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
 
         //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(100,100);
+
+        JButton confirm = new JButton("Confirm");
+        confirm.setPreferredSize(new Dimension(135, 35));
+        confirm.addActionListener(l -> confirmButtonpressed());
+
         navigation.add(backBtn);
+        navigation.add(confirm);
         navigation.setVisible(true);
 
         return navigation;
@@ -150,6 +182,24 @@ public class ChoosePlantPanel extends JPanel {
         controller.showMainMenu();
     }
 
+    private void confirmButtonpressed()
+    {
+        if (currentSelectedPlant == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Please select a plant.");
+        }
+
+        else if (currentSelectedPot == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Please select a pot.");
+        }
+
+        else
+        {
+            controller.createPlant(currentSelectedPlant, currentSelectedPot);
+        }
+    }
+
     /**
      * @author Elvira Grubb
      * @param plant An int corresponding to the PlantTypes
@@ -159,7 +209,23 @@ public class ChoosePlantPanel extends JPanel {
      */
     private void plantPressed(int plant)
     {
-        controller.createPlant(plant);
+        if (currentSelectedPlant != -1)
+        {
+            plantButtons.get(currentSelectedPlant).setIcon(plantBtnImages.get(currentSelectedPlant));
+        }
+        currentSelectedPlant = plant;
+        plantButtons.get(plant).setIcon(plantBtnHoverImages.get(plant));
         System.out.println(plant);
+    }
+
+    private void potPressed(int pot)
+    {
+        if (currentSelectedPot != -1)
+        {
+            potButtons.get(currentSelectedPot).setIcon(potBtnImages.get(currentSelectedPot));
+        }
+
+        currentSelectedPot = pot;
+        potButtons.get(pot).setIcon(potBtnHoverImages.get(pot));
     }
 }

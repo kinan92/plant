@@ -21,6 +21,7 @@ public class Controller {
 	private MainMenu window;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
+	ArrayList<Pot> pots = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
@@ -31,6 +32,7 @@ public class Controller {
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		loadPlantTypes();
+		loadPots();
 		test();
 		/*Chinese Money Plant
 		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
@@ -45,15 +47,16 @@ public class Controller {
 	 * @param i int, the index of the chosen plant in the GUI
 	 * @author Petri Närhi
 	 * */
-	public void createPlant(int i) {
-		PlantType type = plantTypes.get(i);
+	public void createPlant(int plantNumber, int potNumber) {
+		PlantType type = plantTypes.get(plantNumber);
 		String name;
 		do {
 			name = JOptionPane.showInputDialog("Give your plant a name!");
 		} while (name == null || name.isEmpty());
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime); //ny planta är alltid liten
+
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
@@ -87,6 +90,10 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * @author Elvira Grubb
+	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
+	 */
 	private void test()
 	{
 		for (PlantType pt : plantTypes)
@@ -133,6 +140,8 @@ public class Controller {
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
+		ArrayList<ImageIcon> potImage = new ArrayList<>();
+		ArrayList<ImageIcon> potImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)
@@ -141,7 +150,13 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		mainFrame.addChoosePlantPanel(plantImage, plantImageHover);
+		for (Pot p : pots)
+		{
+			potImage.add(p.getPotButton());
+			potImageHover.add(p.getPotButtonHoverImage());
+		}
+
+		mainFrame.addChoosePlantPanel(plantImage, plantImageHover, potImage, potImageHover);
 	}
 
 	public void showMainMenu()
@@ -149,7 +164,10 @@ public class Controller {
 		mainFrame.addMainMenu();
 	}
 
-	//Reads PlantTypes from the plantTypes textfile, creates an object of them and adds them to the plantTypes ArrayList
+	/**
+	 * @author Elvira Grubb
+	 * Reads PlantType information from a TextFile and creates PlantType objects from the information
+	 */
 	private void loadPlantTypes()
 	{
 		try {
@@ -163,6 +181,27 @@ public class Controller {
 
 				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
 				plantTypes.add(plantType);
+				string = br.readLine();
+			}
+			br.close();
+		} catch( IOException e ) {
+			System.out.println( "readPlantType: " + e );
+		}
+	}
+
+	private void loadPots()
+	{
+		try {
+			BufferedReader br = new BufferedReader( new FileReader("files/pot.txt"));
+			Pot pot;
+			String string = br.readLine();
+
+			while(string != null) {
+				String[] potInformation;
+				potInformation = string.split( "," );
+
+				pot = new Pot(potInformation[0], potInformation[1], potInformation[2]);
+				pots.add(pot);
 				string = br.readLine();
 			}
 			br.close();

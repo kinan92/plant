@@ -40,8 +40,8 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
-        this.currentPlant = scaleImage(plantView.getCurrentPlant(), 256, 256);
-        currentPot = plantView.getCurrentPot();
+        this.currentPlant = plantView.getCurrentPlant();
+        this.currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
 
@@ -95,7 +95,7 @@ public class PlantPanel extends JPanel {
         plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
-        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+        JLabel plantPot = new JLabel(currentPot);
         plantPot.setBounds(0, 0, 256, 320);
         sparkle = new JLabel();
         sparkle.setBounds(0, 0, 256, 320);

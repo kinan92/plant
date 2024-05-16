@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class MainFrame extends JFrame {
     private int width = 550;
     private int height = 450;
-    PlantView plantView;
+    private PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
 
@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(width, height));
         pack();
         setVisible(true);
+        addPlantView();
     }
 
     /**

@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
@@ -19,12 +20,14 @@ public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
 	private MainMenu window;
-	MainFrame mainFrame;
+	private MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	ArrayList<Pot> pots = new ArrayList<>();
-	private Timer waterDecreaseTimer;
-	private Timer ageTimer;
+	private Timer plantTimer;
+
 	private boolean isPaused = false;
+	private LocalDateTime pauseStartTime;
+	private Duration totalPausedDuration = Duration.ZERO;
 	private Random random = new Random();
 
 	public Controller() {
@@ -34,11 +37,7 @@ public class Controller {
 		loadPlantTypes();
 		loadPots();
 		test();
-		/*Chinese Money Plant
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
-		listOfPlants.add(plant);*/
-		startWaterDecreaseTimer();
-		startAgeTimer();
+		startPlantTimer();
 	}
 
 	/**
@@ -64,31 +63,61 @@ public class Controller {
 		mainFrame.getPlantView().updatePlantDetails(plant);
 	}
 
+	public void pausTime(){
+		if(!isPaused){
+			isPaused = true;
+			pauseStartTime = LocalDateTime.now();
+			stopPlantTimer();
+			System.out.println("Tid är pausad");
+		}
+	}
 
-	private void startAgeTimer(){
-		if (ageTimer == null){
-			ageTimer = new Timer(1000, new ActionListener() {
+	public void stopPlantTimer() {
+		if (plantTimer != null) {
+			plantTimer.stop();
+		}
+	}
+
+	public Duration getTotalPausedDuration(){
+		return totalPausedDuration;
+	}
+
+
+
+	public void resumeTime(){
+		if (isPaused){
+			isPaused = false;
+			Duration pauseDuration = Duration.between(pauseStartTime, LocalDateTime.now());
+			totalPausedDuration = totalPausedDuration.plus(pauseDuration);
+			startPlantTimer();
+			System.out.println("Tiden återupptas");
+		}
+	}
+
+	private void startPlantTimer(){
+		if (plantTimer == null){
+			plantTimer = new Timer(1000, new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if (!isPaused){
 						incrementAgeForALlPlants();
-					}
-				}
-			});
-			ageTimer.start();
-		}
-
-		if (waterDecreaseTimer == null){
-			waterDecreaseTimer = new Timer(6000, new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					if(!isPaused){
 						decreaseWaterLevelForAllPlants();
+						mainFrame.getPlantView().updateElapsedTime();
 					}
 				}
 			});
-			waterDecreaseTimer.start();
+		}
+		plantTimer.start();
+	}
+
+	private void updateAge(){
+		for (Plant plant : listOfPlants){
+			if (plant != null){
+				plant.incrementAge(1);
+			}
 		}
 	}
+
+
 
 	/**
 	 * @author Elvira Grubb
@@ -104,22 +133,6 @@ public class Controller {
 			System.out.println(pt.getPlantImageButton());
 			System.out.println(pt.getPlantInformation());
 			System.out.println();
-		}
-	}
-
-	public void startWaterDecreaseTimer(){
-		waterDecreaseTimer = new Timer(60000, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				plant.decreaseWaterLevel(1);
-			}
-		});
-		waterDecreaseTimer.start();
-	}
-
-	public void stopWaterDecreaseTimer(){
-		if (waterDecreaseTimer != null){
-			waterDecreaseTimer.stop();
-			waterDecreaseTimer = null;
 		}
 	}
 
@@ -292,6 +305,9 @@ public class Controller {
 	 * */
 	public Plant getPlant() {
 		return plant;
+	}
+	public boolean isPaused(){
+		return isPaused;
 	}
 
 	/**

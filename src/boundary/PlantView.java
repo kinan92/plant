@@ -22,12 +22,12 @@ public class PlantView extends JPanel {
 	boolean soundEffectSetting;
 	private Controller controller;
 	private SettingsView settingsView;
-	private Timer updateTimer;
 	private SideButtons sideButtons;
 	private JLabel creationTimeLabel;
 	private Plant plant;
 	private WidgetJavaFXApplication javaFXApp;
 	private static boolean isJavaFXInitialized = false;
+	private boolean isVacationMode = false;
 
 	/**
 	 * @author Elvira Grubb
@@ -49,7 +49,6 @@ public class PlantView extends JPanel {
 
 		creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
 		add(creationTimeLabel, BorderLayout.NORTH);
-		startUpdateTimer();
 		updateElapsedTime();
 
 		plantPanel = new PlantPanel(width, height, this);
@@ -99,13 +98,9 @@ public class PlantView extends JPanel {
 		System.out.println("Widget pressed.");
 	}
 
-	public void startUpdateTimer(){
-		updateTimer = new Timer(1000, e -> updateElapsedTime());
-		updateTimer.start();
-	}
 	public void updateElapsedTime(){
 		if (plant != null){
-			LocalDateTime creationTime = plant.getDateAndTime();
+			LocalDateTime creationTime = plant.getDateAndTime().plus(controller.getTotalPausedDuration());
 			LocalDateTime now = LocalDateTime.now();
 			Duration duration = Duration.between(creationTime, now);
 
@@ -117,6 +112,8 @@ public class PlantView extends JPanel {
 			creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
 		}
 	}
+
+
 
 	// Method will be called when the Skip Hour button is pressed
 	// Method is a work in progress, functionality will be added later
@@ -149,7 +146,15 @@ public class PlantView extends JPanel {
 	// When method is done this method will allow the user to set the program to
 	// vacation mode
 	public void vacationPressed() {
-		System.out.println("Vacation pressed.");
+		if (isVacationMode){
+			controller.resumeTime();
+			isVacationMode = false;
+			System.out.println("Vacation mode disabled, resuming time");
+		} else {
+			controller.pausTime();
+			isVacationMode = true;
+			System.out.println("Vacation mode enabled, pausing time");
+		}
 	}
 
 	/**
@@ -304,6 +309,8 @@ public class PlantView extends JPanel {
 			return 0;
 		}
 	}
+
+
 
 	
 	public PlantPanel getPlantPanelClass() {

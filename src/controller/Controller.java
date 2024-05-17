@@ -18,7 +18,6 @@ import javax.swing.*;
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
-	private MainMenu window;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	ArrayList<Pot> pots = new ArrayList<>();
@@ -28,15 +27,10 @@ public class Controller {
 	private Random random = new Random();
 
 	public Controller() {
-		//this.window = new MainMenu(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		loadPlantTypes();
 		loadPots();
-		test();
-		/*Chinese Money Plant
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
-		listOfPlants.add(plant);*/
 		startWaterDecreaseTimer();
 		startAgeTimer();
 	}
@@ -44,7 +38,7 @@ public class Controller {
 	/**
 	 * Creates a new plant object based on the choice of the user
 	 * called by a boundary class
-	 * @param i int, the index of the chosen plant in the GUI
+	 * @param plantNumber int, the index of the chosen plant in the GUI
 	 * @author Petri Närhi
 	 * */
 	public void createPlant(int plantNumber, int potNumber) {
@@ -93,23 +87,6 @@ public class Controller {
 		}
 	}
 
-	/**
-	 * @author Elvira Grubb
-	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
-	 */
-	private void test()
-	{
-		for (PlantType pt : plantTypes)
-		{
-			System.out.println(pt.getPlantTypeName());
-			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getGrownPlantImage());
-			System.out.println(pt.getPlantImageButton());
-			System.out.println(pt.getPlantInformation());
-			System.out.println();
-		}
-	}
-
 	public void startWaterDecreaseTimer(){
 		waterDecreaseTimer = new Timer(60000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -132,6 +109,7 @@ public class Controller {
 
 	}
 	// Gets the current plant water level
+	// Ta bort och fixa till där den används
 	public int getPlantWaterLevel(){
 		return plant.getWaterLevel();
 	}
@@ -213,33 +191,6 @@ public class Controller {
 		}
 	}
 
-	/**
-	 * Reads image file paths from a text file and returns an arraylist
-	 * can be used regardless of type of pictures
-	 * @param filename a String of the file path
-	 * @return arraylist of images
-	 * @author Petri Närhi
-	 * */
-	public ArrayList<ImageIcon> getImageListFromFile(String filename)
-	{
-		ArrayList<ImageIcon> imageList = new ArrayList<>();
-		try {
-			BufferedReader br = new BufferedReader( new FileReader(filename));
-			ImageIcon image;
-			String imagePath = br.readLine();
-
-			while(imagePath != null) {
-				image = new ImageIcon(imagePath);
-				imageList.add(image);
-				imagePath = br.readLine();
-			}
-			br.close();
-		} catch( IOException e ) {
-			System.out.println( "getImageList: " + e );
-		}
-		return imageList;
-	}
-
 	public void skipTime(int hours){
 		if (hours <= 0){
 			System.out.println("Skipped time requires a positive number of hours");
@@ -254,13 +205,6 @@ public class Controller {
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
-	}
-
-
-
-	public ArrayList<PlantType> getPlantTypes()
-	{
-		return plantTypes;
 	}
 
 	public void showPlantView()

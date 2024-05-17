@@ -4,12 +4,10 @@ import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.application.Platform;
-import javafx.stage.Stage;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -61,14 +59,13 @@ public class PlantView extends JPanel {
 		settingsView = new SettingsView(width, height, this);
 
 		checkJavaFXToolKit();
-
 	}
 
 
 	// Method that is called when the Plant Collection button is pressed
 	// Method is a work in progress and currently has no functionality.
 	// When functionality is added this method will open the user's Plant Storage
-	public void getPlantPressed() {
+	public void storagePressed() {
 		if (soundEffectSetting) {
 			buttonPressedSoundEffect();
 		}
@@ -230,7 +227,7 @@ public class PlantView extends JPanel {
 	 * @return ImageIcon current plant
 	 * @author Petri Närhi
 	 * */
-	public ImageIcon getCurrentPlant()
+	public ImageIcon getCurrentPlantImage()
 	{
 		try {
 			return controller.getPlant().getImage();

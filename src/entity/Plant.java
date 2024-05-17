@@ -57,11 +57,8 @@ public class Plant {
 	}
 
 	public void waterPlant(){
-		if (waterLevel < 100){
 			waterLevel += WATER_INCREMENT;
 			updateState();
-		}
-
 	}
 
 	public void incrementAge(int age){

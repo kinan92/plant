@@ -140,7 +140,6 @@ public class PlantView extends JPanel {
 	public void updatePlantDetails(Plant plant){
 		this.plant = plant;
 		updateElapsedTime();
-		plantPanel.updateWaterLevel(plant.getWaterLevel());
 		plantPanel.updatePlantImage(plant.getImage());
 	}
 

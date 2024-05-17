@@ -63,7 +63,7 @@ public class SideButtons extends JPanel {
 
         //Adds Plant Storage button to panel and adds actionlistener
         backgroundPanel.add(getPlant, c);
-        getPlant.addActionListener(l -> plantView.getPlantPressed());
+        getPlant.addActionListener(l -> plantView.storagePressed());
         getPlant.setRolloverEnabled(true);
         getPlant.setRolloverIcon(new ImageIcon("images/buttons/storage_hover.png"));
 

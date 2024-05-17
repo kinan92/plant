@@ -6,14 +6,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import static com.sun.javafx.iio.common.ImageTools.scaleImage;
-
 public class PlantPanel extends JPanel {
     private int width;
     private int height;
-    private JPanel plantPanel;
     private PlantView plantView;
-    private ImageIcon currentPlant;
+    private ImageIcon currentPlantImage;
     private ImageIcon currentPot;
     private String currentPlantName;
     private String currentPlantSpecies;
@@ -40,7 +37,7 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
-        this.currentPlant = plantView.getCurrentPlant();
+        this.currentPlantImage = plantView.getCurrentPlantImage();
         this.currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
@@ -74,10 +71,6 @@ public class PlantPanel extends JPanel {
         this.add(plantCare, c);
     }
 
-    public JProgressBar getWaterBar(){
-        return this.waterBar;
-    }
-
     /**
      * @author Elvira Grubb
      * @return JLayeredPane plantWindow, a window where the user can see its active plant
@@ -91,7 +84,7 @@ public class PlantPanel extends JPanel {
         plantWindow.setBounds(0, 0, 256, 320);
         plantWindow.setBackground(Color.ORANGE);
 
-        plantImageLabel = new JLabel(currentPlant);
+        plantImageLabel = new JLabel(currentPlantImage);
         plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
@@ -184,15 +177,9 @@ public class PlantPanel extends JPanel {
     }
 
     public void updatePlantImage(ImageIcon newImage){
-        this.currentPlant = newImage;
-        plantImageLabel.setIcon(this.currentPlant);
+        this.currentPlantImage = newImage;
+        plantImageLabel.setIcon(this.currentPlantImage);
         repaint();
-    }
-
-    private ImageIcon scaleImage(ImageIcon icon, int width, int height){
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
     }
 
     /**
@@ -279,5 +266,4 @@ public class PlantPanel extends JPanel {
     public JButton getWaterPlantButton() {
  		return waterPlantButton;
  	}
-
 }

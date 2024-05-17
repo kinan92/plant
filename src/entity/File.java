@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.function.Consumer;
 
-public class File  extends Thread{
+public class File  {
 	private Object objectFromTheFile = null;
 	private String fileName = "files\\data.dat";
 	private FileOutputStream datafile;

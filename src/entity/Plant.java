@@ -16,7 +16,7 @@ public class Plant {
 	private final int WATER_DECREMENT = 1;
 	private PlantType type;
 	private PlantStateEnum state;
-	private ImageIcon pot;
+	private Pot pot;
 
 	/**
 	 * Constructor for plant
@@ -30,7 +30,7 @@ public class Plant {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime) {
+	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
 		super();
 		this.name = name;
 		this.age = age;
@@ -39,13 +39,14 @@ public class Plant {
 		this.type = type;
 		this.state = state;
 		updateStateImage(state);
-		this.pot = new ImageIcon("images/pots/default_pot.png"); //läggs till som parameter sen när vi har ett "välj kruka"-fönster
+		this.pot = pot; //läggs till som parameter sen när vi har ett "välj kruka"-fönster
 	}
 
 	/**
 	 * Updates the image for the plant based on its state
 	 * @param state PlantStateEnum
 	 * @author Petri Närhi
+	 * @author Aleksander Augustyniak
 	 * */
 	public void updateStateImage(PlantStateEnum state)
 	{
@@ -57,11 +58,13 @@ public class Plant {
 	}
 
 	public void waterPlant(){
-		waterLevel += WATER_INCREMENT;
+			waterLevel += WATER_INCREMENT;
+			updateState();
 	}
 
 	public void incrementAge(int age){
 		this.age += age;
+		updateState();
 	}
 
 
@@ -69,8 +72,19 @@ public class Plant {
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}
+		updateState();
 	}
 
+	public void updateState(){
+		if (waterLevel <= 0){
+			setState(PlantStateEnum.dead);
+		} else if (waterLevel >= 75){
+			setState(PlantStateEnum.big);
+		} else {
+			setState(PlantStateEnum.little);
+		}
+		updateStateImage(getState());
+	}
 
 	public int getWaterLevel(){
 		return this.waterLevel;
@@ -142,8 +156,9 @@ public class Plant {
 	 * @return pot ImageIcon
 	 * @author Petri Närhi
 	 * */
-	public ImageIcon getPot() {
-		return pot;
+	public ImageIcon getPot()
+	{
+		return pot.getPotImage();
 	}
 
 	/**
@@ -151,9 +166,11 @@ public class Plant {
 	 * @param pot ImageIcon
 	 * @author Petri Närhi
 	 * */
-	public void setPot(ImageIcon pot) {
-		this.pot = pot;
+	public void setPot(ImageIcon pot)
+	{
+		//this.pot = pot;
 	}
+
 
 	/**
 	 * To String method for test purposes

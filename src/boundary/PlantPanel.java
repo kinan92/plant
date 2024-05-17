@@ -9,9 +9,8 @@ import java.io.IOException;
 public class PlantPanel extends JPanel {
     private int width;
     private int height;
-    private JPanel plantPanel;
     private PlantView plantView;
-    private ImageIcon currentPlant;
+    private ImageIcon currentPlantImage;
     private ImageIcon currentPot;
     private String currentPlantName;
     private String currentPlantSpecies;
@@ -20,6 +19,8 @@ public class PlantPanel extends JPanel {
 	private JProgressBar waterBar;
     private JLayeredPane plantWindow;
     private JLabel sparkle;
+    private JLabel creationTimeLabel;
+    private JLabel plantImageLabel;
 
     /**
      * @author Elvira Grubb
@@ -36,10 +37,11 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
-        currentPlant = plantView.getCurrentPlant();
-        currentPot = plantView.getCurrentPot();
+        this.currentPlantImage = plantView.getCurrentPlantImage();
+        this.currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
+
 
         //Creates nameView panel and adds with constraints
         this.add(nameView());
@@ -56,13 +58,15 @@ public class PlantPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 2;
         JLayeredPane plantWindow = getPlantWindow();
+        creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
+        this.add(creationTimeLabel, c);
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
         c.weightx = 1;
         c.gridx = 0;
-        c.gridy = 3;
+        c.gridy = 4;
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
     }
@@ -80,17 +84,17 @@ public class PlantPanel extends JPanel {
         plantWindow.setBounds(0, 0, 256, 320);
         plantWindow.setBackground(Color.ORANGE);
 
-        JLabel plantImage = new JLabel(currentPlant);
-        plantImage.setBounds(0, 0, 256, 320);
+        plantImageLabel = new JLabel(currentPlantImage);
+        plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
-        JLabel plantPot = new JLabel(new ImageIcon("images/pots/default_pot.png"));
+        JLabel plantPot = new JLabel(currentPot);
         plantPot.setBounds(0, 0, 256, 320);
         sparkle = new JLabel();
         sparkle.setBounds(0, 0, 256, 320);
 
         plantWindow.add(sparkle, 1);
-        plantWindow.add(plantImage, 2);
+        plantWindow.add(plantImageLabel, 2);
         plantWindow.add(plantPot, 3);
         plantWindow.add(plantBackground, 4);
         return plantWindow;
@@ -160,6 +164,7 @@ public class PlantPanel extends JPanel {
         c.insets = new Insets(0, 0, 0, 0);
         plantCare.add(waterPlantButton, c);
 
+
         waterBar = new JProgressBar(0, 100);
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
         waterBar.setValue(currentPlantWaterLevel);
@@ -169,6 +174,12 @@ public class PlantPanel extends JPanel {
         plantCare.add(waterBar, c);
 
         return plantCare;
+    }
+
+    public void updatePlantImage(ImageIcon newImage){
+        this.currentPlantImage = newImage;
+        plantImageLabel.setIcon(this.currentPlantImage);
+        repaint();
     }
 
     /**
@@ -255,5 +266,4 @@ public class PlantPanel extends JPanel {
     public JButton getWaterPlantButton() {
  		return waterPlantButton;
  	}
-
 }

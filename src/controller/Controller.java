@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import boundary.MainMenu;
-import boundary.PlantView;
 import java.util.Random;
 
 import javax.swing.*;
@@ -19,75 +18,49 @@ import javax.swing.*;
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
-	private MainMenu window;
-	PlantView maingui;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
+	ArrayList<Pot> pots = new ArrayList<>();
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
 	private Random random = new Random();
 
 	public Controller() {
-		//this.window = new MainMenu(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
-
 		loadPlantTypes();
-		test();
-		/*Chinese Money Plant
-		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
-		listOfPlants.add(plant);*/
-		// startWaterDecreaseTimer();
-		// startAgeTimer();
+		loadPots();
+		startWaterDecreaseTimer();
+		startAgeTimer();
 	}
 
 	/**
 	 * Creates a new plant object based on the choice of the user
 	 * called by a boundary class
-	 * @param i int, the index of the chosen plant in the GUI
+	 * @param plantNumber int, the index of the chosen plant in the GUI
 	 * @author Petri Närhi
 	 * */
-	public void createPlant(int i) {
-		PlantType type = plantTypes.get(i);
+	public void createPlant(int plantNumber, int potNumber) {
+		PlantType type = plantTypes.get(plantNumber);
 		String name;
 		do {
 			name = JOptionPane.showInputDialog("Give your plant a name!");
 		} while (name == null || name.isEmpty());
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
+		if (initialWaterLevel == 0) {
+			initialWaterLevel = 5;
+		}
 		LocalDateTime dateAndTime = LocalDateTime.now();
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime); //ny planta är alltid liten
+
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
 		showPlantView();
+		mainFrame.getPlantView().updatePlantDetails(plant);
 	}
 
-	public void pausTime(){
-		if(!isPaused){
-			isPaused = true;
-			stopAgeTimer();
-			System.out.println("Tid är pausad");
-		}
-	}
-
-	public void resumeTime(){
-		if (isPaused){
-			isPaused = false;
-			startAgeTimer();
-			System.out.println("Tiden återupptas");
-		}
-	}
-	public void stopAgeTimer(){
-		if (ageTimer != null){
-			ageTimer.stop();
-			ageTimer = null;
-		}
-		if(waterDecreaseTimer != null){
-			waterDecreaseTimer.stop();
-			waterDecreaseTimer = null;
-		}
-	}
 
 	private void startAgeTimer(){
 		if (ageTimer == null){
@@ -114,27 +87,6 @@ public class Controller {
 		}
 	}
 
-	private void updateAge(){
-		for (Plant plant : listOfPlants){
-			plant.incrementAge(1);
-		}
-	}
-
-
-
-	private void test()
-	{
-		for (PlantType pt : plantTypes)
-		{
-			System.out.println(pt.getPlantTypeName());
-			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getGrownPlantImage());
-			System.out.println(pt.getPlantImageButton());
-			System.out.println(pt.getPlantInformation());
-			System.out.println();
-		}
-	}
-
 	public void startWaterDecreaseTimer(){
 		waterDecreaseTimer = new Timer(60000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -142,7 +94,6 @@ public class Controller {
 			}
 		});
 		waterDecreaseTimer.start();
-
 	}
 
 	public void stopWaterDecreaseTimer(){
@@ -154,31 +105,24 @@ public class Controller {
 
 	public void waterPlant(){
 		plant.waterPlant();
+		mainFrame.getPlantView().updatePlantDetails(plant);
+
 	}
 	// Gets the current plant water level
+	// Ta bort och fixa till där den används
 	public int getPlantWaterLevel(){
 		return plant.getWaterLevel();
-	}
-
-	private void adjustPlantBasedOnWaterLevel(Plant plant){
-		if (plant.getWaterLevel() < 10){
-			System.out.println(plant.getName() + " needs water");
-			// Add additional logic for low water levels
-		} else if (plant.getWaterLevel() > 100){
-			System.out.println(plant.getName() + " is overwatered");
-			// Add additional logic for overwatered plants
-		}
 	}
 
 	private void notifyTimeSkipped(int hours){
 		System.out.println("Time skipped by " + hours + " hours.");
 	}
-
-
 	public void choosePlantFrame()
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
+		ArrayList<ImageIcon> potImage = new ArrayList<>();
+		ArrayList<ImageIcon> potImageHover = new ArrayList<>();
 
 
 		for (PlantType pt : plantTypes)
@@ -187,7 +131,13 @@ public class Controller {
 			plantImageHover.add(pt.getPlantImageButtonHover());
 		}
 
-		mainFrame.addChoosePlantPanel(plantImage, plantImageHover);
+		for (Pot p : pots)
+		{
+			potImage.add(p.getPotButton());
+			potImageHover.add(p.getPotButtonHoverImage());
+		}
+
+		mainFrame.addChoosePlantPanel(plantImage, plantImageHover, potImage, potImageHover);
 	}
 
 	public void showMainMenu()
@@ -195,7 +145,10 @@ public class Controller {
 		mainFrame.addMainMenu();
 	}
 
-	//Reads PlantTypes from the plantTypes textfile, creates an object of them and adds them to the plantTypes ArrayList
+	/**
+	 * @author Elvira Grubb
+	 * Reads PlantType information from a TextFile and creates PlantType objects from the information
+	 */
 	private void loadPlantTypes()
 	{
 		try {
@@ -217,31 +170,25 @@ public class Controller {
 		}
 	}
 
-	/**
-	 * Reads image file paths from a text file and returns an arraylist
-	 * can be used regardless of type of pictures
-	 * @param filename a String of the file path
-	 * @return arraylist of images
-	 * @author Petri Närhi
-	 * */
-	public ArrayList<ImageIcon> getImageListFromFile(String filename)
+	private void loadPots()
 	{
-		ArrayList<ImageIcon> imageList = new ArrayList<>();
 		try {
-			BufferedReader br = new BufferedReader( new FileReader(filename));
-			ImageIcon image;
-			String imagePath = br.readLine();
+			BufferedReader br = new BufferedReader( new FileReader("files/pot.txt"));
+			Pot pot;
+			String string = br.readLine();
 
-			while(imagePath != null) {
-				image = new ImageIcon(imagePath);
-				imageList.add(image);
-				imagePath = br.readLine();
+			while(string != null) {
+				String[] potInformation;
+				potInformation = string.split( "," );
+
+				pot = new Pot(potInformation[0], potInformation[1], potInformation[2]);
+				pots.add(pot);
+				string = br.readLine();
 			}
 			br.close();
 		} catch( IOException e ) {
-			System.out.println( "getImageList: " + e );
+			System.out.println( "readPlantType: " + e );
 		}
-		return imageList;
 	}
 
 	public void skipTime(int hours){
@@ -249,22 +196,15 @@ public class Controller {
 			System.out.println("Skipped time requires a positive number of hours");
 			return;
 		}
-
-		for (Plant plant : listOfPlants){
-			int ageIncrement = hours / 24;
-			plant.incrementAge(ageIncrement);
-
-            plant.decreaseWaterLevel(hours);
-
-			adjustPlantBasedOnWaterLevel(plant);
-		}
-
+		LocalDateTime newCreationTime = plant.getDateAndTime().minusHours(hours);
+		plant.setDateAndTime(newCreationTime);
+		int ageIncrement = hours / 24;
+		plant.incrementAge(ageIncrement);
+		plant.decreaseWaterLevel(1);
+		plant.updateState();
+		mainFrame.getPlantView().updateElapsedTime();
+		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
-	}
-
-	public ArrayList<PlantType> getPlantTypes()
-	{
-		return plantTypes;
 	}
 
 	public void showPlantView()
@@ -285,7 +225,7 @@ public class Controller {
 		for (int i = 0; i < listOfPlants.size(); i++){
 			Plant plant = listOfPlants.get(i);
 			if(plant != null) {
-				plant.decreaseWaterLevel(10);
+				plant.decreaseWaterLevel(1);
 			}
 		}
 	}

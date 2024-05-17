@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private int width = 550;
-    private int height = 435;
+    private int height = 450;
     PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
@@ -46,17 +46,21 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
+    public PlantView getPlantView(){
+        return plantView;
+    }
+
     /**
      * @author Elvira Grubb
      * @param plantImage An ArrayList of all PlantType images
      * @param plantImageHover An ArrayList of all PlantType hover images
      * This method clears the MainFrame and adds ChoosePlantPanel
      */
-    public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover)
+    public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover, ArrayList<ImageIcon> potImage, ArrayList<ImageIcon> potImageHover)
     {
         this.getContentPane().removeAll();
         this.revalidate();
-        choosePlantPanel = new ChoosePlantPanel(controller, plantImage, plantImageHover, width, height);
+        choosePlantPanel = new ChoosePlantPanel(controller, plantImage, plantImageHover, potImage, potImageHover, width, height);
         this.setContentPane(choosePlantPanel);
         this.repaint();
     }

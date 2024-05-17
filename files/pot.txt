@@ -1,0 +1,3 @@
+images/pots/pot.png,images/buttons/pot_button.png,images/buttons/pot_button_hover.png
+images/pots/pot_duo.png,images/buttons/pot_duo_button.png,images/buttons/pot_duo_button_hover.png
+images/pots/pot_pink.png,images/buttons/pot_pink_button.png,images/buttons/pot_pink_button_hover.png

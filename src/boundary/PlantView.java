@@ -61,15 +61,26 @@ public class PlantView extends JPanel {
 		checkJavaFXToolKit();
 	}
 
+    /* TODO: Not just in this class, but: make open all plants as widgets button in storage
+    *   merge plants and pots and resize them and make buttons and hoverbuttons
+    *   of them with java graphics or javafx
+    *   make the name display under the buttons */
+
 
 	// Method that is called when the Plant Collection button is pressed
 	// Method is a work in progress and currently has no functionality.
 	// When functionality is added this method will open the user's Plant Storage
+	/**
+	 * @author Petri Närhi
+	 * ActionListener used for the Storage button that calls on a method in the
+	 * Controller to show the Storage panel
+	 */
 	public void storagePressed() {
 		if (soundEffectSetting) {
 			buttonPressedSoundEffect();
 		}
-		System.out.println("Plant Collection pressed.");
+		System.out.println("Storage pressed.");
+		controller.storagePanel();
 	}
 
 	/**

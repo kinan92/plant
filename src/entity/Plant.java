@@ -46,6 +46,7 @@ public class Plant {
 	 * Updates the image for the plant based on its state
 	 * @param state PlantStateEnum
 	 * @author Petri Närhi
+	 * @author Aleksander Augustyniak
 	 * */
 	public void updateStateImage(PlantStateEnum state)
 	{
@@ -82,23 +83,8 @@ public class Plant {
 		} else {
 			setState(PlantStateEnum.little);
 		}
-		updateImage();
+		updateStateImage(getState());
 	}
-
-	private void updateImage(){
-		switch (state){
-			case little:
-				this.image = type.getLittlePlantImage();
-				break;
-			case big:
-				this.image = type.getGrownPlantImage();
-				break;
-			case dead:
-				this.image = type.getDeadPlantImage();
-				break;
-		}
-	}
-
 
 	public int getWaterLevel(){
 		return this.waterLevel;

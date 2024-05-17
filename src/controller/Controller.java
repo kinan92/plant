@@ -54,6 +54,9 @@ public class Controller {
 			name = JOptionPane.showInputDialog("Give your plant a name!");
 		} while (name == null || name.isEmpty());
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
+		if (initialWaterLevel == 0) {
+			initialWaterLevel = 5;
+		}
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
 		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten

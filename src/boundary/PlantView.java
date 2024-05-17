@@ -167,9 +167,9 @@ public class PlantView extends JPanel {
 		try {
 			System.out.println("Water pressed.");
 			controller.waterPlant();
-			plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
+			plantPanel.updateWaterLevel(controller.getPlant().getWaterLevel());
 			updatePlantDetails(controller.getPlant());
-			System.out.println("Water level: " + controller.getPlantWaterLevel());
+			System.out.println("Water level: " + controller.getPlant().getWaterLevel());
 		} catch (NullPointerException e) {
 			// JOptionPane.showMessageDialog(waterPlant, "No plant exists!");
 		}

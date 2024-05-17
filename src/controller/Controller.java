@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import boundary.MainMenu;
 import java.util.Random;
 
 import javax.swing.*;
@@ -19,18 +18,20 @@ public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
 	MainFrame mainFrame;
-	ArrayList<PlantType> plantTypes = new ArrayList<>();
-	ArrayList<Pot> pots = new ArrayList<>();
+	ArrayList<PlantType> plantTypes;
+	ArrayList<Pot> pots;
 	private Timer waterDecreaseTimer;
 	private Timer ageTimer;
 	private boolean isPaused = false;
 	private Random random = new Random();
+	private FileManager file;
 
 	public Controller() {
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
-		loadPlantTypes();
-		loadPots();
+		this.file = new FileManager();
+		plantTypes = file.loadPlantTypes();
+		pots = file.loadPots();
 		startWaterDecreaseTimer();
 		startAgeTimer();
 	}
@@ -41,7 +42,8 @@ public class Controller {
 	 * @param plantNumber int, the index of the chosen plant in the GUI
 	 * @author Petri Närhi
 	 * */
-	public void createPlant(int plantNumber, int potNumber) {
+	public void createPlant(int plantNumber, int potNumber)
+	{
 		PlantType type = plantTypes.get(plantNumber);
 		String name;
 		do {
@@ -108,11 +110,6 @@ public class Controller {
 		mainFrame.getPlantView().updatePlantDetails(plant);
 
 	}
-	// Gets the current plant water level
-	// Ta bort och fixa till där den används
-	public int getPlantWaterLevel(){
-		return plant.getWaterLevel();
-	}
 
 	private void notifyTimeSkipped(int hours){
 		System.out.println("Time skipped by " + hours + " hours.");
@@ -143,52 +140,6 @@ public class Controller {
 	public void showMainMenu()
 	{
 		mainFrame.addMainMenu();
-	}
-
-	/**
-	 * @author Elvira Grubb
-	 * Reads PlantType information from a TextFile and creates PlantType objects from the information
-	 */
-	private void loadPlantTypes()
-	{
-		try {
-			BufferedReader br = new BufferedReader( new FileReader("files/plantTypes.txt"));
-			PlantType plantType;
-			String string = br.readLine();
-
-			while(string != null) {
-				String[] plantInformation;
-				plantInformation = string.split( "," );
-
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
-				plantTypes.add(plantType);
-				string = br.readLine();
-			}
-			br.close();
-		} catch( IOException e ) {
-			System.out.println( "readPlantType: " + e );
-		}
-	}
-
-	private void loadPots()
-	{
-		try {
-			BufferedReader br = new BufferedReader( new FileReader("files/pot.txt"));
-			Pot pot;
-			String string = br.readLine();
-
-			while(string != null) {
-				String[] potInformation;
-				potInformation = string.split( "," );
-
-				pot = new Pot(potInformation[0], potInformation[1], potInformation[2]);
-				pots.add(pot);
-				string = br.readLine();
-			}
-			br.close();
-		} catch( IOException e ) {
-			System.out.println( "readPlantType: " + e );
-		}
 	}
 
 	public void skipTime(int hours){

@@ -37,7 +37,7 @@ public class Controller {
 		loadPlantTypes();
 		loadPots();
 		test();
-		startPlantTimer();
+
 	}
 
 	/**
@@ -61,6 +61,7 @@ public class Controller {
 		System.out.println("New plant! " + plant);
 		showPlantView();
 		mainFrame.getPlantView().updatePlantDetails(plant);
+		startPlantTimer();
 	}
 
 	public void pausTime(){

@@ -1,5 +1,6 @@
 package boundary.PlantView;
 
+import boundary.HelpMenu;
 import boundary.SettingsView;
 import boundary.WidgetJavaFXApplication;
 import controller.Controller;

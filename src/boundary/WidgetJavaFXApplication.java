@@ -1,5 +1,6 @@
 package boundary;
 
+import boundary.PlantView.PlantView;
 import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;

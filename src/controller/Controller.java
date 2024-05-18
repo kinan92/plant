@@ -18,6 +18,7 @@ import javax.swing.*;
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
+	private MainMenu window;
 	MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	ArrayList<Pot> pots = new ArrayList<>();
@@ -27,10 +28,15 @@ public class Controller {
 	private Random random = new Random();
 
 	public Controller() {
+		//this.window = new MainMenu(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		loadPlantTypes();
 		loadPots();
+		test();
+		/*Chinese Money Plant
+		plant = new Plant("TestPlanta", 0, "images/plants/moneyplant.png",50, );
+		listOfPlants.add(plant);*/
 		startWaterDecreaseTimer();
 		startAgeTimer();
 	}
@@ -39,18 +45,17 @@ public class Controller {
 	 * Creates a new plant object based on the choice of the user
 	 * called by a boundary class
 	 * @param plantNumber int, the index of the chosen plant in the GUI
-	 * @author Petri Närhi
+	 * @param potNumber int, the index of the chosen pot in the GUI
+	 * @author Petri Närhi, Elvira Grubb
 	 * */
-	public void createPlant(int plantNumber, int potNumber) {
+	public void confirmPlant(int plantNumber, int potNumber) {
+		mainFrame.confirmPlantPanel(plantTypes.get(plantNumber).getGrownPlantImage(), pots.get(potNumber).getPotImage(), plantNumber, potNumber, plantTypes.get(plantNumber).getPlantInfoArray());
+	}
+
+	public void createPlant(int plantNumber, int potNumber, String plantName) {
 		PlantType type = plantTypes.get(plantNumber);
-		String name;
-		do {
-			name = JOptionPane.showInputDialog("Give your plant a name!");
-		} while (name == null || name.isEmpty());
+		String name = plantName;
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
-		if (initialWaterLevel == 0) {
-			initialWaterLevel = 5;
-		}
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
 		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
@@ -87,6 +92,23 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * @author Elvira Grubb
+	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
+	 */
+	private void test()
+	{
+		for (PlantType pt : plantTypes)
+		{
+			System.out.println(pt.getPlantTypeName());
+			System.out.println(pt.getPlantTypeNameAlternative());
+			System.out.println(pt.getGrownPlantImage());
+			System.out.println(pt.getPlantImageButton());
+			System.out.println(pt.getPlantInformation());
+			System.out.println();
+		}
+	}
+
 	public void startWaterDecreaseTimer(){
 		waterDecreaseTimer = new Timer(60000, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,7 +131,6 @@ public class Controller {
 
 	}
 	// Gets the current plant water level
-	// Ta bort och fixa till där den används
 	public int getPlantWaterLevel(){
 		return plant.getWaterLevel();
 	}
@@ -160,7 +181,7 @@ public class Controller {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7],plantInformation[8], plantInformation[9], plantInformation[10]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}
@@ -191,6 +212,33 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Reads image file paths from a text file and returns an arraylist
+	 * can be used regardless of type of pictures
+	 * @param filename a String of the file path
+	 * @return arraylist of images
+	 * @author Petri Närhi
+	 * */
+	public ArrayList<ImageIcon> getImageListFromFile(String filename)
+	{
+		ArrayList<ImageIcon> imageList = new ArrayList<>();
+		try {
+			BufferedReader br = new BufferedReader( new FileReader(filename));
+			ImageIcon image;
+			String imagePath = br.readLine();
+
+			while(imagePath != null) {
+				image = new ImageIcon(imagePath);
+				imageList.add(image);
+				imagePath = br.readLine();
+			}
+			br.close();
+		} catch( IOException e ) {
+			System.out.println( "getImageList: " + e );
+		}
+		return imageList;
+	}
+
 	public void skipTime(int hours){
 		if (hours <= 0){
 			System.out.println("Skipped time requires a positive number of hours");
@@ -205,6 +253,13 @@ public class Controller {
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
+	}
+
+
+
+	public ArrayList<PlantType> getPlantTypes()
+	{
+		return plantTypes;
 	}
 
 	public void showPlantView()
@@ -232,7 +287,7 @@ public class Controller {
 
 	/**
 	 * Gets the current plant
-	 * to show the current plant that is shown in PlantView
+	 * to show the current plant that is shown in boundary.PlantView.PlantView
 	 * and to be able to use the plant's methods in various classes
 	 * @return Plant
 	 * @author Petri Närhi
@@ -243,7 +298,7 @@ public class Controller {
 
 	/**
 	 * Sets the current plant
-	 * to change the current plant that is shown in PlantView
+	 * to change the current plant that is shown in boundary.PlantView.PlantView
 	 * @param plant the plant to replace the current plant
 	 * @author Petri Närhi
 	 * */

@@ -1,5 +1,6 @@
 package boundary;
 
+import boundary.PlantView.PlantView;
 import controller.Controller;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ public class MainFrame extends JFrame {
     PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
+    private ConfirmPlantPanel confirmPlantPanel;
 
     /**
      * @author Elvira Grubb
@@ -35,7 +37,7 @@ public class MainFrame extends JFrame {
 
     /**
      * @author Elvira Grubb
-     * This method clears the MainFrame and adds the PlantView panel
+     * This method clears the MainFrame and adds the boundary.PlantView.PlantView panel
      */
     public void addPlantView()
     {
@@ -43,6 +45,15 @@ public class MainFrame extends JFrame {
         this.revalidate();
         plantView = new PlantView(width, height, controller);
         this.setContentPane(plantView);
+        this.repaint();
+    }
+
+    public void confirmPlantPanel(ImageIcon selectedPlant, ImageIcon selectedPot, int plantNumber, int potNumber, ArrayList<String> plantInformation)
+    {
+        this.getContentPane().removeAll();
+        this.revalidate();
+        confirmPlantPanel = new ConfirmPlantPanel(width, height, selectedPlant, selectedPot, plantNumber, potNumber, plantInformation, controller);
+        this.setContentPane(confirmPlantPanel);
         this.repaint();
     }
 

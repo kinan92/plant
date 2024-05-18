@@ -1,15 +1,15 @@
-package boundary;
+package boundary.PlantView;
 
+import boundary.SettingsView;
+import boundary.WidgetJavaFXApplication;
 import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.application.Platform;
-import javafx.stage.Stage;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -34,7 +34,7 @@ public class PlantView extends JPanel {
 	 * @param width Width of MainFrame
 	 * @param height Height of MainFrame
 	 * @param controller Active Controller object used in program
-	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
+	 * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
 	 * active plant, relevant information about the plant and buttons for taking care of the plant
 	 */
 	public PlantView(int width, int height, Controller controller) {
@@ -87,7 +87,7 @@ public class PlantView extends JPanel {
 		SwingUtilities.invokeLater(() -> {
 			if ((controller.getPlant() == null)
 					|| ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
-				System.out.println("you can't ctreat a Widget because the plant or the pot image is null");
+				System.out.println("You can't create a Widget because the plant or the pot image is null");
 			} else {
 				sendDataToJavaFX(controller);
 			}

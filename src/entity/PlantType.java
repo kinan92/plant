@@ -1,6 +1,7 @@
 package entity;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 /**
  * Stores the plant data regarding generic information
@@ -102,5 +103,14 @@ public class PlantType {
      * */
     public String toString() {
         return ("Type: " + plantTypeName + ", aka " + plantTypeNameAlternative + ". " + plantInformation);
+    }
+
+    public ArrayList<String> getPlantInfoArray()
+    {
+        ArrayList<String> plantInfoArray = new ArrayList<>();
+        plantInfoArray.add(plantTypeName);
+        plantInfoArray.add(plantTypeNameAlternative);
+        plantInfoArray.add(plantInformation);
+        return plantInfoArray;
     }
 }

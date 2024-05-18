@@ -196,7 +196,7 @@ public class ChoosePlantPanel extends JPanel {
 
         else
         {
-            controller.createPlant(currentSelectedPlant, currentSelectedPot);
+            controller.confirmPlant(currentSelectedPlant, currentSelectedPot);
         }
     }
 

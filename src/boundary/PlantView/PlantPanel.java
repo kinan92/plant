@@ -1,12 +1,10 @@
-package boundary;
+package boundary.PlantView;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-
-import static com.sun.javafx.iio.common.ImageTools.scaleImage;
 
 public class PlantPanel extends JPanel {
     private int width;
@@ -29,7 +27,7 @@ public class PlantPanel extends JPanel {
      * @author Elvira Grubb
      * @param width Width of the MainFrame
      * @param height Height of the MainFrame
-     * @param plantView The active PlantView class
+     * @param plantView The active boundary.PlantView.PlantView class
      * This constructor creates a PlantPanel, filling it with relevant JPanels to function
      * as a window where the user can see their plant, relevant plant information, and plant care
      */

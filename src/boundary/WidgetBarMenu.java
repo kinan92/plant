@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import boundary.PlantView.PlantView;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,7 +16,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -218,7 +218,7 @@ public class WidgetBarMenu extends Pane {
 
 	/**
 	 * this method update the Progress bar by geting the waterLevel from the
-	 * PlantView and dived the value on 100 because the JavaFX Bar take double 1
+	 * boundary.PlantView.PlantView and dived the value on 100 because the JavaFX Bar take double 1
 	 * 
 	 * @author kinan
 	 */

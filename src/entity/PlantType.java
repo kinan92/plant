@@ -21,6 +21,7 @@ public class PlantType {
     private ImageIcon largeDeadPlantImage;
     private ImageIcon plantImageButton;
     private ImageIcon plantImageButtonHover;
+    private ImageIcon plantImageButtonSelected;
     private String plantInformation;
 
     /**
@@ -36,12 +37,13 @@ public class PlantType {
      * @author Elvira Grubb
      * @author Petri Närhi
      * */
-    public PlantType(String plantTypeName, String plantTypeNameAlternative, String plantImageButton, String plantImageButtonHover, String plantInformation, String plantStage1Image, String plantStage2Image, String plantStage3Image, String plantStage1DeadImage, String plantStage2DeadImage, String plantStage3DeadImage)
+    public PlantType(String plantTypeName, String plantTypeNameAlternative, String plantImageButton, String plantImageButtonHover, String plantImageButtonSelected, String plantInformation, String plantStage1Image, String plantStage2Image, String plantStage3Image, String plantStage1DeadImage, String plantStage2DeadImage, String plantStage3DeadImage)
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
         this.plantImageButton = new ImageIcon(plantImageButton);
         this.plantImageButtonHover = new ImageIcon(plantImageButtonHover);
+        this.plantImageButtonSelected = new ImageIcon(plantImageButtonSelected);
         this.plantInformation = plantInformation;
         this.smallPlantImage = new ImageIcon(plantStage1Image);
         this.mediumPlantImage = new ImageIcon(plantStage2Image);

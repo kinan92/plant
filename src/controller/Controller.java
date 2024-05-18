@@ -138,10 +138,18 @@ public class Controller {
 	private void notifyTimeSkipped(int hours){
 		System.out.println("Time skipped by " + hours + " hours.");
 	}
+
+	/**
+	 * @author Elvira Grubb, Petri Nähri
+	 * Method that creates the ChoosePlantPanel by making ImageIcon ArrayList from values in the PlantType and Pot classes and then calling on
+	 * the ChoosePlantPanel method in the MainFrame
+	 */
 	public void choosePlantFrame()
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
+		ArrayList<ImageIcon> plantImageSelected = new ArrayList<>();
+
 		ArrayList<ImageIcon> potImage = new ArrayList<>();
 		ArrayList<ImageIcon> potImageHover = new ArrayList<>();
 
@@ -158,7 +166,7 @@ public class Controller {
 			potImageHover.add(p.getPotButtonHoverImage());
 		}
 
-		mainFrame.addChoosePlantPanel(plantImage, plantImageHover, potImage, potImageHover);
+		mainFrame.addChoosePlantPanel(plantImage, plantImageHover, plantImageSelected, potImage, potImageHover);
 	}
 
 	public void showMainMenu()
@@ -181,7 +189,7 @@ public class Controller {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7], plantInformation[8], plantInformation[9], plantInformation[10]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7], plantInformation[8], plantInformation[9], plantInformation[10], plantInformation[11]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}

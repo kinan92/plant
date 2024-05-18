@@ -2,6 +2,7 @@ package boundary;
 
 import controller.Controller;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 
 import javax.swing.GroupLayout.Alignment;
@@ -9,6 +10,8 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 
 public class MainMenu extends JPanel {
 	private int width;
@@ -90,7 +93,9 @@ public class MainMenu extends JPanel {
 	 * ActionListener used for the createPlant button that calls on a method in the
 	 * Controller to allow the user to create a pant
 	 */
-	private void clickCreatePlantButton() {
+	private void clickCreatePlantButton()
+	{
+		buttonPressedSoundEffect();
 		controller.choosePlantFrame();
 	}
 
@@ -99,7 +104,29 @@ public class MainMenu extends JPanel {
 	 * ActionListener used for the getPlant button. Calls on a method in the controller
 	 * to allow the user to view their last plant
 	 */
-	private void clickGetAPlantButton() {
+	private void clickGetAPlantButton()
+	{
+		buttonPressedSoundEffect();
 		controller.showPlantView();
+	}
+
+	/**
+	 * @author Elvira Grubb
+	 * This method plays a sound effect whenever a button is pressed
+	 */
+	private void buttonPressedSoundEffect() {
+		AudioInputStream audioInputStream = null;
+		try {
+			audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+			Clip clip = AudioSystem.getClip();
+			clip.open(audioInputStream);
+			clip.start();
+		} catch (UnsupportedAudioFileException e) {
+			throw new RuntimeException(e);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		} catch (LineUnavailableException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

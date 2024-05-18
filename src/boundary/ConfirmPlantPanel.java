@@ -2,8 +2,11 @@ package boundary;
 
 import controller.Controller;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConfirmPlantPanel extends JPanel{
@@ -229,6 +232,7 @@ public class ConfirmPlantPanel extends JPanel{
      */
     private void backPressed()
     {
+        buttonPressedSoundEffect();
         controller.choosePlantFrame();
     }
 
@@ -239,6 +243,7 @@ public class ConfirmPlantPanel extends JPanel{
      */
     private void createPlant()
     {
+        buttonPressedSoundEffect();
         if (plantName.getText().isEmpty())
         {
             JOptionPane.showMessageDialog(this, "Please enter a name for your plant.");
@@ -247,6 +252,26 @@ public class ConfirmPlantPanel extends JPanel{
         else
         {
             controller.createPlant(plantNumber, potNumber, plantName.getText());
+        }
+    }
+
+    /**
+     * @author Elvira Grubb
+     * This method plays a sound effect whenever a button is pressed
+     */
+    private void buttonPressedSoundEffect() {
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
         }
     }
 }

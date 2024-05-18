@@ -54,9 +54,9 @@ public class PlantPanel extends JPanel {
 
         //Creates plantWindow JLayeredPane and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         JLayeredPane plantWindow = getPlantWindow();
         creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
@@ -64,9 +64,9 @@ public class PlantPanel extends JPanel {
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
     }

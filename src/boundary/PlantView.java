@@ -188,6 +188,11 @@ public class PlantView extends JPanel {
 		settingsView.setVisible(true);
 	}
 
+	public void helpMenuPressed()
+	{
+		HelpMenu helpMenu = new HelpMenu(width, height);
+	}
+
 	private void buttonPressedSoundEffect() {
 		AudioInputStream audioInputStream = null;
 		try {
@@ -361,7 +366,6 @@ public class PlantView extends JPanel {
 		getSideButtonsClass().getSkipHour().setEnabled(!isWidgetCreated);
 		getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
 		getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
-
 	}
 
 }

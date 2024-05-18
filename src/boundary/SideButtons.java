@@ -124,7 +124,7 @@ public class SideButtons extends JPanel {
         //Creates a JLabel to put the Settings and Main Menu buttons on
         JLabel settingsMenuButtons = new JLabel();
         settingsMenuButtons.setLayout(new GridLayout(1,2));
-        settingsMenuButtons.setPreferredSize(new Dimension(130, 60));
+        settingsMenuButtons.setPreferredSize(new Dimension(200, 60));
 
         //Creates Settings button
         settings = new JButton();
@@ -146,9 +146,19 @@ public class SideButtons extends JPanel {
         mainMenu.setRolloverIcon(new ImageIcon("images/buttons/home_hover.png"));
         mainMenu.addActionListener(l -> plantView.mainMenuPressed());
 
+        JButton helpButton = new JButton();
+        helpButton.setBorder(BorderFactory.createEmptyBorder());
+        helpButton.setContentAreaFilled(false);
+        helpButton.setIcon(new ImageIcon("images/buttons/help.png"));
+
+        helpButton.setRolloverEnabled(true);
+        helpButton.setRolloverIcon(new ImageIcon("images/buttons/help_hover.png"));
+        helpButton.addActionListener(l -> plantView.helpMenuPressed());
+
         //Adds mainMenu and settings buttons onto their shared JLabel
         settingsMenuButtons.add(mainMenu);
         settingsMenuButtons.add(settings);
+        settingsMenuButtons.add(helpButton);
 
         //Adds settingsMenuButton JLabel to the main panel with constraints
         c.weightx = 0;

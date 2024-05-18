@@ -12,9 +12,12 @@ import javax.swing.*;
 public class PlantType {
     private String plantTypeName;
     private String plantTypeNameAlternative;
-    private ImageIcon grownPlantImage;
-    private ImageIcon littlePlantImage;
-    private ImageIcon deadPlantImage;
+    private ImageIcon smallPlantImage;
+    private ImageIcon mediumPlantImage;
+    private ImageIcon largePlantImage;
+    private ImageIcon smallDeadPlantImage;
+    private ImageIcon mediumDeadPlantImage;
+    private ImageIcon largeDeadPlantImage;
     private ImageIcon plantImageButton;
     private ImageIcon plantImageButtonHover;
     private String plantInformation;
@@ -32,16 +35,19 @@ public class PlantType {
      * @author Elvira Grubb
      * @author Petri Närhi
      * */
-    public PlantType(String plantTypeName, String plantTypeNameAlternative, String grownPlantImage, String plantImageButton, String plantImageButtonHover, String plantInformation, String littlePlantImage, String deadPlantImage)
+    public PlantType(String plantTypeName, String plantTypeNameAlternative, String plantImageButton, String plantImageButtonHover, String plantInformation, String plantStage1Image, String plantStage2Image, String plantStage3Image, String plantStage1DeadImage, String plantStage2DeadImage, String plantStage3DeadImage)
     {
         this.plantTypeName = plantTypeName;
         this.plantTypeNameAlternative = plantTypeNameAlternative;
-        this.grownPlantImage = new ImageIcon(grownPlantImage);
-        this.littlePlantImage = new ImageIcon(littlePlantImage);
-        this.deadPlantImage = new ImageIcon(deadPlantImage);
         this.plantImageButton = new ImageIcon(plantImageButton);
         this.plantImageButtonHover = new ImageIcon(plantImageButtonHover);
         this.plantInformation = plantInformation;
+        this.smallPlantImage = new ImageIcon(plantStage1Image);
+        this.mediumPlantImage = new ImageIcon(plantStage2Image);
+        this.largePlantImage = new ImageIcon(plantStage3Image);
+        this.smallDeadPlantImage = new ImageIcon(plantStage1DeadImage);
+        this.mediumDeadPlantImage = new ImageIcon(plantStage2DeadImage);
+        this.largeDeadPlantImage = new ImageIcon(plantStage3DeadImage);
     }
     public String getPlantTypeName()
     {
@@ -59,7 +65,7 @@ public class PlantType {
      * */
     public ImageIcon getGrownPlantImage()
     {
-        return grownPlantImage;
+        return largePlantImage;
     }
 
     public ImageIcon getPlantImageButton()
@@ -83,7 +89,7 @@ public class PlantType {
      * @author Petri Närhi
      * */
     public ImageIcon getLittlePlantImage() {
-        return littlePlantImage;
+        return smallPlantImage;
     }
 
     /**
@@ -92,7 +98,7 @@ public class PlantType {
      * @author Petri Närhi
      * */
     public ImageIcon getDeadPlantImage() {
-        return deadPlantImage;
+        return largeDeadPlantImage;
     }
 
     /**

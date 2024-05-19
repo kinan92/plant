@@ -176,6 +176,10 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
+    public JProgressBar getWaterBar(){
+        return this.waterBar;
+    }
+
     public void updatePlantImage(ImageIcon newImage){
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);

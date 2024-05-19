@@ -139,10 +139,10 @@ public class PlantView extends JPanel {
 		this.plant = plant;
 		updateElapsedTime();
 		plantPanel.updatePlantImage(plant.getImage());
-		//call the update image method 
-		 UpdateWidgetImages();
-		
-		
+		JProgressBar waterBar = plantPanel.getWaterBar();
+		waterBar.setValue(plant.getWaterLevel());
+		waterBar.repaint();
+		UpdateWidgetImages();
 	}
 	
 	

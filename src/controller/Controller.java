@@ -66,6 +66,11 @@ public class Controller {
 		startPlantTimer();
 	}
 
+	/**
+	 * Pauses the plant timer if it is currently running. Records the start time of the pause
+	 * Sets the isPaused flag to true
+	 * @author Aleksander Augustyniak
+	 */
 	public void pausTime(){
 		if(!isPaused){
 			isPaused = true;
@@ -75,18 +80,32 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Stops the plant timer if it is currently running.
+	 * Ensures that the timer does not continue to update plant state while paused
+	 * @author Aleksander Augustyniak
+	 */
 	public void stopPlantTimer() {
 		if (plantTimer != null) {
 			plantTimer.stop();
 		}
 	}
 
+	/**
+	 * Returns the total duration for which the plant timer has been paused.
+	 * This duration accumulates each time the timer is paused and resumed.
+	 * @return Duration representing the total paused duration
+	 */
 	public Duration getTotalPausedDuration(){
 		return totalPausedDuration;
 	}
 
 
-
+	/**
+	 * Resumes the plant timer if it is currently paused. Calculates and accumulates the duration
+	 * for which the timer was paused. Sets the isPaused flag to false and restarts the plant timer.
+	 * @author Aleksander Augustyniak
+	 */
 	public void resumeTime(){
 		if (isPaused){
 			isPaused = false;
@@ -97,6 +116,12 @@ public class Controller {
 		}
 	}
 
+
+	/**
+	 * Starts the plant timer if it is not already running. The timer updates the plant's age,
+	 * decreases the water level for all plants, and updates the elapsed time in the PlantView.
+	 * @author Aleksander Augustyniak
+	 */
 	private void startPlantTimer(){
 		if (plantTimer == null){
 			plantTimer = new Timer(1000, new ActionListener() {
@@ -139,12 +164,22 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Waters the current plant by calling its waterPlant method.
+	 * Updates the PlantView to reflect the new state of the plant
+	 * @author Aleksander Augustyniak
+	 */
 	public void waterPlant(){
 		plant.waterPlant();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 
 	}
-	// Gets the current plant water level
+
+	/**
+	 * Gets the current water level of the plant
+	 * @return the current water level
+	 * @author Aleksander Augustyniak
+	 */
 	public int getPlantWaterLevel(){
 		return plant.getWaterLevel();
 	}
@@ -227,32 +262,9 @@ public class Controller {
 	}
 
 	/**
-	 * Reads image file paths from a text file and returns an arraylist
-	 * can be used regardless of type of pictures
-	 * @param filename a String of the file path
-	 * @return arraylist of images
-	 * @author Petri Närhi
-	 * */
-	public ArrayList<ImageIcon> getImageListFromFile(String filename)
-	{
-		ArrayList<ImageIcon> imageList = new ArrayList<>();
-		try {
-			BufferedReader br = new BufferedReader( new FileReader(filename));
-			ImageIcon image;
-			String imagePath = br.readLine();
-
-			while(imagePath != null) {
-				image = new ImageIcon(imagePath);
-				imageList.add(image);
-				imagePath = br.readLine();
-			}
-			br.close();
-		} catch( IOException e ) {
-			System.out.println( "getImageList: " + e );
-		}
-		return imageList;
-	}
-
+	 * Skips a specific number of hours for the current plant. This method adjusts the
+	 * @param hours
+	 */
 	public void skipTime(int hours){
 		if (hours <= 0){
 			System.out.println("Skipped time requires a positive number of hours");
@@ -269,12 +281,6 @@ public class Controller {
 		notifyTimeSkipped(hours);
 	}
 
-
-
-	public ArrayList<PlantType> getPlantTypes()
-	{
-		return plantTypes;
-	}
 
 	public void showPlantView()
 	{

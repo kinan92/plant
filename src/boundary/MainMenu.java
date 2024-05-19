@@ -1,15 +1,9 @@
 package boundary;
 
 import controller.Controller;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
-
-import javax.swing.GroupLayout.Alignment;
-
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 

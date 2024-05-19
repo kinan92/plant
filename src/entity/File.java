@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.function.Consumer;
 
 public class File  {
 	private Object objectFromTheFile = null;
@@ -29,9 +28,7 @@ public class File  {
 
 			e.printStackTrace();
 		}
-			
 	}
-	
 
 	public void creatAFileIFNotExist() {
 		try {
@@ -55,8 +52,6 @@ public class File  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-	
 	}
 
 	public Object readObjectFromFile() {	
@@ -72,7 +67,5 @@ public class File  {
 			}
 		
 		return objectFromTheFile;
-
 	}
-
 }

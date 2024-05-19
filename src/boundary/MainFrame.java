@@ -57,6 +57,12 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
+
+    /**
+     * Gets the current PlantView instance associated with the MainFrame
+     * @return the current PlantView instance
+     * @author Aleksander Augustyniak
+     */
     public PlantView getPlantView(){
         return plantView;
     }

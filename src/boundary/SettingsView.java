@@ -1,7 +1,6 @@
 package boundary;
 
 import boundary.PlantView.PlantView;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

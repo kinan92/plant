@@ -34,7 +34,6 @@ public class SideButtons extends JPanel {
 		/*
 		 * JLabel timeLabel = new JLabel("Time: "); c.gridx = 0; c.gridy = 0; c.anchor =
 		 * GridBagConstraints.LINE_END; sideButtons.add(timeLabel, c);
-		 * 
 		 */
 	}
 
@@ -164,18 +163,13 @@ public class SideButtons extends JPanel {
 
 		return backgroundPanel;
 	}
-
 	public JButton getSettings() {
 		return settings;
 	}
-
 	public JButton getSkipHour() {
 		return skipHour;
 	}
-
 	public JButton getWidget() {
 		return widget;
 	}
-
-
 }

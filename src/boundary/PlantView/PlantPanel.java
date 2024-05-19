@@ -42,7 +42,6 @@ public class PlantPanel extends JPanel {
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
 
-
         //Creates nameView panel and adds with constraints
         this.add(nameView());
         GridBagConstraints c = new GridBagConstraints();
@@ -176,10 +175,21 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
+    /**
+     * Gets the water level bar for the plant.
+     * @return the JProgressBar representing the plant's water level
+     * @author Aleksander Augustyniak
+     */
     public JProgressBar getWaterBar(){
         return this.waterBar;
     }
 
+    /**
+     * Updates the plant image with a new image.
+     * Sets the plantImageLabel's icon to the new image and repaints the component.
+     * @param newImage the new ImageICon to be displayed as the plant image.
+     * @author Aleksander Augustyniak
+     */
     public void updatePlantImage(ImageIcon newImage){
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);

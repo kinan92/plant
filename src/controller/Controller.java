@@ -2,7 +2,6 @@ package controller;
 
 import boundary.*;
 import entity.*;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
@@ -11,15 +10,12 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import boundary.MainMenu;
 import java.util.Random;
-
 import javax.swing.*;
 
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant plant;
-	private MainMenu window;
 	private MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	ArrayList<Pot> pots = new ArrayList<>();
@@ -31,13 +27,11 @@ public class Controller {
 	private Random random = new Random();
 
 	public Controller() {
-		//this.window = new MainMenu(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		loadPlantTypes();
 		loadPots();
 		test();
-
 	}
 
 	/**
@@ -100,7 +94,6 @@ public class Controller {
 		return totalPausedDuration;
 	}
 
-
 	/**
 	 * Resumes the plant timer if it is currently paused. Calculates and accumulates the duration
 	 * for which the timer was paused. Sets the isPaused flag to false and restarts the plant timer.
@@ -115,7 +108,6 @@ public class Controller {
 			System.out.println("Tiden återupptas");
 		}
 	}
-
 
 	/**
 	 * Starts the plant timer if it is not already running. The timer updates the plant's age,
@@ -144,8 +136,6 @@ public class Controller {
 			}
 		}
 	}
-
-
 
 	/**
 	 * @author Elvira Grubb
@@ -193,7 +183,6 @@ public class Controller {
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
 		ArrayList<ImageIcon> potImage = new ArrayList<>();
 		ArrayList<ImageIcon> potImageHover = new ArrayList<>();
-
 
 		for (PlantType pt : plantTypes)
 		{
@@ -262,8 +251,11 @@ public class Controller {
 	}
 
 	/**
-	 * Skips a specific number of hours for the current plant. This method adjusts the
-	 * @param hours
+	 * Skips a specific number of hours for the current plant. This method adjusts the plant's
+	 * Creation time, increments its age, decreases its water level, and updates its state.
+	 * The PlantView is the updated to reflect these changes
+	 * @param hours the number of hours to skip. Must be a positive integer.
+	 * @author Aleksander Augustyniak
 	 */
 	public void skipTime(int hours){
 		if (hours <= 0){
@@ -274,19 +266,23 @@ public class Controller {
 		plant.setDateAndTime(newCreationTime);
 		int ageIncrement = hours / 24;
 		plant.incrementAge(ageIncrement);
-		plant.decreaseWaterLevel(1);
+		plant.decreaseWaterLevel();
 		plant.updateState();
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
 	}
 
-
 	public void showPlantView()
 	{
 		mainFrame.addPlantView();
 	}
 
+	/**
+	 * Increments the age of all plants in the list by 1 unit.
+	 * This method iterates through the list of plants and calls the incrementAge method for each plant.
+	 * @author Aleksander Augustyniak
+	 */
 	public void incrementAgeForALlPlants(){
 		for (int i = 0; i < listOfPlants.size(); i++){
 			Plant plant = listOfPlants.get(i);
@@ -296,11 +292,16 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Decreases the water level of all plants in the list by 1 unit.
+	 * This method iterates through the list of plants and calls the decreaseWaterLevel method for each plant.
+	 * @author Aleksander Augustyniak
+	 */
 	public void decreaseWaterLevelForAllPlants(){
 		for (int i = 0; i < listOfPlants.size(); i++){
 			Plant plant = listOfPlants.get(i);
 			if(plant != null) {
-				plant.decreaseWaterLevel(1);
+				plant.decreaseWaterLevel();
 			}
 		}
 	}

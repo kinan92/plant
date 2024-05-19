@@ -1,4 +1,4 @@
-package boundary;
+package boundary.Widget;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.image.Image;
@@ -14,8 +14,11 @@ import java.awt.Graphics2D;
 import java.awt.geom.Path2D;
 
 import java.awt.image.BufferedImage;
+
 /***
- * this Clsass is responsible for creating a JavaFX Pane that contain the Plant image 
+ * this Clsass is responsible for creating a JavaFX Pane that contain the Plant
+ * image
+ * 
  * @author kinan
  */
 public class WidgetCreatorJFX extends Pane {
@@ -23,6 +26,7 @@ public class WidgetCreatorJFX extends Pane {
 	private BufferedImage plantBufferedImage;
 	private BufferedImage potBufferedImage;
 	private BufferedImage combinedImage;
+	private ImageView imageView;
 
 	public WidgetCreatorJFX(Controller controller) {
 
@@ -36,7 +40,7 @@ public class WidgetCreatorJFX extends Pane {
 		Image fxImage = SwingFXUtils.toFXImage(combinedImage, null);
 
 		// Create an ImageView to display the combined image
-		ImageView imageView = new ImageView(fxImage);
+		imageView = new ImageView(fxImage);
 
 		// Display the merged image
 		this.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
@@ -44,6 +48,26 @@ public class WidgetCreatorJFX extends Pane {
 
 	}
 
+	/**
+	 * This method responsible for update the plant image and add the image to the existing image
+	 * @param newPlantImage
+	 * @author kinan
+	 */
+	public void updatePlantImage(ImageIcon newPlantImage) {
+		this.plantBufferedImage = convertImageIconToBufferedImage(newPlantImage);
+		refreshImageView();
+	}
+	
+	/**
+	 * This method responsible for refresh the ImageView and marge the new plant image to the combined image.
+	 * @author kinan
+	 */
+
+	private void refreshImageView() {
+		this.combinedImage = mergeAndDrawTheCombinedImages(plantBufferedImage, potBufferedImage);
+		Image fxImage = SwingFXUtils.toFXImage(combinedImage, null);
+		this.imageView.setImage(fxImage);
+	}
 
 	/**
 	 * This method responsible to convert ImageIcon to BufferedImage
@@ -62,7 +86,9 @@ public class WidgetCreatorJFX extends Pane {
 	}
 
 	/**
-	 *  This method responsible for merge the plant and the pot and return a Combined image 
+	 * This method responsible for merge the plant and the pot and return a Combined
+	 * image
+	 * 
 	 * @author kinan
 	 * @param plantImage
 	 * @param potImage
@@ -90,46 +116,5 @@ public class WidgetCreatorJFX extends Pane {
 		// Return the combined image
 		return combinedImage;
 	}
-
-	/***
-	 * This method responsible for create Shape Image
-	 * 
-	 * @author kinan
-	 * @return Path2D
-	 */
-	public Path2D getImageShape() {
-		Path2D pixelShape = new Path2D.Double();
-		BufferedImage image = combinedImage;
-		// Iterate through the image and create a shape from its alpha channel
-		for (int y = 0; y < image.getHeight(); y++) {
-			for (int x = 0; x < image.getWidth(); x++) {
-				int alpha = (image.getRGB(x, y) >> 24) & 0xFF;
-				if (alpha != 0) {
-					pixelShape = createPixelShape(x, y);
-
-				}
-			}
-		}
-		return pixelShape;
-	}
-
-	/****
-	 * This method responsible for create a Pixel shape path representing a single
-	 * pixel at the specified coordinates
-	 * 
-	 * @author kinan
-	 * @param double x
-	 * @param double y
-	 * @return Path2D
-	 */
-	private Path2D createPixelShape(double x, double y) {
-		Path2D path = new Path2D.Double();
-		path.moveTo(x, y);
-		path.lineTo(x + 1, y);
-		path.lineTo(x + 1, y + 1);
-		path.lineTo(x, y + 1);
-		path.closePath();
-		return path;
-	}
-
+	
 }

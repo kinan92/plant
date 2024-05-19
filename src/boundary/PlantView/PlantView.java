@@ -2,7 +2,7 @@ package boundary.PlantView;
 
 import boundary.HelpMenu;
 import boundary.SettingsView;
-import boundary.WidgetJavaFXApplication;
+import boundary.Widget.WidgetJavaFXApplication;
 import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
@@ -60,8 +60,9 @@ public class PlantView extends JPanel {
 		add(sideButtons, BorderLayout.EAST);
 
 		settingsView = new SettingsView(width, height, this);
-
+		
 		checkJavaFXToolKit();
+		
 	}
 
 
@@ -141,7 +142,13 @@ public class PlantView extends JPanel {
 		this.plant = plant;
 		updateElapsedTime();
 		plantPanel.updatePlantImage(plant.getImage());
+		//call the update image method 
+		 UpdateWidgetImages();
+		
+		
 	}
+	
+	
 
 	// Method used when Vacation button is pressed
 	// Method is a work in progress
@@ -173,6 +180,7 @@ public class PlantView extends JPanel {
 			plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
 			updatePlantDetails(controller.getPlant());
 			System.out.println("Water level: " + controller.getPlantWaterLevel());
+			
 		} catch (NullPointerException e) {
 			// JOptionPane.showMessageDialog(waterPlant, "No plant exists!");
 		}
@@ -355,6 +363,7 @@ public class PlantView extends JPanel {
 			this.javaFXApp = new WidgetJavaFXApplication(controller, stage, this);
 			javaFXApp.start(stage);
 			updateButtonStatesIfWidgeIsON();
+			
 
 		});
 	}
@@ -368,7 +377,19 @@ public class PlantView extends JPanel {
 		// Disable or enable buttons based on the widget existence
 		getSideButtonsClass().getSkipHour().setEnabled(!isWidgetCreated);
 		getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
+		getSideButtonsClass().getWidget().setEnabled(!isWidgetCreated);
 		getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
 	}
+	/**
+	 * This method is responsible for updating the image if the WidgetJavaFXApplication is not null
+	 * @author kinan
+	 */
+	private void UpdateWidgetImages() {
+		if (getJavaFXAppClass()!=null) {
+			javaFXApp.updateWidgetImages(getCurrentPlantImage());
+		}
+	}
+
+	
 
 }

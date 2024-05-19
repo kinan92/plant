@@ -1,4 +1,4 @@
-package boundary;
+package boundary.Widget;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,6 +6,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
+import boundary.PlantView.PlantView;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -15,7 +16,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -40,7 +40,7 @@ public class WidgetBarMenu extends Pane {
 	private MenuItem minimizeMenuItem;
 	private Button minimizeButton;
 	private MenuItem plantViewMenuItem;
-	private Button planViewButton;
+	private Button closeWidgetButton;
 	private HBox hbox;
 	private double progress = -1;
 
@@ -81,7 +81,7 @@ public class WidgetBarMenu extends Pane {
 		this.minimizeMenuItem = new MenuItem();
 		this.minimizeButton = new Button("minimize");
 		this.plantViewMenuItem = new MenuItem();
-		this.planViewButton = new Button("plant view");
+		this.closeWidgetButton = new Button("close");
 		this.hbox = new HBox();
 		this.progressBar = new ProgressBar();
 
@@ -98,7 +98,7 @@ public class WidgetBarMenu extends Pane {
 		soundMenuItem.setGraphic(checkBox);
 		soundMenuItem.setStyle("-fx-background-color: transparent; -fx-border-color: transparent;");
 		addStyleToMenuItemAndButton(minimizeButton, minimizeMenuItem);
-		addStyleToMenuItemAndButton(planViewButton, plantViewMenuItem);
+		addStyleToMenuItemAndButton(closeWidgetButton, plantViewMenuItem);
 		hbox.setLayoutX(10);
 		hbox.setLayoutY(25);
 		hbox.setPadding(new Insets(1));
@@ -119,7 +119,9 @@ public class WidgetBarMenu extends Pane {
 		skipHourButton.setOnAction(event -> plantView.skipHourPressed());
 		// minimize Action tor the Bar Menu
 		minimizeButton.setOnAction(event -> plantView.getJavaFXAppClass().getBarMenuStage().setIconified(true));
+		closeWidgetButton.setOnAction(event-> {plantView.getJavaFXAppClass().getBarMenuStage().close();
 		
+		});
 		checkBoxAction();
 	}
 
@@ -218,7 +220,7 @@ public class WidgetBarMenu extends Pane {
 
 	/**
 	 * this method update the Progress bar by geting the waterLevel from the
-	 * PlantView and dived the value on 100 because the JavaFX Bar take double 1
+	 * boundary.PlantView.PlantView and dived the value on 100 because the JavaFX Bar take double 1
 	 * 
 	 * @author kinan
 	 */
@@ -229,12 +231,11 @@ public class WidgetBarMenu extends Pane {
 		// get the waterLevel progress
 		if (progress == -1) {
 			progressBar.setProgress(newValue);
-			System.out.println("xxxxxxxxxxxxxxxxxxxxx");
+		
 			progress = newValue;
 		} else {
 			plantView.waterPressed();
-			newValue = plantView.getCurrentPlantWaterLevel() / 100.0;
-			System.out.println("yyyyyyyyyyy");
+			newValue = plantView.getCurrentPlantWaterLevel() / 100.0;	
 			progressBar.setProgress(newValue);
 		}
 

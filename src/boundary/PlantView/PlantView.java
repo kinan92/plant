@@ -1,15 +1,16 @@
-package boundary;
+package boundary.PlantView;
 
+import boundary.HelpMenu;
+import boundary.SettingsView;
+import boundary.Widget.WidgetJavaFXApplication;
 import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-import javafx.application.Platform;
-import javafx.stage.Stage;
+
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.geom.Path2D;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
@@ -34,7 +35,7 @@ public class PlantView extends JPanel {
 	 * @param width Width of MainFrame
 	 * @param height Height of MainFrame
 	 * @param controller Active Controller object used in program
-	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
+	 * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
 	 * active plant, relevant information about the plant and buttons for taking care of the plant
 	 */
 	public PlantView(int width, int height, Controller controller) {
@@ -58,16 +59,16 @@ public class PlantView extends JPanel {
 		add(sideButtons, BorderLayout.EAST);
 
 		settingsView = new SettingsView(width, height, this);
-
+		
 		checkJavaFXToolKit();
-
+		
 	}
 
 
 	// Method that is called when the Plant Collection button is pressed
 	// Method is a work in progress and currently has no functionality.
 	// When functionality is added this method will open the user's Plant Storage
-	public void getPlantPressed() {
+	public void storagePressed() {
 		if (soundEffectSetting) {
 			buttonPressedSoundEffect();
 		}
@@ -86,7 +87,7 @@ public class PlantView extends JPanel {
 		SwingUtilities.invokeLater(() -> {
 			if ((controller.getPlant() == null)
 					|| ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
-				System.out.println("you can't ctreat a Widget because the plant or the pot image is null");
+				System.out.println("You can't create a Widget because the plant or the pot image is null");
 			} else {
 				sendDataToJavaFX(controller);
 			}
@@ -137,9 +138,14 @@ public class PlantView extends JPanel {
 	public void updatePlantDetails(Plant plant){
 		this.plant = plant;
 		updateElapsedTime();
-		plantPanel.updateWaterLevel(plant.getWaterLevel());
 		plantPanel.updatePlantImage(plant.getImage());
+		//call the update image method 
+		 UpdateWidgetImages();
+		
+		
 	}
+	
+	
 
 	// Method used when Vacation button is pressed
 	// Method is a work in progress
@@ -179,6 +185,7 @@ public class PlantView extends JPanel {
 			plantPanel.updateWaterLevel(controller.getPlantWaterLevel());
 			updatePlantDetails(controller.getPlant());
 			System.out.println("Water level: " + controller.getPlantWaterLevel());
+			
 		} catch (NullPointerException e) {
 			// JOptionPane.showMessageDialog(waterPlant, "No plant exists!");
 		}
@@ -195,6 +202,11 @@ public class PlantView extends JPanel {
 			buttonPressedSoundEffect();
 		}
 		settingsView.setVisible(true);
+	}
+
+	public void helpMenuPressed()
+	{
+		HelpMenu helpMenu = new HelpMenu(width, height);
 	}
 
 	private void buttonPressedSoundEffect() {
@@ -236,7 +248,7 @@ public class PlantView extends JPanel {
 	 * @return ImageIcon current plant
 	 * @author Petri Närhi
 	 * */
-	public ImageIcon getCurrentPlant()
+	public ImageIcon getCurrentPlantImage()
 	{
 		try {
 			return controller.getPlant().getImage();
@@ -358,6 +370,7 @@ public class PlantView extends JPanel {
 			this.javaFXApp = new WidgetJavaFXApplication(controller, stage, this);
 			javaFXApp.start(stage);
 			updateButtonStatesIfWidgeIsON();
+			
 
 		});
 	}
@@ -371,8 +384,19 @@ public class PlantView extends JPanel {
 		// Disable or enable buttons based on the widget existence
 		getSideButtonsClass().getSkipHour().setEnabled(!isWidgetCreated);
 		getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
+		getSideButtonsClass().getWidget().setEnabled(!isWidgetCreated);
 		getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
-
 	}
+	/**
+	 * This method is responsible for updating the image if the WidgetJavaFXApplication is not null
+	 * @author kinan
+	 */
+	private void UpdateWidgetImages() {
+		if (getJavaFXAppClass()!=null) {
+			javaFXApp.updateWidgetImages(getCurrentPlantImage());
+		}
+	}
+
+	
 
 }

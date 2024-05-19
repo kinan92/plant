@@ -1,4 +1,4 @@
-package boundary;
+package boundary.PlantView;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -6,14 +6,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-import static com.sun.javafx.iio.common.ImageTools.scaleImage;
-
 public class PlantPanel extends JPanel {
     private int width;
     private int height;
-    private JPanel plantPanel;
     private PlantView plantView;
-    private ImageIcon currentPlant;
+    private ImageIcon currentPlantImage;
     private ImageIcon currentPot;
     private String currentPlantName;
     private String currentPlantSpecies;
@@ -29,7 +26,7 @@ public class PlantPanel extends JPanel {
      * @author Elvira Grubb
      * @param width Width of the MainFrame
      * @param height Height of the MainFrame
-     * @param plantView The active PlantView class
+     * @param plantView The active boundary.PlantView.PlantView class
      * This constructor creates a PlantPanel, filling it with relevant JPanels to function
      * as a window where the user can see their plant, relevant plant information, and plant care
      */
@@ -40,7 +37,7 @@ public class PlantPanel extends JPanel {
         this.width = width;
         this.height = height;
         this.plantView = plantView;
-        this.currentPlant = plantView.getCurrentPlant();
+        this.currentPlantImage = plantView.getCurrentPlantImage();
         this.currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
@@ -57,9 +54,9 @@ public class PlantPanel extends JPanel {
 
         //Creates plantWindow JLayeredPane and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         JLayeredPane plantWindow = getPlantWindow();
         creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
@@ -67,15 +64,11 @@ public class PlantPanel extends JPanel {
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
-    }
-
-    public JProgressBar getWaterBar(){
-        return this.waterBar;
     }
 
     /**
@@ -91,7 +84,7 @@ public class PlantPanel extends JPanel {
         plantWindow.setBounds(0, 0, 256, 320);
         plantWindow.setBackground(Color.ORANGE);
 
-        plantImageLabel = new JLabel(currentPlant);
+        plantImageLabel = new JLabel(currentPlantImage);
         plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
@@ -184,15 +177,9 @@ public class PlantPanel extends JPanel {
     }
 
     public void updatePlantImage(ImageIcon newImage){
-        this.currentPlant = newImage;
-        plantImageLabel.setIcon(this.currentPlant);
+        this.currentPlantImage = newImage;
+        plantImageLabel.setIcon(this.currentPlantImage);
         repaint();
-    }
-
-    private ImageIcon scaleImage(ImageIcon icon, int width, int height){
-        Image image = icon.getImage();
-        Image scaledImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-        return new ImageIcon(scaledImage);
     }
 
     /**
@@ -279,5 +266,4 @@ public class PlantPanel extends JPanel {
     public JButton getWaterPlantButton() {
  		return waterPlantButton;
  	}
-
 }

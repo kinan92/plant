@@ -43,15 +43,17 @@ public class Controller {
 	/**
 	 * Creates a new plant object based on the choice of the user
 	 * called by a boundary class
-	 * @param i int, the index of the chosen plant in the GUI
-	 * @author Petri Närhi
+	 * @param plantNumber int, the index of the chosen plant in the GUI
+	 * @param potNumber int, the index of the chosen pot in the GUI
+	 * @author Petri Närhi, Elvira Grubb
 	 * */
-	public void createPlant(int plantNumber, int potNumber) {
+	public void confirmPlant(int plantNumber, int potNumber) {
+		mainFrame.confirmPlantPanel(plantTypes.get(plantNumber).getGrownPlantImage(), pots.get(potNumber).getPotImage(), plantNumber, potNumber, plantTypes.get(plantNumber).getPlantInfoArray());
+	}
+
+	public void createPlant(int plantNumber, int potNumber, String plantName) {
 		PlantType type = plantTypes.get(plantNumber);
-		String name;
-		do {
-			name = JOptionPane.showInputDialog("Give your plant a name!");
-		} while (name == null || name.isEmpty());
+		String name = plantName;
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
@@ -193,7 +195,7 @@ public class Controller {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7], plantInformation[8], plantInformation[9], plantInformation[10]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}
@@ -299,7 +301,7 @@ public class Controller {
 
 	/**
 	 * Gets the current plant
-	 * to show the current plant that is shown in PlantView
+	 * to show the current plant that is shown in boundary.PlantView.PlantView
 	 * and to be able to use the plant's methods in various classes
 	 * @return Plant
 	 * @author Petri Närhi
@@ -313,7 +315,7 @@ public class Controller {
 
 	/**
 	 * Sets the current plant
-	 * to change the current plant that is shown in PlantView
+	 * to change the current plant that is shown in boundary.PlantView.PlantView
 	 * @param plant the plant to replace the current plant
 	 * @author Petri Närhi
 	 * */

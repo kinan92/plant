@@ -1,7 +1,12 @@
 package entity;
 
+import controller.Controller;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public class Plant {
 	
@@ -9,12 +14,15 @@ public class Plant {
 	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
+	private LocalDateTime growthStartTime;
+	private Timer deathTimer;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
 	private PlantType type;
 	private PlantStateEnum state;
 	private Pot pot;
+	private Controller controller;
 
 	/**
 	 * Constructor for plant
@@ -28,11 +36,13 @@ public class Plant {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
+	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
 		super();
+		this.controller = controller;
 		this.name = name;
 		this.age = age;
 		this.dateAndTime = dateAndTime;
+		this.growthStartTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
 		this.type = type;
 		this.state = state;
@@ -62,6 +72,7 @@ public class Plant {
 	 */
 	public void waterPlant(){
 			waterLevel += WATER_INCREMENT;
+			cancelDeathTimer();
 			updateState();
 	}
 
@@ -83,22 +94,56 @@ public class Plant {
 	 * @author Aleksander Augustyniak
 	 */
 	public void decreaseWaterLevel(){
-		if(waterLevel > 0){
+		if(waterLevel > 0) {
 			waterLevel -= WATER_DECREMENT;
+			if (waterLevel <= 0) {
+				startDeathTimer();
+			}
 		}
 		updateState();
 	}
 
 	public void updateState(){
-		if (waterLevel <= 0){
-			setState(PlantStateEnum.dead);
-		} else if (waterLevel >= 75){
-			setState(PlantStateEnum.big);
+		if (waterLevel > 0) {
+			cancelDeathTimer();
 		} else {
-			setState(PlantStateEnum.little);
+			startDeathTimer();
 		}
 		updateStateImage(getState());
 	}
+
+	public void checkAndGrow(){
+		if (growthStartTime == null){
+			growthStartTime = LocalDateTime.now();
+		}
+		LocalDateTime now = LocalDateTime.now();
+		Duration duration = Duration.between(dateAndTime, now);
+		if (duration.toDays() >= 2 && waterLevel > 0){
+			setState(PlantStateEnum.big);
+			growthStartTime = now;
+			updateStateImage(getState());
+			controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
+		}
+	}
+
+	private void startDeathTimer(){
+		if (deathTimer == null){
+			deathTimer = new Timer(10000, e -> {
+                setState(PlantStateEnum.dead);
+                updateStateImage(getState());
+                controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
+                deathTimer.stop();
+            });
+		}
+		deathTimer.start();
+	}
+
+	private void cancelDeathTimer(){
+		if (deathTimer != null && deathTimer.isRunning()){
+			deathTimer.stop();
+		}
+	}
+
 
 	/**
 	 * Gets the current water level of the plant

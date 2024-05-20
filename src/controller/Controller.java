@@ -31,7 +31,10 @@ public class Controller {
 		mainFrame.addMainMenu();
 		loadPlantTypes();
 		loadPots();
-		test();
+	}
+
+	public MainFrame getMainFrame() {
+		return mainFrame;
 	}
 
 	/**
@@ -51,7 +54,7 @@ public class Controller {
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber), this); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
@@ -116,15 +119,14 @@ public class Controller {
 	 */
 	private void startPlantTimer(){
 		if (plantTimer == null){
-			plantTimer = new Timer(1000, new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					if (!isPaused){
-						incrementAgeForALlPlants();
-						decreaseWaterLevelForAllPlants();
-						mainFrame.getPlantView().updateElapsedTime();
-					}
-				}
-			});
+			plantTimer = new Timer(1000, e -> {
+                if (!isPaused){
+                    incrementAgeForALlPlants();
+                    decreaseWaterLevelForAllPlants();
+                    checkGrowthForAllPlants();
+                    mainFrame.getPlantView().updateElapsedTime();
+                }
+            });
 		}
 		plantTimer.start();
 	}
@@ -134,23 +136,6 @@ public class Controller {
 			if (plant != null){
 				plant.incrementAge(1);
 			}
-		}
-	}
-
-	/**
-	 * @author Elvira Grubb
-	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
-	 */
-	private void test()
-	{
-		for (PlantType pt : plantTypes)
-		{
-			System.out.println(pt.getPlantTypeName());
-			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getGrownPlantImage());
-			System.out.println(pt.getPlantImageButton());
-			System.out.println(pt.getPlantInformation());
-			System.out.println();
 		}
 	}
 
@@ -268,6 +253,7 @@ public class Controller {
 		plant.incrementAge(ageIncrement);
 		plant.decreaseWaterLevel();
 		plant.updateState();
+		plant.checkAndGrow();
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 		notifyTimeSkipped(hours);
@@ -302,6 +288,14 @@ public class Controller {
 			Plant plant = listOfPlants.get(i);
 			if(plant != null) {
 				plant.decreaseWaterLevel();
+			}
+		}
+	}
+
+	public void checkGrowthForAllPlants(){
+		for (Plant plant : listOfPlants){
+			if (plant != null){
+				plant.checkAndGrow();
 			}
 		}
 	}

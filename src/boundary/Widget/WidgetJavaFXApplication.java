@@ -1,7 +1,11 @@
-package boundary;
+package boundary.Widget;
 
+import javax.swing.ImageIcon;
+
+import boundary.PlantView.PlantView;
 import controller.Controller;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
@@ -20,43 +24,81 @@ public class WidgetJavaFXApplication extends Application {
 	private double yOffset = 0;
 	private Controller controller;
 	private PlantView plantView;
-	private Stage stage;
+
 	private Stage barMenuStage;
+	private Stage widgetCreatorStage;
 	private WidgetCreatorJFX widgetCreator;
 	private WidgetBarMenu widgetBarMenu;
-
-	public WidgetJavaFXApplication(Controller controller, Stage stage, PlantView plantView) {
+	private int clickCount = 0;
+	public WidgetJavaFXApplication(Controller controller, Stage primaryStage, PlantView plantView) {
 		this.controller = controller;
-		this.stage = stage;
+		this.widgetCreatorStage = primaryStage;
 		this.plantView = plantView;
 	}
 
 	@Override
 	public void start(Stage primaryStage) {
-
-		widgetBarMenu = new WidgetBarMenu(plantView);
+		this.widgetCreatorStage = primaryStage;
+		
+		if (widgetBarMenu==null) {
+			
+			widgetBarMenu = new WidgetBarMenu(plantView);
+			barMenuStage = new Stage();
+		} 
+		
 		Scene BarMenuScene = new Scene(widgetBarMenu, Color.TRANSPARENT);
 
-		barMenuStage = new Stage();
 		barMenuStage.setScene(BarMenuScene);
 		barMenuStage.setTitle("BAR Menu ");
 		barMenuStage.initStyle(StageStyle.TRANSPARENT);
 
 		this.widgetCreator = new WidgetCreatorJFX(controller);
 		Scene wScene = new Scene(widgetCreator, Color.TRANSPARENT);
-
-		Stage widgetCreatorStage = new Stage();
+		showMenuBar(wScene);
+		widgetCreatorStage = new Stage();
 		widgetCreatorStage.setScene(wScene);
 		widgetCreatorStage.initStyle(StageStyle.TRANSPARENT);
 
 		frameMoverWidget(widgetCreatorStage, widgetCreator);
 		frameMoverProgressBar();		
 
-		barMenuStage.show();
-
 		widgetCreatorStage.show();
+		barMenuStage.show();
+		
 	}
 
+	/**
+	 * This method will update send image Plant to widgetCreator and update the plant image.
+	 * @param newPlantImage
+	 * @param newPotImage
+	 * @author kinan
+	 */
+    public void updateWidgetImages(ImageIcon newPlantImage) {
+        widgetCreator.updatePlantImage(newPlantImage);
+    }
+    
+    /**
+     *  this method add a lesener for the mouse if click on the widgetCreatorStage and show the menu bar 
+     * @param Scene
+     * @return Scene
+     * @author kinan
+     */
+    private Scene showMenuBar(Scene Scene) {
+    	Scene wScene=Scene;
+    	
+    	wScene.setOnMouseClicked(event-> {
+    		clickCount++;
+    		if (clickCount==2) {
+    			if (barMenuStage != null) {
+    				barMenuStage.show();
+    				clickCount=0;
+    			}
+			}
+    	});
+    	
+    	return wScene;
+    }
+    
 	/**
 	 * This method responsible for creating a mover for the window
 	 * 
@@ -74,6 +116,7 @@ public class WidgetJavaFXApplication extends Application {
 			stage.setX(event.getScreenX() - xOffset);
 			stage.setY(event.getScreenY() - yOffset);
 			event.consume();
+		
 		});
 	}
 	/**
@@ -98,7 +141,7 @@ public class WidgetJavaFXApplication extends Application {
             event.consume(); 
         });
 	}
-	
+
 
 	public Stage getBarMenuStage() {
 		return barMenuStage;

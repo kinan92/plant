@@ -9,7 +9,6 @@ public enum PlantStateEnum {
 	private final String state;
 
 	PlantStateEnum(String state) {
-
 		this.state = state;
 
 	}

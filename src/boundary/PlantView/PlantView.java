@@ -1,10 +1,12 @@
-package boundary;
+package boundary.PlantView;
 
+import boundary.HelpMenu;
+import boundary.SettingsView;
+import boundary.Widget.WidgetJavaFXApplication;
 import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -20,19 +22,19 @@ public class PlantView extends JPanel {
 	boolean soundEffectSetting;
 	private Controller controller;
 	private SettingsView settingsView;
-	private Timer updateTimer;
 	private SideButtons sideButtons;
 	private JLabel creationTimeLabel;
 	private Plant plant;
 	private WidgetJavaFXApplication javaFXApp;
 	private static boolean isJavaFXInitialized = false;
+	private boolean isVacationMode = false;
 
 	/**
 	 * @author Elvira Grubb
 	 * @param width Width of MainFrame
 	 * @param height Height of MainFrame
 	 * @param controller Active Controller object used in program
-	 * This constructor creates a PlantView Panel that adds relevant panels to show the user's
+	 * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
 	 * active plant, relevant information about the plant and buttons for taking care of the plant
 	 */
 	public PlantView(int width, int height, Controller controller) {
@@ -47,7 +49,6 @@ public class PlantView extends JPanel {
 
 		creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
 		add(creationTimeLabel, BorderLayout.NORTH);
-		startUpdateTimer();
 		updateElapsedTime();
 
 		plantPanel = new PlantPanel(width, height, this);
@@ -57,19 +58,15 @@ public class PlantView extends JPanel {
 		add(sideButtons, BorderLayout.EAST);
 
 		settingsView = new SettingsView(width, height, this);
-
+		
 		checkJavaFXToolKit();
+		
 	}
-
     /* TODO: Not just in this class, but: make open all plants as widgets button in storage
     *   merge plants and pots and resize them and make buttons and hoverbuttons
     *   of them with java graphics or javafx
     *   make the name display under the buttons */
 
-
-	// Method that is called when the Plant Collection button is pressed
-	// Method is a work in progress and currently has no functionality.
-	// When functionality is added this method will open the user's Plant Storage
 	/**
 	 * @author Petri Närhi
 	 * ActionListener used for the Storage button that calls on a method in the
@@ -80,7 +77,7 @@ public class PlantView extends JPanel {
 			buttonPressedSoundEffect();
 		}
 		System.out.println("Storage pressed.");
-		controller.storagePanel();
+		//controller.storagePanel();
 	}
 
 	/**
@@ -95,7 +92,7 @@ public class PlantView extends JPanel {
 		SwingUtilities.invokeLater(() -> {
 			if ((controller.getPlant() == null)
 					|| ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
-				System.out.println("you can't ctreat a Widget because the plant or the pot image is null");
+				System.out.println("You can't create a Widget because the plant or the pot image is null");
 			} else {
 				sendDataToJavaFX(controller);
 			}
@@ -107,13 +104,14 @@ public class PlantView extends JPanel {
 		System.out.println("Widget pressed.");
 	}
 
-	public void startUpdateTimer(){
-		updateTimer = new Timer(1000, e -> updateElapsedTime());
-		updateTimer.start();
-	}
+	/**
+	 * Updates the elapsed time for the current plant by calculating the duration from its creation time,
+	 * adjusted for any paused durations, to the current time. The elapsed time is displayed in a label.
+	 * @author Aleksander Augustyniak
+	 */
 	public void updateElapsedTime(){
 		if (plant != null){
-			LocalDateTime creationTime = plant.getDateAndTime();
+			LocalDateTime creationTime = plant.getDateAndTime().plus(controller.getTotalPausedDuration());
 			LocalDateTime now = LocalDateTime.now();
 			Duration duration = Duration.between(creationTime, now);
 
@@ -128,6 +126,13 @@ public class PlantView extends JPanel {
 
 	// Method will be called when the Skip Hour button is pressed
 	// Method is a work in progress, functionality will be added later
+	/**
+	 * Handles the action of skipping one hour for the current plant.
+	 * Calls the controller to skip the specified time and updates the plant details.
+	 * If no plant is found, an error message is printed(just for test now)
+	 * Plays a button pressed sound effect
+	 * @author Aleksander Augustyniak
+	 */
 	public void skipHourPressed()
 	{
 		int hoursToSkip = 1;
@@ -145,18 +150,41 @@ public class PlantView extends JPanel {
 		}
 	}
 
+	/**
+	 * Updates the details of the specified plant, including the elapsed time, plant image, and water level.
+	 * Updates the widget images if applicable
+	 * @param plant the plant whose details are to be updated
+	 * @author Aleksander Augustyniak
+	 */
 	public void updatePlantDetails(Plant plant){
 		this.plant = plant;
 		updateElapsedTime();
 		plantPanel.updatePlantImage(plant.getImage());
+		JProgressBar waterBar = plantPanel.getWaterBar();
+		waterBar.setValue(plant.getWaterLevel());
+		waterBar.repaint();
+		UpdateWidgetImages();
 	}
 
 	// Method used when Vacation button is pressed
 	// Method is a work in progress
 	// When method is done this method will allow the user to set the program to
 	// vacation mode
+	/**
+	 * Toggles the vacation mode for the plant. When the vacation mode is enabled, the plant's time is paused.
+	 * When vacation mode is disabled, it resumes
+	 * @author Aleksander Augustyniak
+	 */
 	public void vacationPressed() {
-		System.out.println("Vacation pressed.");
+		if (isVacationMode){
+			controller.resumeTime();
+			isVacationMode = false;
+			System.out.println("Vacation mode disabled, resuming time");
+		} else {
+			controller.pausTime();
+			isVacationMode = true;
+			System.out.println("Vacation mode enabled, pausing time");
+		}
 	}
 
 	/**
@@ -174,6 +202,11 @@ public class PlantView extends JPanel {
 
 	// Method used when water button is pressed
 	// Method is a work in progress
+	/**
+	 * Waters the current plant by calling the controller's waterPlant method.
+	 * Updates the plant's water level, details
+	 * @author Aleksander Augustyniak
+	 */
 	public void waterPressed() {
 		try {
 			System.out.println("Water pressed.");
@@ -197,6 +230,11 @@ public class PlantView extends JPanel {
 			buttonPressedSoundEffect();
 		}
 		settingsView.setVisible(true);
+	}
+
+	public void helpMenuPressed()
+	{
+		HelpMenu helpMenu = new HelpMenu(width, height);
 	}
 
 	private void buttonPressedSoundEffect() {
@@ -312,21 +350,16 @@ public class PlantView extends JPanel {
 		}
 	}
 
-	
 	public PlantPanel getPlantPanelClass() {
 		return plantPanel;
 	}
-
 	public SideButtons getSideButtonsClass() {
 		return sideButtons;
 	}
-
 	public WidgetJavaFXApplication getJavaFXAppClass() {
 		return javaFXApp;
 	}
 
-
-	
 	/**
 	 * This method responsible for JavaFX ToolKit if the ToolKit is not itialized the Platform will start 
 	 * This method is called in the Constractor after creating the view ;
@@ -347,7 +380,7 @@ public class PlantView extends JPanel {
 
 	/**
 	 * This method responsible for sending data to the JavaFX Application
-	 * 
+	 *
 	 * @author kinan
 	 * @param controller
 	 */
@@ -358,7 +391,6 @@ public class PlantView extends JPanel {
 			this.javaFXApp = new WidgetJavaFXApplication(controller, stage, this);
 			javaFXApp.start(stage);
 			updateButtonStatesIfWidgeIsON();
-
 		});
 	}
 
@@ -371,8 +403,16 @@ public class PlantView extends JPanel {
 		// Disable or enable buttons based on the widget existence
 		getSideButtonsClass().getSkipHour().setEnabled(!isWidgetCreated);
 		getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
+		getSideButtonsClass().getWidget().setEnabled(!isWidgetCreated);
 		getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
-
 	}
-
+	/**
+	 * This method is responsible for updating the image if the WidgetJavaFXApplication is not null
+	 * @author kinan
+	 */
+	private void UpdateWidgetImages() {
+		if (getJavaFXAppClass()!=null) {
+			javaFXApp.updateWidgetImages(getCurrentPlantImage());
+		}
+	}
 }

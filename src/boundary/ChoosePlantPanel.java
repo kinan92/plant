@@ -2,8 +2,11 @@ package boundary;
 
 import controller.Controller;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ChoosePlantPanel extends JPanel {
@@ -179,11 +182,13 @@ public class ChoosePlantPanel extends JPanel {
      */
     private void backPressed()
     {
+        buttonPressedSoundEffect();
         controller.showMainMenu();
     }
 
     private void confirmButtonpressed()
     {
+        buttonPressedSoundEffect();
         if (currentSelectedPlant == -1)
         {
             JOptionPane.showMessageDialog(this, "Please select a plant.");
@@ -196,7 +201,7 @@ public class ChoosePlantPanel extends JPanel {
 
         else
         {
-            controller.createPlant(currentSelectedPlant, currentSelectedPot);
+            controller.confirmPlant(currentSelectedPlant, currentSelectedPot);
         }
     }
 
@@ -213,6 +218,8 @@ public class ChoosePlantPanel extends JPanel {
         {
             plantButtons.get(currentSelectedPlant).setIcon(plantBtnImages.get(currentSelectedPlant));
         }
+
+        buttonPressedSoundEffect();
         currentSelectedPlant = plant;
         plantButtons.get(plant).setIcon(plantBtnHoverImages.get(plant));
         System.out.println(plant);
@@ -225,7 +232,28 @@ public class ChoosePlantPanel extends JPanel {
             potButtons.get(currentSelectedPot).setIcon(potBtnImages.get(currentSelectedPot));
         }
 
+        buttonPressedSoundEffect();
         currentSelectedPot = pot;
         potButtons.get(pot).setIcon(potBtnHoverImages.get(pot));
+    }
+
+    /**
+     * @author Elvira Grubb
+     * This method plays a sound effect whenever a button is pressed
+     */
+    private void buttonPressedSoundEffect() {
+        AudioInputStream audioInputStream = null;
+        try {
+            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioInputStream);
+            clip.start();
+        } catch (UnsupportedAudioFileException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

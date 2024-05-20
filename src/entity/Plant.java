@@ -1,8 +1,6 @@
 package entity;
 
-import java.awt.*;
 import java.time.LocalDateTime;
-
 import javax.swing.ImageIcon;
 
 public class Plant {
@@ -57,18 +55,34 @@ public class Plant {
 		}
 	}
 
+	/**
+	 * Increases the water level of the plant by a predefined increment.
+	 * Updates the state of the plant based on the new water level (Just for test)
+	 * @author Aleksander Augustyniak
+	 */
 	public void waterPlant(){
 			waterLevel += WATER_INCREMENT;
 			updateState();
 	}
 
+	/**
+	 * Increments the age of the plant by the specified amount.
+	 * Update the state of the plant based on the new age.
+	 * @param age the amount to increment the plant's age by.
+	 * @author Aleksander Augustyniak
+	 */
 	public void incrementAge(int age){
 		this.age += age;
 		updateState();
 	}
 
-
-	public void decreaseWaterLevel(int level){
+	/**
+	 * Decreases the water level of the plant by a predefined decrement if the current water level is above 0.
+	 * Updates the state of the platn based on the new level
+	 * @param
+	 * @author Aleksander Augustyniak
+	 */
+	public void decreaseWaterLevel(){
 		if(waterLevel > 0){
 			waterLevel -= WATER_DECREMENT;
 		}
@@ -86,18 +100,19 @@ public class Plant {
 		updateStateImage(getState());
 	}
 
+	/**
+	 * Gets the current water level of the plant
+	 * @return the water level
+	 */
 	public int getWaterLevel(){
 		return this.waterLevel;
 	}
-
 	public boolean needsWater(){
 		return waterLevel < 10;
 	}
-
 	public boolean isOverWatered(){
 		return waterLevel > 100;
 	}
-
 	public String getName() {
 		return name;
 	}
@@ -170,7 +185,6 @@ public class Plant {
 	{
 		//this.pot = pot;
 	}
-
 
 	/**
 	 * To String method for test purposes

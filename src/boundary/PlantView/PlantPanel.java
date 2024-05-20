@@ -1,4 +1,4 @@
-package boundary;
+package boundary.PlantView;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
@@ -26,7 +26,7 @@ public class PlantPanel extends JPanel {
      * @author Elvira Grubb
      * @param width Width of the MainFrame
      * @param height Height of the MainFrame
-     * @param plantView The active PlantView class
+     * @param plantView The active boundary.PlantView.PlantView class
      * This constructor creates a PlantPanel, filling it with relevant JPanels to function
      * as a window where the user can see their plant, relevant plant information, and plant care
      */
@@ -42,7 +42,6 @@ public class PlantPanel extends JPanel {
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
 
-
         //Creates nameView panel and adds with constraints
         this.add(nameView());
         GridBagConstraints c = new GridBagConstraints();
@@ -54,9 +53,9 @@ public class PlantPanel extends JPanel {
 
         //Creates plantWindow JLayeredPane and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 2;
+        c.gridy = 1;
         JLayeredPane plantWindow = getPlantWindow();
         creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
@@ -64,9 +63,9 @@ public class PlantPanel extends JPanel {
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 1;
+        c.weightx = 0;
         c.gridx = 0;
-        c.gridy = 4;
+        c.gridy = 2;
         JPanel plantCare = plantCare();
         this.add(plantCare, c);
     }
@@ -176,6 +175,21 @@ public class PlantPanel extends JPanel {
         return plantCare;
     }
 
+    /**
+     * Gets the water level bar for the plant.
+     * @return the JProgressBar representing the plant's water level
+     * @author Aleksander Augustyniak
+     */
+    public JProgressBar getWaterBar(){
+        return this.waterBar;
+    }
+
+    /**
+     * Updates the plant image with a new image.
+     * Sets the plantImageLabel's icon to the new image and repaints the component.
+     * @param newImage the new ImageICon to be displayed as the plant image.
+     * @author Aleksander Augustyniak
+     */
     public void updatePlantImage(ImageIcon newImage){
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);

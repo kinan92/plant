@@ -1,5 +1,6 @@
 package boundary;
 
+import boundary.PlantView.PlantView;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -14,7 +15,7 @@ public class SettingsView extends JFrame {
      * @author Elvira Grubb
      * @param width The width of the MainFrame
      * @param height The height of the MainFrame
-     * @param plantView The active PlantView
+     * @param plantView The active boundary.PlantView.PlantView
      * This method creates a Settings menu but will not set it to visible until prompted
      */
     public SettingsView (int width, int height, PlantView plantView)
@@ -81,7 +82,7 @@ public class SettingsView extends JFrame {
         this.setVisible(false);
     }
 
-    //Method called when settings are confirmed that updates the settings in PlantView
+    //Method called when settings are confirmed that updates the settings in boundary.PlantView.PlantView
     //and sets the settings windows as invisible
     private void confirmSettings()
     {

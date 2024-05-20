@@ -196,7 +196,7 @@ public class StoragePanel extends JPanel {
 
         else
         {
-            controller.createPlant(currentSelectedPlant, currentSelectedPot);
+            //controller.createPlant(currentSelectedPlant, currentSelectedPot);
         }
     }
 

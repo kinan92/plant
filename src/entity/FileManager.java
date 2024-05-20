@@ -45,7 +45,7 @@ public class FileManager {
 				String[] plantInformation;
 				plantInformation = string.split( "," );
 
-				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7]);
+				plantType = new PlantType(plantInformation[0], plantInformation[1], plantInformation[2], plantInformation[3], plantInformation[4], plantInformation[5], plantInformation[6], plantInformation[7], plantInformation[8], plantInformation[9], plantInformation[10]);
 				plantTypes.add(plantType);
 				string = br.readLine();
 			}

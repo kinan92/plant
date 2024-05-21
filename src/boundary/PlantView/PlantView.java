@@ -77,7 +77,9 @@ public class PlantView extends JPanel {
 			buttonPressedSoundEffect();
 		}
 		System.out.println("Storage pressed.");
-		//controller.storagePanel();
+		if (controller.getListOfPlants() != null) {
+			controller.createStoragePlantButtons();
+		}
 	}
 
 	/**

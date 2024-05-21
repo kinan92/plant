@@ -76,7 +76,7 @@ public class WidgetCreatorJFX extends Pane {
 	 * @param imageIcon
 	 * @return BufferedImage
 	 */
-	private BufferedImage convertImageIconToBufferedImage(ImageIcon imageIcon) {
+	public BufferedImage convertImageIconToBufferedImage(ImageIcon imageIcon) {
 		BufferedImage bufferedImage = new BufferedImage(imageIcon.getIconWidth(), imageIcon.getIconHeight(),
 				BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bufferedImage.createGraphics();

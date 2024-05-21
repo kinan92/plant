@@ -14,6 +14,7 @@ public class MainFrame extends JFrame {
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
     private ConfirmPlantPanel confirmPlantPanel;
+    private StoragePanel storagePanel;
 
     /**
      * @author Elvira Grubb
@@ -90,5 +91,20 @@ public class MainFrame extends JFrame {
     {
         MainMenu mainMenu = new MainMenu(width, height, controller);
         this.setContentPane(mainMenu);
+    }
+
+    /**
+     * @author Petri Närhi
+     * @param plantImage An ArrayList of all PlantType images
+     * @param plantImageHover An ArrayList of all PlantType hover images
+     * This method clears the MainFrame and adds ChoosePlantPanel
+     */
+    public void addStoragePanel(ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages)
+    {
+        this.getContentPane().removeAll();
+        this.revalidate();
+        storagePanel = new StoragePanel(controller, plantBtnImages, plantBtnHoverImages, width, height);
+        this.setContentPane(storagePanel);
+        this.repaint();
     }
 }

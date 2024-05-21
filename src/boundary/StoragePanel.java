@@ -12,12 +12,8 @@ public class StoragePanel extends JPanel {
     private int height;
     private ArrayList<ImageIcon> plantBtnImages;
     private ArrayList<ImageIcon> plantBtnHoverImages;
-    private ArrayList<ImageIcon> potBtnImages;
-    private ArrayList<ImageIcon> potBtnHoverImages;
     private ArrayList<JButton> plantButtons = new ArrayList<>();
-    private ArrayList<JButton> potButtons = new ArrayList<>();
     private int currentSelectedPlant;
-    private int currentSelectedPot;
 
     /**
      * @author Elvira Grubb
@@ -28,7 +24,7 @@ public class StoragePanel extends JPanel {
      * @param height The height of the MainFrame
      * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
      */
-    public StoragePanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, ArrayList<ImageIcon> potBtnImages, ArrayList<ImageIcon> potBtnHoverImages, int width, int height)
+    public StoragePanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
     {
         super(null);
         this.controller = controller;
@@ -102,37 +98,6 @@ public class StoragePanel extends JPanel {
 
         JScrollPane scrollPlantPanel = new JScrollPane(plantPanel);
         return scrollPlantPanel;
-    }
-
-    public JScrollPane potPanel()
-    {
-        JPanel potPanel = new JPanel();
-        potPanel.setBackground(new java.awt.Color(184, 200, 177));
-        potPanel.setLayout(new GridLayout(1, potBtnImages.size()));
-        potPanel.setPreferredSize(new Dimension(potBtnImages.size() * 132, 320 / 2));
-
-        for (int i = 0; i < potBtnImages.size(); i++)
-        {
-            JButton plantBtn = new JButton();
-            plantBtn.setSize(new Dimension(132, 160));
-            plantBtn.setBorder(BorderFactory.createEmptyBorder());
-            plantBtn.setContentAreaFilled(false);
-            plantBtn.setIcon(potBtnImages.get(i));
-            ImageIcon shadow = potBtnHoverImages.get(i);
-
-            plantBtn.setFocusPainted(false);
-            plantBtn.setRolloverEnabled(true);
-            plantBtn.setRolloverIcon(shadow);
-
-            potButtons.add(plantBtn);
-            //ActionListener that will return the ArrayList number when the plant is pressed
-            int potNumber = i;
-            plantBtn.addActionListener(l -> potPressed(potNumber));
-            potPanel.add(plantBtn);
-        }
-
-        JScrollPane scrollPotPanel = new JScrollPane(potPanel);
-        return scrollPotPanel;
     }
 
     /**

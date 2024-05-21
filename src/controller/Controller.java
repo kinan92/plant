@@ -1,9 +1,13 @@
 package controller;
 
 import boundary.*;
+import boundary.Widget.WidgetCreatorJFX;
 import entity.*;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,6 +29,7 @@ public class Controller {
 	private Duration totalPausedDuration = Duration.ZERO;
 	private Random random = new Random();
 	private FileManager file;
+	private WidgetCreatorJFX widget = new WidgetCreatorJFX(this);
 
 	public Controller() {
 		mainFrame = new MainFrame(this);
@@ -275,5 +280,26 @@ public class Controller {
 	 * */
 	public void setPlant(Plant plant) {
 		this.plant = plant;
+	}
+
+	public ArrayList<Plant> getListOfPlants() {
+		return listOfPlants;
+	}
+
+	public void createStoragePlantButtons() {
+		ArrayList<ImageIcon> plantBtnImages = new ArrayList<>();
+		ArrayList<ImageIcon> plantBtnHoverImages = new ArrayList<>();
+		for (int i = 0; i < listOfPlants.size(); i++) {
+			ImageIcon plant = listOfPlants.get(i).getImage();
+			ImageIcon pot = listOfPlants.get(i).getPot();
+			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
+			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
+			ImageIcon combinedImage = combineImage(plant, pot);
+			ImageIcon shrunkImage = shrinkImage(combinedImage);
+			ImageIcon hoverButton = createHoverButton(shrunkImage);
+			plantBtnImages.add(shrunkImage);
+			plantBtnHoverImages.add(hoverButton);
+		}
+		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
 	}
 }

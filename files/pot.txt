@@ -1,3 +1,7 @@
 images/pots/pot.png,images/buttons/pot_button.png,images/buttons/pot_button_hover.png
+images/pots/pot_duo_purple.png,images/buttons/pot_duo_purple_button.png,images/buttons/pot_duo_purple_button_hover.png
+images/pots/pot_duo_blue.png,images/buttons/pot_duo_blue_button.png,images/buttons/pot_duo_blue_button_hover.png
 images/pots/pot_duo.png,images/buttons/pot_duo_button.png,images/buttons/pot_duo_button_hover.png
 images/pots/pot_pink.png,images/buttons/pot_pink_button.png,images/buttons/pot_pink_button_hover.png
+images/pots/pot_blue.png,images/buttons/pot_blue_button.png,images/buttons/pot_blue_button_hover.png
+images/pots/pot_green.png,images/buttons/pot_green_button.png,images/buttons/pot_green_button_hover.png

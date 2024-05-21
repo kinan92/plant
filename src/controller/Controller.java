@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.awt.image.RescaleOp;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -294,6 +295,39 @@ public class Controller {
 			ImageIcon pot = listOfPlants.get(i).getPot();
 			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
 			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
+			BufferedImage combinedImage = widget.mergeAndDrawTheCombinedImages(plantBuffered, potBuffered);
+			BufferedImage shrunkImage = resizeImage(combinedImage, 128, 160);
+			BufferedImage hoverButton = brightenImage(shrunkImage);
+			plantBtnImages.add(new ImageIcon(shrunkImage));
+			plantBtnHoverImages.add(new ImageIcon(hoverButton));
+		}
+		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
+	}
+
+	public BufferedImage brightenImage(BufferedImage image, float scaleFactor, float offset)
+	{
+		RescaleOp rescaleOp = new RescaleOp(scaleFactor, offset, null);
+		image = n
+	}
+
+	public BufferedImage resizeImage(BufferedImage originalImage, int width, int height)
+	{
+		BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
+		Graphics2D graphics2D = resizedImage.createGraphics();
+		graphics2D.drawImage(originalImage, 0, 0, width, height, null);
+		graphics2D.dispose();
+		return resizedImage;
+	}
+
+	/*
+	* public void createStoragePlantButtons() {
+		ArrayList<ImageIcon> plantBtnImages = new ArrayList<>();
+		ArrayList<ImageIcon> plantBtnHoverImages = new ArrayList<>();
+		for (int i = 0; i < listOfPlants.size(); i++) {
+			ImageIcon plant = listOfPlants.get(i).getImage();
+			ImageIcon pot = listOfPlants.get(i).getPot();
+			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
+			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
 			ImageIcon combinedImage = combineImage(plant, pot);
 			ImageIcon shrunkImage = shrinkImage(combinedImage);
 			ImageIcon hoverButton = createHoverButton(shrunkImage);
@@ -301,5 +335,5 @@ public class Controller {
 			plantBtnHoverImages.add(hoverButton);
 		}
 		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
-	}
+	}*/
 }

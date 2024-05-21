@@ -207,7 +207,7 @@ public class PlantPanel extends JPanel {
         if (plantView.getSoundEffectSetting())
         {
             waterSoundEffect();
-            if (waterLevel == 100)
+            if (waterLevel >= 100 && waterLevel <= 103)
             {
                 plantSparkleAnimation();
                 plantHappySoundEffect();

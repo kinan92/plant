@@ -30,7 +30,7 @@ public class Controller {
 	private Duration totalPausedDuration = Duration.ZERO;
 	private Random random = new Random();
 	private FileManager file;
-	private WidgetCreatorJFX widget = new WidgetCreatorJFX(this);
+	private WidgetCreatorJFX widget = new WidgetCreatorJFX();
 
 	public Controller() {
 		mainFrame = new MainFrame(this);
@@ -276,11 +276,11 @@ public class Controller {
 	/**
 	 * Sets the current plant
 	 * to change the current plant that is shown in boundary.PlantView.PlantView
-	 * @param plant the plant to replace the current plant
+	 * @param selecedPlant int, the plant to replace the current plant selected in storage
 	 * @author Petri Närhi
 	 * */
-	public void setPlant(Plant plant) {
-		this.plant = plant;
+	public void setPlant(int selecedPlant) {
+		this.plant = listOfPlants.get(selecedPlant);
 	}
 
 	public ArrayList<Plant> getListOfPlants() {
@@ -297,7 +297,7 @@ public class Controller {
 			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
 			BufferedImage combinedImage = widget.mergeAndDrawTheCombinedImages(plantBuffered, potBuffered);
 			BufferedImage shrunkImage = resizeImage(combinedImage, 128, 160);
-			BufferedImage hoverButton = brightenImage(shrunkImage);
+			BufferedImage hoverButton = brightenImage(shrunkImage, 1.5f, 0);
 			plantBtnImages.add(new ImageIcon(shrunkImage));
 			plantBtnHoverImages.add(new ImageIcon(hoverButton));
 		}
@@ -307,7 +307,8 @@ public class Controller {
 	public BufferedImage brightenImage(BufferedImage image, float scaleFactor, float offset)
 	{
 		RescaleOp rescaleOp = new RescaleOp(scaleFactor, offset, null);
-		image = n
+		image = rescaleOp.filter(image, null);
+		return image;
 	}
 
 	public BufferedImage resizeImage(BufferedImage originalImage, int width, int height)

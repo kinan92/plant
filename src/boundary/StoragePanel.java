@@ -13,7 +13,6 @@ public class StoragePanel extends JPanel {
     private ArrayList<ImageIcon> plantBtnImages;
     private ArrayList<ImageIcon> plantBtnHoverImages;
     private ArrayList<JButton> plantButtons = new ArrayList<>();
-    private int currentSelectedPlant;
 
     /**
      * @author Elvira Grubb
@@ -31,19 +30,15 @@ public class StoragePanel extends JPanel {
         System.out.println("You're in StoragePanel");
         this.plantBtnImages = plantBtnImages;
         this.plantBtnHoverImages = plantBtnHoverImages;
-        this.potBtnImages = potBtnImages;
-        this.potBtnHoverImages = potBtnHoverImages;
         this.width = width;
         this.height = height;
-        currentSelectedPlant = -1;
-        currentSelectedPot = -1;
 
         setLayout(new BorderLayout());
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
 
-        JPanel plantAndPotPanel = plantAndPotPanel();
-        this.add(plantAndPotPanel, BorderLayout.CENTER);
+        JPanel storedPlantsPanel = storedPlantsPanel();
+        this.add(storedPlantsPanel, BorderLayout.CENTER);
 
         //Adds navigation JPanel
         JPanel navigation = navigation();
@@ -58,13 +53,12 @@ public class StoragePanel extends JPanel {
      * Creates a JPanel that adds all PlantTypes by looping through the PlantButton ArrayList to
      * create buttons of each PlantType
      */
-    public JPanel plantAndPotPanel()
+    public JPanel storedPlantsPanel()
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, 1));
         plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320));
         plants.add(plantPanel());
-        plants.add(potPanel());
 
         return plants;
     }
@@ -127,12 +121,7 @@ public class StoragePanel extends JPanel {
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(100,100);
 
-        JButton confirm = new JButton("Confirm");
-        confirm.setPreferredSize(new Dimension(135, 35));
-        confirm.addActionListener(l -> confirmButtonpressed());
-
         navigation.add(backBtn);
-        navigation.add(confirm);
         navigation.setVisible(true);
 
         return navigation;
@@ -147,50 +136,15 @@ public class StoragePanel extends JPanel {
         controller.showMainMenu();
     }
 
-    private void confirmButtonpressed()
-    {
-        if (currentSelectedPlant == -1)
-        {
-            JOptionPane.showMessageDialog(this, "Please select a plant.");
-        }
-
-        else if (currentSelectedPot == -1)
-        {
-            JOptionPane.showMessageDialog(this, "Please select a pot.");
-        }
-
-        else
-        {
-            //controller.createPlant(currentSelectedPlant, currentSelectedPot);
-        }
-    }
-
     /**
-     * @author Elvira Grubb
-     * @param plant An int corresponding to the PlantTypes
-     * This method will be replaced by a method that calls a method in the Controller to notify
-     * that a plant has been chosen and which plant has been chosen (via the index that will
-     *  correspond to an index in the PlantType ArrayList)
+     * Called when a plant button is clicked in storage
+     * @author Petri Närhi
+     * @param selectedPlant int corresponding to the plant chosen in GUI
      */
-    private void plantPressed(int plant)
+    private void plantPressed(int selectedPlant)
     {
-        if (currentSelectedPlant != -1)
-        {
-            plantButtons.get(currentSelectedPlant).setIcon(plantBtnImages.get(currentSelectedPlant));
-        }
-        currentSelectedPlant = plant;
-        plantButtons.get(plant).setIcon(plantBtnHoverImages.get(plant));
-        System.out.println(plant);
-    }
-
-    private void potPressed(int pot)
-    {
-        if (currentSelectedPot != -1)
-        {
-            potButtons.get(currentSelectedPot).setIcon(potBtnImages.get(currentSelectedPot));
-        }
-
-        currentSelectedPot = pot;
-        potButtons.get(pot).setIcon(potBtnHoverImages.get(pot));
+        controller.setPlant(selectedPlant);
+        controller.showPlantView();
+        System.out.println(selectedPlant);
     }
 }

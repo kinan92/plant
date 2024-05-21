@@ -78,7 +78,10 @@ public class PlantView extends JPanel {
 		}
 		System.out.println("Storage pressed.");
 		if (controller.getListOfPlants() != null) {
-			controller.createStoragePlantButtons();
+			if (!controller.getListOfPlants().isEmpty()) {
+				controller.createStoragePlantButtons();
+			}
+
 		}
 	}
 

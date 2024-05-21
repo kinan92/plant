@@ -49,6 +49,12 @@ public class WidgetCreatorJFX extends Pane {
 	}
 
 	/**
+	 * Default constructor used to access the class' methods without the above code execution
+	 * @author Petri Närhi
+	 * */
+	public WidgetCreatorJFX() {}
+
+	/**
 	 * This method responsible for update the plant image and add the image to the existing image
 	 * @param newPlantImage
 	 * @author kinan

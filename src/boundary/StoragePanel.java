@@ -16,12 +16,13 @@ public class StoragePanel extends JPanel {
 
     /**
      * @author Elvira Grubb
+     * @author Petri Närhi
      * @param controller The active controller class used in the program
      * @param plantBtnImages An ArrayList of plantbutton images
      * @param plantBtnHoverImages An ArrayList of plantbutton hover images
      * @param width The width of the MainFrame
      * @param height The height of the MainFrame
-     * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
+     * This method creates the Storage JPanel
      */
     public StoragePanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
     {
@@ -48,10 +49,11 @@ public class StoragePanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      * @return JPanel plants
-     * Creates a JPanel that adds all PlantTypes by looping through the PlantButton ArrayList to
-     * create buttons of each PlantType
+     * Creates a JPanel that adds all plantbuttons by looping through the PlantButton ArrayList to
+     * create buttons of each plant
      */
     public JPanel storedPlantsPanel()
     {
@@ -63,6 +65,13 @@ public class StoragePanel extends JPanel {
         return plants;
     }
 
+    /**
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
+     * @return JScrollPane plantPanel
+     * Creates a scrollable pane for the storedPlantsPanel
+     * which includes all the plant buttons
+     */
     public JScrollPane plantPanel()
     {
         JPanel plantPanel = new JPanel();

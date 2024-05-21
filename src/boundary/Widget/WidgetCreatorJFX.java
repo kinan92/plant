@@ -50,6 +50,7 @@ public class WidgetCreatorJFX extends Pane {
 
 	/**
 	 * Default constructor used to access the class' methods without the above code execution
+	 * used for Storage to create buttons
 	 * @author Petri Närhi
 	 * */
 	public WidgetCreatorJFX() {}

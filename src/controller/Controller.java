@@ -30,7 +30,7 @@ public class Controller {
 	private Duration totalPausedDuration = Duration.ZERO;
 	private Random random = new Random();
 	private FileManager file;
-	private WidgetCreatorJFX widget = new WidgetCreatorJFX();
+	private WidgetCreatorJFX widget = new WidgetCreatorJFX(); //used here only to access its image merging methods
 
 	public Controller() {
 		mainFrame = new MainFrame(this);
@@ -287,30 +287,43 @@ public class Controller {
 		return listOfPlants;
 	}
 
-	public void createStoragePlantButtons() {
+	/**
+	 * Creates images to be used for the plant buttons in Storage,
+	 * then adds the Storage window
+	 * @author Petri Närhi
+	 * */
+	public void createStorage()
+	{
 		ArrayList<ImageIcon> plantBtnImages = new ArrayList<>();
 		ArrayList<ImageIcon> plantBtnHoverImages = new ArrayList<>();
-		for (int i = 0; i < listOfPlants.size(); i++) {
+
+		for (int i = 0; i < listOfPlants.size(); i++)
+		{
 			ImageIcon plant = listOfPlants.get(i).getImage();
 			ImageIcon pot = listOfPlants.get(i).getPot();
+
 			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
-			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
+			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(pot);
 			BufferedImage combinedImage = widget.mergeAndDrawTheCombinedImages(plantBuffered, potBuffered);
 			BufferedImage shrunkImage = resizeImage(combinedImage, 128, 160);
-			BufferedImage hoverButton = brightenImage(shrunkImage, 1.5f, 0);
+			BufferedImage hoverButton = brightenImage(shrunkImage, 1.5f);
+
 			plantBtnImages.add(new ImageIcon(shrunkImage));
 			plantBtnHoverImages.add(new ImageIcon(hoverButton));
 		}
 		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
 	}
 
-	public BufferedImage brightenImage(BufferedImage image, float scaleFactor, float offset)
-	{
-		RescaleOp rescaleOp = new RescaleOp(scaleFactor, offset, null);
-		image = rescaleOp.filter(image, null);
-		return image;
-	}
-
+	/**
+	 * Resizes an image (type BufferedImage)
+	 * used to create buttons of plants dynamically for Storage
+	 * based on the actual state of the plant in question
+	 * @author Petri Närhi
+	 * @param originalImage BufferedImage
+	 * @param width int, desired width of the image
+	 * @param height int, desired height of the image
+	 * @return resizedImage BufferedImage
+	 * */
 	public BufferedImage resizeImage(BufferedImage originalImage, int width, int height)
 	{
 		BufferedImage resizedImage = new BufferedImage(width, height, originalImage.getType());
@@ -320,21 +333,17 @@ public class Controller {
 		return resizedImage;
 	}
 
-	/*
-	* public void createStoragePlantButtons() {
-		ArrayList<ImageIcon> plantBtnImages = new ArrayList<>();
-		ArrayList<ImageIcon> plantBtnHoverImages = new ArrayList<>();
-		for (int i = 0; i < listOfPlants.size(); i++) {
-			ImageIcon plant = listOfPlants.get(i).getImage();
-			ImageIcon pot = listOfPlants.get(i).getPot();
-			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
-			BufferedImage potBuffered = widget.convertImageIconToBufferedImage(plant);
-			ImageIcon combinedImage = combineImage(plant, pot);
-			ImageIcon shrunkImage = shrinkImage(combinedImage);
-			ImageIcon hoverButton = createHoverButton(shrunkImage);
-			plantBtnImages.add(shrunkImage);
-			plantBtnHoverImages.add(hoverButton);
-		}
-		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
-	}*/
+	/**
+	 * Changes brightness of image (type BufferedImage)
+	 * used to create hover buttons dynamically for the Storage panel
+	 * @author Petri Närhi
+	 * @param image BufferedImage, the image to be brightened/darkened
+	 * @param scaleFactor float, desired brightness
+	 * @return image BufferedImage
+	 * */
+	public BufferedImage brightenImage(BufferedImage image, float scaleFactor)
+	{
+		RescaleOp rescaleOp = new RescaleOp(scaleFactor, 0, null);
+		return rescaleOp.filter(image, null);
+	}
 }

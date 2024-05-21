@@ -94,10 +94,10 @@ public class MainFrame extends JFrame {
     }
 
     /**
+     * Clears the MainFrame and adds StoragePanel
      * @author Petri Närhi
-     * @param plantImage An ArrayList of all PlantType images
-     * @param plantImageHover An ArrayList of all PlantType hover images
-     * This method clears the MainFrame and adds ChoosePlantPanel
+     * @param plantBtnImages An ArrayList of all plant button images
+     * @param plantBtnHoverImages An ArrayList of all plant button hover images
      */
     public void addStoragePanel(ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages)
     {

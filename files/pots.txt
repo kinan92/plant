@@ -1,5 +1,0 @@
-images/pots/bow-tie2.png
-images/pots/default_pot.png
-images/pots/pot-with-bow-tie1.png
-images/pots/pot-with-bow-tie2.png
-images/pots/water_jug.png

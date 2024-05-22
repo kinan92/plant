@@ -111,9 +111,7 @@ public class PlantView extends JPanel {
 			long days = duration.toDays();
 			long hours = duration.toHours() % 24;
 			long minutes = duration.toMinutes() % 60;
-			long seconds = duration.getSeconds() % 60;
-
-			creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
+			creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min");
 		}
 	}
 
@@ -295,6 +293,10 @@ public class PlantView extends JPanel {
 		}
 	}
 
+	public PlantPanel getPlantPanel(){
+		return plantPanel;
+	}
+
 	/**
 	 * Gets the current plant name from the current plant in controller
 	 * if no plant exists, returns a text that no plant is created
@@ -352,6 +354,13 @@ public class PlantView extends JPanel {
 	}
 	public WidgetJavaFXApplication getJavaFXAppClass() {
 		return javaFXApp;
+	}
+
+	public String getCurrentPlantState(){
+		if (plant != null){
+			return plant.getState().toString();
+		}
+		return "Unknown";
 	}
 
 	/**

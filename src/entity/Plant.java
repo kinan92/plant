@@ -11,7 +11,6 @@ import javax.swing.*;
 public class Plant {
 	
 	private String name;
-	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
 	private LocalDateTime growthStartTime;
@@ -27,7 +26,6 @@ public class Plant {
 	/**
 	 * Constructor for plant
 	 * @param name the String user has typed in as its name
-	 * @param age int, starts at 0 for new plants but is a variable in case
 	 *               creating grown plants becomes an option
 	 * @param initialWaterLevel int, a random water level for new plants
 	 * @param type PlantType, its species
@@ -36,11 +34,11 @@ public class Plant {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
+	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
 		super();
 		this.controller = controller;
 		this.name = name;
-		this.age = age;
+
 		this.dateAndTime = dateAndTime;
 		this.growthStartTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
@@ -74,17 +72,6 @@ public class Plant {
 			waterLevel += WATER_INCREMENT;
 			cancelDeathTimer();
 			updateState();
-	}
-
-	/**
-	 * Increments the age of the plant by the specified amount.
-	 * Update the state of the plant based on the new age.
-	 * @param age the amount to increment the plant's age by.
-	 * @author Aleksander Augustyniak
-	 */
-	public void incrementAge(int age){
-		this.age += age;
-		updateState();
 	}
 
 	/**
@@ -122,6 +109,7 @@ public class Plant {
 			setState(PlantStateEnum.big);
 			growthStartTime = now;
 			updateStateImage(getState());
+			controller.getMainFrame().getPlantView().getPlantPanel().updatePlantState(controller.getMainFrame().getPlantView().getCurrentPlantState());
 			controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 		}
 	}
@@ -163,12 +151,6 @@ public class Plant {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
 	}
 	public ImageIcon getImage() {
 		return image;
@@ -237,6 +219,6 @@ public class Plant {
 	 * @author Petri Närhi
 	 * */
 	public String toString() {
-		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
+		return ("Name: " + name + " | Age: " + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
 	}
 }

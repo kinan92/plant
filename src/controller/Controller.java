@@ -2,8 +2,6 @@ package controller;
 
 import boundary.*;
 import entity.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -20,6 +18,8 @@ public class Controller {
 	ArrayList<PlantType> plantTypes = new ArrayList<>();
 	ArrayList<Pot> pots = new ArrayList<>();
 	private Timer plantTimer;
+	private Timer waterLevelTimer;
+	private Timer checkGrowTimer;
 
 	private boolean isPaused = false;
 	private LocalDateTime pauseStartTime;
@@ -54,13 +54,15 @@ public class Controller {
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber), this); //ny planta är alltid liten
+		Plant newPlant = new Plant(name, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber), this); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		plant = newPlant;
 		System.out.println("New plant! " + plant);
 		showPlantView();
 		mainFrame.getPlantView().updatePlantDetails(plant);
 		startPlantTimer();
+		startWaterLevelTimer();
+		startCheckGrowTimer();
 	}
 
 	/**
@@ -73,6 +75,8 @@ public class Controller {
 			isPaused = true;
 			pauseStartTime = LocalDateTime.now();
 			stopPlantTimer();
+			stopWaterLevelTimer();
+			stopCheckGrowTimer();
 			System.out.println("Tid är pausad");
 		}
 	}
@@ -85,6 +89,16 @@ public class Controller {
 	public void stopPlantTimer() {
 		if (plantTimer != null) {
 			plantTimer.stop();
+		}
+	}
+	public void stopWaterLevelTimer(){
+		if (waterLevelTimer != null) {
+			waterLevelTimer.stop();
+		}
+	}
+	public void stopCheckGrowTimer(){
+		if (checkGrowTimer != null) {
+			checkGrowTimer.stop();
 		}
 	}
 
@@ -121,21 +135,38 @@ public class Controller {
 		if (plantTimer == null){
 			plantTimer = new Timer(1000, e -> {
                 if (!isPaused){
-                    incrementAgeForALlPlants();
-                    decreaseWaterLevelForAllPlants();
                     checkGrowthForAllPlants();
+
                     mainFrame.getPlantView().updateElapsedTime();
+					mainFrame.getPlantView().updatePlantDetails(plant);
                 }
             });
 		}
 		plantTimer.start();
 	}
 
-	private void updateAge(){
-		for (Plant plant : listOfPlants){
-			if (plant != null){
-				plant.incrementAge(1);
-			}
+	private void startCheckGrowTimer(){
+		if (checkGrowTimer == null){
+			checkGrowTimer = new Timer(60000, e -> {
+				if (!isPaused){
+					checkGrowthForAllPlants();
+					mainFrame.getPlantView().updateElapsedTime();
+					mainFrame.getPlantView().updatePlantDetails(plant);
+				}
+			});
+		}
+		checkGrowTimer.start();
+	}
+
+	public void startWaterLevelTimer(){
+		if (waterLevelTimer == null){
+			waterLevelTimer = new Timer(3600000, e -> {
+				if (!isPaused){
+					decreaseWaterLevelForAllPlants();
+					mainFrame.getPlantView().updatePlantDetails(plant);
+				}
+			});
+			waterLevelTimer.start();
 		}
 	}
 
@@ -249,8 +280,6 @@ public class Controller {
 		}
 		LocalDateTime newCreationTime = plant.getDateAndTime().minusHours(hours);
 		plant.setDateAndTime(newCreationTime);
-		int ageIncrement = hours / 24;
-		plant.incrementAge(ageIncrement);
 		plant.decreaseWaterLevel();
 		plant.updateState();
 		plant.checkAndGrow();
@@ -262,20 +291,6 @@ public class Controller {
 	public void showPlantView()
 	{
 		mainFrame.addPlantView();
-	}
-
-	/**
-	 * Increments the age of all plants in the list by 1 unit.
-	 * This method iterates through the list of plants and calls the incrementAge method for each plant.
-	 * @author Aleksander Augustyniak
-	 */
-	public void incrementAgeForALlPlants(){
-		for (int i = 0; i < listOfPlants.size(); i++){
-			Plant plant = listOfPlants.get(i);
-			if(plant != null){
-				plant.incrementAge(1);
-			}
-		}
 	}
 
 	/**
@@ -310,6 +325,7 @@ public class Controller {
 	public Plant getPlant() {
 		return plant;
 	}
+
 	public boolean isPaused(){
 		return isPaused;
 	}

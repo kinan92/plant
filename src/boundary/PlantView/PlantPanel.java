@@ -32,8 +32,6 @@ public class PlantPanel extends JPanel {
      */
     public PlantPanel(int width, int height, PlantView plantView)
     {
-        //Creates the panel and sets the current plant and its pot
-        super(null);
         this.width = width;
         this.height = height;
         this.plantView = plantView;
@@ -77,12 +75,14 @@ public class PlantPanel extends JPanel {
      * images on top of each other
      */
     private JLayeredPane getPlantWindow() {
+        //Creates a JLayeredPane
         plantWindow = new JLayeredPane();
         plantWindow.setLayout(new BorderLayout());
         plantWindow.setPreferredSize(new Dimension(256, 320));
         plantWindow.setBounds(0, 0, 256, 320);
         plantWindow.setBackground(Color.ORANGE);
 
+        //Creates various labels to use in the JLayeredPane
         plantImageLabel = new JLabel(currentPlantImage);
         plantImageLabel.setBounds(0, 0, 256, 320);
         JLabel plantBackground = new JLabel(new ImageIcon("images/background/green_gradient.png"));
@@ -92,10 +92,12 @@ public class PlantPanel extends JPanel {
         sparkle = new JLabel();
         sparkle.setBounds(0, 0, 256, 320);
 
+        //Adds all the labels to the JLayeredPane in the correct order
         plantWindow.add(sparkle, 1);
         plantWindow.add(plantImageLabel, 2);
         plantWindow.add(plantPot, 3);
         plantWindow.add(plantBackground, 4);
+
         return plantWindow;
     }
 
@@ -106,12 +108,13 @@ public class PlantPanel extends JPanel {
      * and species
      */
     public JPanel nameView()
-    {
+    {//Creates a JPanel for the NameView
         JPanel nameView = new JPanel();
         nameView.setPreferredSize(new Dimension(256, height / 7));
         nameView.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
+        //Creates JLabels with relevant information and adding it with constraints
         c.weightx = 1;
         c.gridx = 0;
         c.gridy = 0;
@@ -139,19 +142,21 @@ public class PlantPanel extends JPanel {
      */
     private JPanel plantCare()
     {
+        //Creates a JPanel for PlantCare
         JPanel plantCare = new JPanel();
         plantCare.setSize(new Dimension(256, 50));
         plantCare.setLayout(new GridBagLayout());
         plantCare.setBackground(Color.GRAY);
         GridBagConstraints c = new GridBagConstraints();
 
+        //Creates the watering button and adds it to the PlantCare panel
         waterPlantButton = new JButton();
         waterPlantButton.setBorder(BorderFactory.createEmptyBorder());
         waterPlantButton.setContentAreaFilled(false);
         waterPlantButton.setIcon(new ImageIcon("images/buttons/water.png"));
         waterPlantButton.setPreferredSize(new Dimension(45, 45));
-        plantCare.add(waterPlantButton, c);
         waterPlantButton.addActionListener(l -> plantView.waterPressed());
+
         waterPlantButton.setRolloverEnabled(true);
         waterPlantButton.setRolloverIcon(new ImageIcon("images/buttons/water_hover.png"));
 
@@ -163,7 +168,7 @@ public class PlantPanel extends JPanel {
         c.insets = new Insets(0, 0, 0, 0);
         plantCare.add(waterPlantButton, c);
 
-
+        //Creates a healthbar and adds it to the panel
         waterBar = new JProgressBar(0, 100);
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
         waterBar.setValue(currentPlantWaterLevel);
@@ -180,7 +185,8 @@ public class PlantPanel extends JPanel {
      * @return the JProgressBar representing the plant's water level
      * @author Aleksander Augustyniak
      */
-    public JProgressBar getWaterBar(){
+    public JProgressBar getWaterBar()
+    {
         return this.waterBar;
     }
 
@@ -190,7 +196,8 @@ public class PlantPanel extends JPanel {
      * @param newImage the new ImageICon to be displayed as the plant image.
      * @author Aleksander Augustyniak
      */
-    public void updatePlantImage(ImageIcon newImage){
+    public void updatePlantImage(ImageIcon newImage)
+    {
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);
         repaint();
@@ -277,7 +284,8 @@ public class PlantPanel extends JPanel {
         }).start();
     }
 
-    public JButton getWaterPlantButton() {
+    public JButton getWaterPlantButton()
+    {
  		return waterPlantButton;
  	}
 }

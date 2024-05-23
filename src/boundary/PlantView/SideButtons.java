@@ -15,11 +15,17 @@ public class SideButtons extends JPanel {
 	private JButton settings;
 	private JButton widget;
 
+	/**
+	 * This constructor creates a SideButton panel.
+	 * @param width The width of the MainFrame
+	 * @param height The height of the MainFrame
+	 * @param plantView The active PlantView object
+	 * @author Elvira Grubb
+	 */
 	public SideButtons(int width, int height, PlantView plantView) {
 		this.width = width;
 		this.height = height;
 		this.plantView = plantView;
-		JPanel sideButtons = new JPanel();
 		this.setBackground(Color.LIGHT_GRAY);
 		this.setPreferredSize(new Dimension(240, height));
 		this.setLayout(new GridBagLayout());
@@ -37,6 +43,11 @@ public class SideButtons extends JPanel {
 		 */
 	}
 
+	/**
+	 * This method creates a JLabel that functions as a background panel
+	 * @return JLabel background
+	 * @author Elvira Grubb
+	 */
 	private JLabel backgroundPanel() {
 		JLabel backgroundPanel = new JLabel();
 		backgroundPanel.setIcon(new ImageIcon("images/background/buttons_background.png"));
@@ -163,7 +174,9 @@ public class SideButtons extends JPanel {
 
 		return backgroundPanel;
 	}
-	public JButton getSettings() {
+
+	public JButton getSettings()
+	{
 		return settings;
 	}
 	public JButton getSkipHour() {

@@ -27,15 +27,18 @@ public class PlantType {
      * Constructor for PlantType
      * @param plantTypeName String, species scientific name
      * @param plantTypeNameAlternative String, casual name
-     * @param grownPlantImage String, image path for the grown plant
-     * @param littlePlantImage String, image path for the little plant
-     * @param deadPlantImage String, image path for the dead plant
      * @param plantImageButton String, image path for corresponding button
      * @param plantImageButtonHover String, image path for hover button when mouse hovering
      * @param plantInformation String, facts about the species
+     * @param plantStage1Image Image path for plant stage 1
+     * @param plantStage2Image Image path for plant stage 2
+     * @param plantStage3Image Image path for plant stage 3
+     * @param plantStage1DeadImage Image path for dead plant stage 1
+     * @param plantStage2DeadImage Image path for dead plant stage 2
+     * @param plantStage3DeadImage Image path for dead plant stage 3
      * @author Elvira Grubb
      * @author Petri Närhi
-     * */
+     */
     public PlantType(String plantTypeName, String plantTypeNameAlternative, String plantImageButton, String plantImageButtonHover, String plantInformation, String plantStage1Image, String plantStage2Image, String plantStage3Image, String plantStage1DeadImage, String plantStage2DeadImage, String plantStage3DeadImage)
     {
         this.plantTypeName = plantTypeName;
@@ -111,6 +114,11 @@ public class PlantType {
         return ("Type: " + plantTypeName + ", aka " + plantTypeNameAlternative + ". " + plantInformation);
     }
 
+    /**
+     * Method that creates an array out of certain plant information
+     * @return An array with plant information
+     * @author Elvira Grubb
+     */
     public ArrayList<String> getPlantInfoArray()
     {
         ArrayList<String> plantInfoArray = new ArrayList<>();

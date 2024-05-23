@@ -34,8 +34,8 @@ public class PlantView extends JPanel {
      * @param width      Width of MainFrame
      * @param height     Height of MainFrame
      * @param controller Active Controller object used in program
-     *                   This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
-     *                   active plant, relevant information about the plant and buttons for taking care of the plant
+     * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
+     * active plant, relevant information about the plant and buttons for taking care of the plant
      * @author Elvira Grubb
      */
     public PlantView(int width, int height, Controller controller) {
@@ -134,9 +134,6 @@ public class PlantView extends JPanel {
         }
     }
 
-    // Method will be called when the Skip Hour button is pressed
-    // Method is a work in progress, functionality will be added later
-
     /**
      * Handles the action of skipping one hour for the current plant.
      * Calls the controller to skip the specified time and updates the plant details.
@@ -177,11 +174,6 @@ public class PlantView extends JPanel {
         UpdateWidgetImages();
     }
 
-    // Method used when Vacation button is pressed
-    // Method is a work in progress
-    // When method is done this method will allow the user to set the program to
-    // vacation mode
-
     /**
      * Toggles the vacation mode for the plant. When the vacation mode is enabled, the plant's time is paused.
      * When vacation mode is disabled, it resumes
@@ -213,9 +205,6 @@ public class PlantView extends JPanel {
         }
     }
 
-    // Method used when water button is pressed
-    // Method is a work in progress
-
     /**
      * Waters the current plant by calling the controller's waterPlant method.
      * Updates the plant's water level, details
@@ -246,14 +235,23 @@ public class PlantView extends JPanel {
         settingsView.setVisible(true);
     }
 
-    public void helpMenuPressed() {
-        HelpMenu helpMenu = new HelpMenu(width, height);
+    /**
+     * @author Elvira Grubb
+     * Used when the help button is clicked. This method creates the HelpMenu.
+     */
+    public void helpMenuPressed()
+    {
+        new HelpMenu(width, height);
     }
 
-    private void buttonPressedSoundEffect() {
-        AudioInputStream audioInputStream = null;
+    /**
+     * @author Elvira Grubb
+     * This method plays a button clicking sound effect.
+     */
+    private void buttonPressedSoundEffect()
+    {
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -268,15 +266,22 @@ public class PlantView extends JPanel {
 
     /**
      * @param setting A boolean indicating whether the sound is on or off in the settings
-     *                Method called when the settings in the settings menu are saved to update whether
-     *                the sound is on or off
+     * Method called when the settings in the settings menu are saved to update whether
+     * the sound is on or off
      * @author Elvira Grubb
      */
-    public void setSoundEffectSetting(boolean setting) {
+    public void setSoundEffectSetting(boolean setting)
+    {
         soundEffectSetting = setting;
     }
 
-    public boolean getSoundEffectSetting() {
+    /**
+     * @author Elvira Grubb
+     * @return boolean for whether the sound effect setting is on or off
+     * This method returns a boolean indicating whether the user has turned the settings on or off
+     */
+    public boolean getSoundEffectSetting()
+    {
         return soundEffectSetting;
     }
 

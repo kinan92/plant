@@ -24,6 +24,7 @@ public class PlantView extends JPanel {
 	private SettingsView settingsView;
 	private SideButtons sideButtons;
 	private JLabel creationTimeLabel;
+	private JLabel stateLabel;
 	private Plant plant;
 	private WidgetJavaFXApplication javaFXApp;
 	private static boolean isJavaFXInitialized = false;
@@ -47,8 +48,12 @@ public class PlantView extends JPanel {
 		BorderLayout borderLayout = new BorderLayout();
 		this.setLayout(borderLayout);
 
+		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
-		add(creationTimeLabel, BorderLayout.NORTH);
+		stateLabel = new JLabel("State: unknown");
+		topPanel.add(creationTimeLabel);
+		topPanel.add(stateLabel);
+		add(topPanel, BorderLayout.NORTH);
 		updateElapsedTime();
 
 		plantPanel = new PlantPanel(width, height, this);
@@ -154,6 +159,7 @@ public class PlantView extends JPanel {
 		JProgressBar waterBar = plantPanel.getWaterBar();
 		waterBar.setValue(plant.getWaterLevel());
 		waterBar.repaint();
+		stateLabel.setText("State: " + plant.getState().toString());
 		UpdateWidgetImages();
 	}
 

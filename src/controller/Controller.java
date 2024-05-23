@@ -63,6 +63,7 @@ public class Controller {
 		startPlantTimer();
 		startWaterLevelTimer();
 		startCheckGrowTimer();
+		plant.checkAndGrow();
 	}
 
 	/**

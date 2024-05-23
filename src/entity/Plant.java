@@ -2,8 +2,6 @@ package entity;
 
 import controller.Controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.swing.*;
@@ -109,9 +107,10 @@ public class Plant {
 			setState(PlantStateEnum.big);
 			growthStartTime = now;
 			updateStateImage(getState());
-			controller.getMainFrame().getPlantView().getPlantPanel().updatePlantState(controller.getMainFrame().getPlantView().getCurrentPlantState());
-			controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 		}
+			PlantStateEnum state = getState();
+			setState(state);
+			controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 	}
 
 	private void startDeathTimer(){
@@ -131,7 +130,6 @@ public class Plant {
 			deathTimer.stop();
 		}
 	}
-
 
 	/**
 	 * Gets the current water level of the plant

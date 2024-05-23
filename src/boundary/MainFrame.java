@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private int width = 550;
-    private int height = 450;
+    private int height = 460;
     private PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;
@@ -56,7 +56,6 @@ public class MainFrame extends JFrame {
         this.setContentPane(confirmPlantPanel);
         this.repaint();
     }
-
 
     /**
      * Gets the current PlantView instance associated with the MainFrame

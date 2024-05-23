@@ -15,14 +15,12 @@ public class PlantPanel extends JPanel {
     private String currentPlantName;
     private String currentPlantSpecies;
     private int currentPlantWaterLevel;
-    private String currentPlantState;
     private JButton waterPlantButton;
 	private JProgressBar waterBar;
     private JLayeredPane plantWindow;
     private JLabel sparkle;
     private JLabel creationTimeLabel;
     private JLabel plantImageLabel;
-    private JLabel plantStateLabel;
 
     /**
      * @author Elvira Grubb
@@ -43,7 +41,6 @@ public class PlantPanel extends JPanel {
         this.currentPot = plantView.getCurrentPot();
         this.setPreferredSize(new Dimension(256, height));
         this.setLayout(new GridBagLayout());
-        currentPlantState = plantView.getCurrentPlantState();
 
         //Creates nameView panel and adds with constraints
         this.add(nameView());
@@ -63,10 +60,6 @@ public class PlantPanel extends JPanel {
         creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
         this.add(plantWindow, c);
         this.add(creationTimeLabel, c);
-
-        plantStateLabel = new JLabel("State: " + currentPlantState);
-        c.gridy = 2;
-        this.add(plantStateLabel, c);
 
         //Creates PlantCare JPanel and adds to this with constraints
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -170,7 +163,6 @@ public class PlantPanel extends JPanel {
         c.insets = new Insets(0, 0, 0, 0);
         plantCare.add(waterPlantButton, c);
 
-
         waterBar = new JProgressBar(0, 100);
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
         waterBar.setValue(currentPlantWaterLevel);
@@ -201,16 +193,6 @@ public class PlantPanel extends JPanel {
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);
         repaint();
-    }
-
-    /**
-     * Updates the plant state label with a new state.
-     * @param newState the new state of the plant
-     * @author Aleksander Augustyniak
-     */
-    public void updatePlantState(String newState){
-        this.currentPlantState = newState;
-        plantStateLabel.setText("State: " + currentPlantState);
     }
 
     /**

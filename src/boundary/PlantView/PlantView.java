@@ -103,6 +103,7 @@ public class PlantView extends JPanel {
                     || ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
                 System.out.println("You can't create a Widget because the plant or the pot image is null");
             } else {
+                updateButtonState();
                 sendDataToJavaFX(controller);
             }
         });
@@ -409,7 +410,6 @@ public class PlantView extends JPanel {
             Stage stage = new Stage();
             this.javaFXApp = new WidgetJavaFXApplication(controller, stage, this);
             javaFXApp.start(stage);
-            updateButtonStatesIfWidgeIsON();
         });
     }
 
@@ -425,6 +425,13 @@ public class PlantView extends JPanel {
         getSideButtonsClass().getSettings().setEnabled(!isWidgetCreated);
         getSideButtonsClass().getWidget().setEnabled(!isWidgetCreated);
         getPlantPanelClass().getWaterPlantButton().setEnabled(!isWidgetCreated);
+    }
+
+    public void updateButtonState() {
+        getSideButtonsClass().getSkipHour().setEnabled(false);
+        getSideButtonsClass().getSettings().setEnabled(false);
+        getSideButtonsClass().getWidget().setEnabled(false);
+        getPlantPanelClass().getWaterPlantButton().setEnabled(false);
     }
 
     /**

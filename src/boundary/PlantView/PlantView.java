@@ -47,6 +47,7 @@ public class PlantView extends JPanel {
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
+        this.setBackground(new java.awt.Color(184, 200, 177));
 
         creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
         add(creationTimeLabel, BorderLayout.NORTH);

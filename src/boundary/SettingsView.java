@@ -20,7 +20,7 @@ public class SettingsView extends JFrame {
      */
     public SettingsView (int width, int height, PlantView plantView)
     {
-        this.width = width / 2;
+        this.width = width / 3;
         this.height = height / 2;
         this.plantView = plantView;
         setTitle("Settings");
@@ -54,6 +54,7 @@ public class SettingsView extends JFrame {
     public JPanel settings()
     {
         JPanel settings = new JPanel();
+        settings.setBackground(new java.awt.Color(184, 200, 177));
         settings.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
@@ -61,13 +62,16 @@ public class SettingsView extends JFrame {
         c.gridx = 0;
         c.gridy = 0;
         soundEffects = new JCheckBox("Sound Effects", plantView.getSoundEffectSetting());
+        soundEffects.setFont(new Font("Calibri", Font.PLAIN, 16));
+        soundEffects.setBackground(new java.awt.Color(184, 200, 177));
         //soundEffects.addItemListener(l -> soundEffectsUpdated());
         settings.add(soundEffects, c);
 
-        c.weightx = 0;
+        c.weighty = 0;
         c.gridx = 0;
-        c.gridy = 1;
+        c.gridy = 2;
         JButton confirm = new JButton("Confirm");
+        confirm.setFont(new Font("Calibri", Font.PLAIN, 16));
         confirm.addActionListener(l -> confirmSettings());
         settings.add(confirm, c);
 

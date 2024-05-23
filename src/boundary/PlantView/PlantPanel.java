@@ -85,7 +85,7 @@ public class PlantPanel extends JPanel {
 
         plantImageLabel = new JLabel(currentPlantImage);
         plantImageLabel.setBounds(0, 0, 256, 320);
-        JLabel plantBackground = new JLabel(new ImageIcon("images/background/blue_gradient.png"));
+        JLabel plantBackground = new JLabel(new ImageIcon("images/background/green_gradient.png"));
         plantBackground.setBounds(0, 0, 256, 320);
         JLabel plantPot = new JLabel(currentPot);
         plantPot.setBounds(0, 0, 256, 320);

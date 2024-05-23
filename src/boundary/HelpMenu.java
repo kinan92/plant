@@ -9,8 +9,8 @@ public class HelpMenu extends JFrame{
 
     public HelpMenu (int width, int height)
     {
-        this.width = (width / 5) * 2 + 10;
-        this.height = (height / 3) * 2;
+        this.width = 250;
+        this.height = 270;
         setTitle("Help");
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -28,15 +28,18 @@ public class HelpMenu extends JFrame{
     private JScrollPane helpText()
     {
         JPanel helpPanel = new JPanel();
-        helpPanel.setPreferredSize(new Dimension(width - 20, height));
-        helpPanel.setBackground(new java.awt.Color(184, 200, 177));
+        helpPanel.setPreferredSize(new Dimension(230, 922));
 
-        JTextArea plantCareTitle = new JTextArea(20, 1);
+        /*JTextArea plantCareTitle = new JTextArea(20, 1);
         plantCareTitle.setText("hej");
         plantCareTitle.setEditable(false);
         plantCareTitle.setSize(new Dimension(width, height));
         plantCareTitle.setFont(new Font("Calibri", Font.BOLD, 16));
-        helpPanel.add(plantCareTitle);
+        helpPanel.add(plantCareTitle);*/
+
+        JLabel helpImage = new JLabel();
+        helpImage.setIcon(new ImageIcon("images/help_menu.png"));
+        helpPanel.add(helpImage);
 
         JScrollPane helpPanelScroll = new JScrollPane(helpPanel);
         helpPanelScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

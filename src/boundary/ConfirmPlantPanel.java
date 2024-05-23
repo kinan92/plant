@@ -215,8 +215,13 @@ public class ConfirmPlantPanel extends JPanel{
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(100,100);
 
-        JButton confirm = new JButton("Confirm");
-        confirm.setPreferredSize(new Dimension(135, 35));
+        JButton confirm = new JButton();
+        confirm.setIcon(new ImageIcon("images/buttons/confirm.png"));
+        confirm.setBorder(BorderFactory.createEmptyBorder());
+        confirm.setContentAreaFilled(false);
+
+        confirm.setRolloverEnabled(true);
+        confirm.setRolloverIcon(new ImageIcon("images/buttons/confirm_hover.png"));
         confirm.addActionListener(l -> createPlant());
 
         navigation.add(backBtn);

@@ -74,7 +74,7 @@ public class Controller {
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber), this); //ny planta är alltid liten
+		Plant newPlant = new Plant(name, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber), this); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		try {
 			currentPlant.setLastPlant(false);

@@ -175,7 +175,13 @@ public class PlantView extends JPanel {
         updateElapsedTime();
         plantPanel.updatePlantImage(plant.getImage());
         JProgressBar waterBar = plantPanel.getWaterBar();
-        waterBar.setValue(plant.getWaterLevel());
+        int newWaterLevel = plant.getWaterLevel();
+        waterBar.setValue(newWaterLevel);
+        if (newWaterLevel > 100){
+            waterBar.setForeground(Color.RED);
+        } else {
+            return;
+        }
         waterBar.repaint();
         stateLabel.setText("State: " + plant.getState().toString());
         UpdateWidgetImages();

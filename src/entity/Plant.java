@@ -10,7 +10,6 @@ import javax.swing.*;
 public class Plant implements Serializable {
 	
 	private String name;
-	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
 	private LocalDateTime growthStartTime;
@@ -21,8 +20,9 @@ public class Plant implements Serializable {
 	private PlantType type;
 	private PlantStateEnum state;
 	private Pot pot;
-	private boolean isLastPlant = false;
 	private Controller controller;
+	private boolean isLastPlant = false;
+
 
 	/**
 	 * Constructor for plant
@@ -36,11 +36,11 @@ public class Plant implements Serializable {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
+	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
 		super();
 		this.controller = controller;
 		this.name = name;
-		this.age = age;
+
 		this.dateAndTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
 		this.type = type;
@@ -70,9 +70,9 @@ public class Plant implements Serializable {
 	 * @author Aleksander Augustyniak
 	 */
 	public void waterPlant(){
-			waterLevel += WATER_INCREMENT;
-			cancelDeathTimer();
-			updateState();
+		waterLevel += WATER_INCREMENT;
+		cancelDeathTimer();
+		updateState();
 	}
 
 	/**
@@ -234,6 +234,6 @@ public class Plant implements Serializable {
 	 * @author Petri Närhi
 	 * */
 	public String toString() {
-		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
+		return ("Name: " + name + " | " + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
 	}
 }

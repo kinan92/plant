@@ -12,8 +12,4 @@ public enum PlantStateEnum {
 		this.state = state;
 
 	}
-
-	public String getState() {
-		return state;
-	}
 }

@@ -5,14 +5,29 @@ import controller.Controller;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * The FileManager class handles reading and writing files
+ * @author Petri Närhi
+ * */
 public class FileManager extends Thread {
 	private Controller controller;
 	private String plantsFile = "files\\plants.dat";
 
+	/**
+	 * Constructor for FileManager
+	 * initializes controller variable
+	 * @param controller Controller
+	 * @author Petri Närhi
+	 * */
 	public FileManager(Controller controller) {
 		this.controller = controller;
 	}
 
+	/**
+	 * Run-method for the thread part of the class
+	 * Saves user data every 60 seconds
+	 * @author Petri Närhi
+	 * */
 	@Override
 	public void run() {
 		while (!Thread.interrupted() ){
@@ -85,6 +100,13 @@ public class FileManager extends Thread {
 		}
 	}
 
+	/**
+	 * Writes plants to file
+	 * Takes the list of plants from controller and writes them to a dat-file
+	 * using buffered object output stream
+	 * @author Petri Närhi
+	 * @param listOfPlants ArrayList of plants
+	 * */
 	public void writePlantsToFile(ArrayList<Plant> listOfPlants) throws IOException {
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(plantsFile)))) {
@@ -96,6 +118,12 @@ public class FileManager extends Thread {
 		}
 	}
 
+	/**
+	 * Reads plants from file
+	 * Reads list of plants from a dat-file using buffered object input stream
+	 * @author Petri Närhi
+	 * @return listOfPlants ArrayList of plants
+	 * */
 	public ArrayList<Plant> readPlantsFromFile() throws IOException {
 		ArrayList<Plant> listOfPlants = new ArrayList<>();
 		try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(plantsFile))) ) {

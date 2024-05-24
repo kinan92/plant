@@ -19,7 +19,8 @@ public class MainFrame extends JFrame {
     private StoragePanel storagePanel;
 
     /**
-     * @author Elvira Grubb
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      * @param controller Current controller class used in the program
      * This constructor creates a MainFrame for the whole program
      */
@@ -44,6 +45,12 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Close operation for mainframe
+     * interrupts autosave thread, saves user data,
+     * disposes gui then terminates program
+     * @author Petri Närhi
+     * */
     private void windowClose() {
         controller.autoSave(false);
         controller.saveUserData();

@@ -30,6 +30,12 @@ public class Controller {
 	private FileManager file;
 	private WidgetCreatorJFX widget = new WidgetCreatorJFX(); //used here only to access its image merging methods
 
+	/**
+	 * Constructor for Controller
+	 * creates filemanager and mainframe, loads planttypes,
+	 * pots and user data and turns on autosave
+	 * @author Petri Närhi and others
+	 * */
 	public Controller() {
 		this.file = new FileManager(this);
 		mainFrame = new MainFrame(this);
@@ -44,6 +50,13 @@ public class Controller {
 		startAgeTimer();*/
 	}
 
+	/**
+	 * Autosave method
+	 * starts file saving thread if turned on
+	 * interrupts file saving thread if turned off
+	 * @author Petri Närhi
+	 * @param on boolean
+	 * */
 	public void autoSave(boolean on) {
 		if (on) {
 			file.start();
@@ -84,6 +97,11 @@ public class Controller {
 		saveUserData();
 	}
 
+	/**
+	 * Saves user data
+	 * calls filemanager's methods to write plant list to file
+	 * @author Petri Närhi
+	 * */
 	public void saveUserData() {
 		try {
 			file.writePlantsToFile(listOfPlants);
@@ -94,6 +112,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Loads saved user data
+	 * Calls filemanager's methods to read plants from file
+	 * Future possible implementation: read settings
+	 * @author Petri Närhi
+	 * */
 	public void loadUserData() {
 		ArrayList<Plant> plantList;
 		boolean soundEffectsOn;
@@ -328,9 +352,9 @@ public class Controller {
 	 * @author Petri Närhi
 	 * */
 	public void setCurrentPlant(int selectedPlant) {
-		this.currentPlant.setLastPlant(false);
+		this.currentPlant.setLastPlant(false); //old plant is not the last plant anymore
 		this.currentPlant = listOfPlants.get(selectedPlant);
-		this.currentPlant.setLastPlant(true);
+		this.currentPlant.setLastPlant(true); //sets the current plant as the last plant
 	}
 
 	public ArrayList<Plant> getListOfPlants() {

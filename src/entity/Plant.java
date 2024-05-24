@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 import javax.swing.ImageIcon;
 
 public class Plant implements Serializable {
-	
 	private String name;
 	private int age;
 	private ImageIcon image;

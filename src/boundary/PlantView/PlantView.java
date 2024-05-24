@@ -1,6 +1,7 @@
 package boundary.PlantView;
 
 import boundary.HelpMenu;
+import boundary.MainFrame;
 import boundary.SettingsView;
 import boundary.Widget.WidgetJavaFXApplication;
 import controller.Controller;
@@ -21,7 +22,6 @@ public class PlantView extends JPanel {
     private int width;
     private int height;
     private PlantPanel plantPanel;
-    boolean soundEffectSetting;
     private Controller controller;
     private SettingsView settingsView;
     private SideButtons sideButtons;
@@ -29,7 +29,7 @@ public class PlantView extends JPanel {
     private Plant plant;
     private WidgetJavaFXApplication javaFXApp;
     private static boolean isJavaFXInitialized = false;
-    private boolean isVacationMode = false;
+    private MainFrame mainFrame;
 
     /**
      * @param width      Width of MainFrame
@@ -39,12 +39,12 @@ public class PlantView extends JPanel {
      * active plant, relevant information about the plant and buttons for taking care of the plant
      * @author Elvira Grubb
      */
-    public PlantView(int width, int height, Controller controller) {
+    public PlantView(int width, int height, Controller controller, MainFrame mainFrame) {
         super(null);
+        this.mainFrame = mainFrame;
         this.width = width;
         this.height = height;
         this.controller = controller;
-        soundEffectSetting = true;
         this.setSize(width, height);
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
@@ -65,10 +65,7 @@ public class PlantView extends JPanel {
         checkJavaFXToolKit();
 
     }
-    /* TODO: Not just in this class, but: make open all plants as widgets button in storage
-     *   merge plants and pots and resize them and make buttons and hoverbuttons
-     *   of them with java graphics or javafx
-     *   make the name display under the buttons */
+    /* TODO: make the name display under the storage buttons */
 
     /**
      * @author Petri Närhi
@@ -77,7 +74,7 @@ public class PlantView extends JPanel {
      */
     public void storagePressed()
     {
-        if (soundEffectSetting) {
+        if (mainFrame.getSoundEffectSetting) {
             buttonPressedSoundEffect();
         }
         System.out.println("Storage pressed.");
@@ -268,27 +265,6 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @param setting A boolean indicating whether the sound is on or off in the settings
-     * Method called when the settings in the settings menu are saved to update whether
-     * the sound is on or off
-     * @author Elvira Grubb
-     */
-    public void setSoundEffectSetting(boolean setting)
-    {
-        this.soundEffectSetting = setting;
-    }
-
-    /**
-     * @author Elvira Grubb
-     * @return boolean for whether the sound effect setting is on or off
-     * This method returns a boolean indicating whether the user has turned the settings on or off
-     */
-    public boolean getSoundEffectSetting()
-    {
-        return soundEffectSetting;
-    }
-
-    /**
      * Gets the current plant image from the current plant in controller
      * if no plant exists, returns a default empty image
      * for display in the PlantPanel
@@ -445,9 +421,5 @@ public class PlantView extends JPanel {
         if (getJavaFXAppClass() != null) {
             javaFXApp.updateWidgetImages(getCurrentPlantImage());
         }
-    }
-
-    public boolean isVacationMode() {
-        return isVacationMode;
     }
 }

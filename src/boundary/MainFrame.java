@@ -17,15 +17,18 @@ public class MainFrame extends JFrame {
     private ChoosePlantPanel choosePlantPanel;
     private ConfirmPlantPanel confirmPlantPanel;
     private StoragePanel storagePanel;
+    boolean soundEffectSetting;
+    private boolean isVacationMode = false;
 
     /**
      * @author Elvira Grubb
      * @param controller Current controller class used in the program
      * This constructor creates a MainFrame for the whole program
      */
-    public MainFrame(Controller controller)
+    public MainFrame(Controller controller, boolean soundEffectSetting)
     {
         this.controller = controller;
+        this.soundEffectSetting = soundEffectSetting;
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -59,7 +62,7 @@ public class MainFrame extends JFrame {
     {
         this.getContentPane().removeAll();
         this.revalidate();
-        plantView = new PlantView(width, height, controller);
+        plantView = new PlantView(width, height, controller, this);
         this.setContentPane(plantView);
         this.repaint();
     }
@@ -121,5 +124,30 @@ public class MainFrame extends JFrame {
         storagePanel = new StoragePanel(controller, plantBtnImages, plantBtnHoverImages, width, height);
         this.setContentPane(storagePanel);
         this.repaint();
+    }
+
+    /**
+     * @param setting A boolean indicating whether the sound is on or off in the settings
+     * Method called when the settings in the settings menu are saved to update whether
+     * the sound is on or off
+     * @author Elvira Grubb
+     */
+    public void setSoundEffectSetting(boolean setting)
+    {
+        this.soundEffectSetting = setting;
+    }
+
+    /**
+     * @author Elvira Grubb
+     * @return boolean for whether the sound effect setting is on or off
+     * This method returns a boolean indicating whether the user has turned the settings on or off
+     */
+    public boolean getSoundEffectSetting()
+    {
+        return soundEffectSetting;
+    }
+
+    public boolean isVacationMode() {
+        return isVacationMode;
     }
 }

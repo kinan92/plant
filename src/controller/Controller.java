@@ -32,13 +32,14 @@ public class Controller {
 
 	public Controller() {
 		this.file = new FileManager(this);
-		mainFrame = new MainFrame(this);
-		mainFrame.addMainMenu();
 		plantTypes = file.loadPlantTypes();
 		this.pots = file.loadPots();
+		boolean soundEffectSetting = true;
 		try {
-			loadUserData();
+			soundEffectSetting = loadUserData();
 		} catch (RuntimeException e) {}
+		mainFrame = new MainFrame(this, soundEffectSetting);
+		mainFrame.addMainMenu();
 		autoSave(true);
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
@@ -94,12 +95,12 @@ public class Controller {
 		}
 	}
 
-	public void loadUserData() {
+	public boolean loadUserData() {
 		ArrayList<Plant> plantList;
-		boolean soundEffectsOn;
+		boolean soundEffectsOn = true;
 		try {
 			plantList = file.readPlantsFromFile();
-			//soundEffectsOn = file.readSettingsFromFile();
+			soundEffectsOn = file.readSettingsFromFile();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -113,7 +114,7 @@ public class Controller {
 				}
 			}
 		}
-		//soundEffectSetting = soundEffectsOn;
+		return soundEffectsOn;
 	}
 
 	/**

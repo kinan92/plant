@@ -108,4 +108,7 @@ public class FileManager extends Thread {
 		}
 		return listOfPlants;
 	}
+
+	public boolean readSettingsFromFile() {
+	}
 }

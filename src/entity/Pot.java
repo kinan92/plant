@@ -1,8 +1,9 @@
 package entity;
 
 import javax.swing.*;
+import java.io.Serializable;
 
-public class Pot {
+public class Pot implements Serializable {
     private ImageIcon potImage;
     private ImageIcon potButton;
     private ImageIcon potButtonHoverImage;

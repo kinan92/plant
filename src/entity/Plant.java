@@ -1,9 +1,10 @@
 package entity;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.swing.ImageIcon;
 
-public class Plant {
+public class Plant implements Serializable {
 	
 	private String name;
 	private int age;

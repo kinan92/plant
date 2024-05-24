@@ -9,6 +9,7 @@ public class FileManager {
 	private FileOutputStream datafile;
 	private ObjectOutputStream myWriter;
 	private ObjectInputStream readObjectFromFile;
+	private String plantsFile = "files\\plants.dat";
 
 	public FileManager() {
 		 
@@ -105,13 +106,24 @@ public class FileManager {
 
 				myWriter.writeObject(obj);
 				myWriter.flush();// Flushes the stream. This will write any bufferedoutput bytes.
-			//	myWriter.close();
+				myWriter.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 	
+	}
+
+	public void writePlantsToFile(ArrayList<Plant> listOfPlants) throws IOException {
+		try (ObjectOutputStream oos = new ObjectOutputStream(
+				new BufferedOutputStream(new FileOutputStream(plantsFile)))) {
+			oos.writeInt(listOfPlants.size());
+			for (Plant p : listOfPlants) {
+				oos.writeObject(p);
+			}
+			oos.flush();
+		}
 	}
 
 	public Object readObjectFromFile() {	
@@ -130,4 +142,16 @@ public class FileManager {
 
 	}
 
+	public ArrayList<Plant> readPlantsFromFile() throws IOException {
+		ArrayList<Plant> listOfPlants = new ArrayList<>();
+		try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(plantsFile))) ) {
+			int n = ois.readInt();
+			for (int i = 0; i < n; i++) {
+				try {
+					listOfPlants.add((Plant) ois.readObject());
+				} catch(ClassNotFoundException e) {}
+			}
+		}
+		return listOfPlants;
+	}
 }

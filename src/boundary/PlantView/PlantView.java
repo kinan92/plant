@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -444,5 +445,9 @@ public class PlantView extends JPanel {
         if (getJavaFXAppClass() != null) {
             javaFXApp.updateWidgetImages(getCurrentPlantImage());
         }
+    }
+
+    public boolean isVacationMode() {
+        return isVacationMode;
     }
 }

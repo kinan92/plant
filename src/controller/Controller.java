@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
+import java.io.IOException;
+import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -30,11 +32,13 @@ public class Controller {
 	private WidgetCreatorJFX widget = new WidgetCreatorJFX(); //used here only to access its image merging methods
 
 	public Controller() {
+		this.file = new FileManager();
+		//Controller = (Controller)file.readObjectFromFile();
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
-		this.file = new FileManager();
 		plantTypes = file.loadPlantTypes();
-		pots = file.loadPots();
+		this.pots = file.loadPots();
+		load();
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
 	}
@@ -63,6 +67,27 @@ public class Controller {
 		showPlantView();
 		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		startPlantTimer();
+		save();
+	}
+
+	public void save() {
+		try {
+			file.writePlantsToFile(listOfPlants);
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public void load() {
+		ArrayList<Plant> plantList;
+		try {
+			plantList = file.readPlantsFromFile();
+		} catch (IOException e) {
+			throw new RuntimeException(e);
+		}
+		if (plantList != null && !plantList.isEmpty()) {
+			listOfPlants = plantList;
+		}
 	}
 
 	/**

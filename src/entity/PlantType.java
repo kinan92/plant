@@ -1,6 +1,7 @@
 package entity;
 
 import javax.swing.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  * @author Petri Närhi
  * */
 
-public class PlantType {
+public class PlantType implements Serializable {
     private String plantTypeName;
     private String plantTypeNameAlternative;
     private ImageIcon smallPlantImage;

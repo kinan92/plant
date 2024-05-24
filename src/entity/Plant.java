@@ -1,8 +1,11 @@
 package entity;
 
+import controller.Controller;
+
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public class Plant implements Serializable {
 	
@@ -10,6 +13,8 @@ public class Plant implements Serializable {
 	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
+	private LocalDateTime growthStartTime;
+	private Timer deathTimer;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
@@ -17,6 +22,7 @@ public class Plant implements Serializable {
 	private PlantStateEnum state;
 	private Pot pot;
 	private boolean isLastPlant = false;
+	private Controller controller;
 
 	/**
 	 * Constructor for plant
@@ -30,8 +36,9 @@ public class Plant implements Serializable {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
+	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot, Controller controller) {
 		super();
+		this.controller = controller;
 		this.name = name;
 		this.age = age;
 		this.dateAndTime = dateAndTime;
@@ -64,18 +71,8 @@ public class Plant implements Serializable {
 	 */
 	public void waterPlant(){
 			waterLevel += WATER_INCREMENT;
+			cancelDeathTimer();
 			updateState();
-	}
-
-	/**
-	 * Increments the age of the plant by the specified amount.
-	 * Update the state of the plant based on the new age.
-	 * @param age the amount to increment the plant's age by.
-	 * @author Aleksander Augustyniak
-	 */
-	public void incrementAge(int age){
-		this.age += age;
-		updateState();
 	}
 
 	/**
@@ -85,21 +82,56 @@ public class Plant implements Serializable {
 	 * @author Aleksander Augustyniak
 	 */
 	public void decreaseWaterLevel(){
-		if(waterLevel > 0){
+		if(waterLevel > 0) {
 			waterLevel -= WATER_DECREMENT;
+			if (waterLevel <= 0) {
+				startDeathTimer();
+			}
 		}
 		updateState();
 	}
 
 	public void updateState(){
-		if (waterLevel <= 0){
-			setState(PlantStateEnum.dead);
-		} else if (waterLevel >= 75){
-			setState(PlantStateEnum.big);
+		if (waterLevel > 0) {
+			cancelDeathTimer();
 		} else {
-			setState(PlantStateEnum.little);
+			startDeathTimer();
 		}
 		updateStateImage(getState());
+	}
+
+	public void checkAndGrow(){
+		if (growthStartTime == null){
+			growthStartTime = LocalDateTime.now();
+		}
+		LocalDateTime now = LocalDateTime.now();
+		Duration duration = Duration.between(dateAndTime, now);
+		if (duration.toDays() >= 2 && waterLevel > 0){
+			setState(PlantStateEnum.big);
+			growthStartTime = now;
+			updateStateImage(getState());
+		}
+		PlantStateEnum state = getState();
+		setState(state);
+		controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
+	}
+
+	private void startDeathTimer(){
+		if (deathTimer == null){
+			deathTimer = new Timer(10000, e -> {
+				setState(PlantStateEnum.dead);
+				updateStateImage(getState());
+				controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
+				deathTimer.stop();
+			});
+		}
+		deathTimer.start();
+	}
+
+	private void cancelDeathTimer(){
+		if (deathTimer != null && deathTimer.isRunning()){
+			deathTimer.stop();
+		}
 	}
 
 	/**
@@ -120,12 +152,6 @@ public class Plant implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
 	}
 	public ImageIcon getImage() {
 		return image;

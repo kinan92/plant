@@ -13,7 +13,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
@@ -26,6 +25,7 @@ public class PlantView extends JPanel {
     private SettingsView settingsView;
     private SideButtons sideButtons;
     private JLabel creationTimeLabel;
+    private JLabel stateLabel;
     private Plant plant;
     private WidgetJavaFXApplication javaFXApp;
     private static boolean isJavaFXInitialized = false;
@@ -50,8 +50,12 @@ public class PlantView extends JPanel {
         this.setLayout(borderLayout);
         this.setBackground(new java.awt.Color(184, 200, 177));
 
+        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
-        add(creationTimeLabel, BorderLayout.NORTH);
+        stateLabel = new JLabel("State: Unknown");
+        topPanel.add(creationTimeLabel);
+        topPanel.add(stateLabel);
+        add(topPanel, BorderLayout.NORTH);
         updateElapsedTime();
 
         plantPanel = new PlantPanel(width, height, this);
@@ -121,8 +125,8 @@ public class PlantView extends JPanel {
      *
      * @author Aleksander Augustyniak
      */
-    public void updateElapsedTime() {
-        if (plant != null) {
+    public void updateElapsedTime(){
+        if (plant != null){
             LocalDateTime creationTime = plant.getDateAndTime().plus(controller.getTotalPausedDuration());
             LocalDateTime now = LocalDateTime.now();
             Duration duration = Duration.between(creationTime, now);
@@ -130,9 +134,7 @@ public class PlantView extends JPanel {
             long days = duration.toDays();
             long hours = duration.toHours() % 24;
             long minutes = duration.toMinutes() % 60;
-            long seconds = duration.getSeconds() % 60;
-
-            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min, " + seconds + " sec");
+            creationTimeLabel.setText("Elapsed time: " + days + " days, " + hours + " h, " + minutes + " min");
         }
     }
 
@@ -144,17 +146,19 @@ public class PlantView extends JPanel {
      *
      * @author Aleksander Augustyniak
      */
-    public void skipHourPressed() {
+    public void skipHourPressed()
+    {
         int hoursToSkip = 1;
         Plant currentPlant = controller.getCurrentPlant();
-        if (currentPlant != null) {
+        if (currentPlant != null){
             controller.skipTime(hoursToSkip);
             updatePlantDetails(currentPlant);
         } else {
             System.out.println("Error: No current plant found");
         }
 
-        if (soundEffectSetting) {
+        if (soundEffectSetting)
+        {
             buttonPressedSoundEffect();
         }
     }
@@ -166,13 +170,14 @@ public class PlantView extends JPanel {
      * @param plant the plant whose details are to be updated
      * @author Aleksander Augustyniak
      */
-    public void updatePlantDetails(Plant plant) {
+    public void updatePlantDetails(Plant plant){
         this.plant = plant;
         updateElapsedTime();
         plantPanel.updatePlantImage(plant.getImage());
         JProgressBar waterBar = plantPanel.getWaterBar();
         waterBar.setValue(plant.getWaterLevel());
         waterBar.repaint();
+        stateLabel.setText("State: " + plant.getState().toString());
         UpdateWidgetImages();
     }
 

@@ -45,6 +45,7 @@ public class MainFrame extends JFrame {
     }
 
     private void windowClose() {
+        controller.autoSave(false);
         controller.saveUserData();
         dispose();
         System.exit(0);

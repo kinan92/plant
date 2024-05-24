@@ -31,7 +31,7 @@ public class Controller {
 	private WidgetCreatorJFX widget = new WidgetCreatorJFX(); //used here only to access its image merging methods
 
 	public Controller() {
-		this.file = new FileManager();
+		this.file = new FileManager(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		plantTypes = file.loadPlantTypes();
@@ -39,8 +39,18 @@ public class Controller {
 		try {
 			loadUserData();
 		} catch (RuntimeException e) {}
+		autoSave(true);
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
+	}
+
+	public void autoSave(boolean on) {
+		if (on) {
+			file.start();
+		}
+		else {
+			file.interrupt();
+		}
 	}
 
 	public void confirmPlant(int plantNumber, int potNumber) {

@@ -1,30 +1,26 @@
 package entity;
 
+import controller.Controller;
+
 import java.io.*;
 import java.util.ArrayList;
 
-public class FileManager {
-	private Object objectFromTheFile = null;
-	private String fileName = "files\\data.dat";
-	private FileOutputStream datafile;
-	private ObjectOutputStream myWriter;
-	private ObjectInputStream readObjectFromFile;
+public class FileManager extends Thread {
+	private Controller controller;
 	private String plantsFile = "files\\plants.dat";
 
-	public FileManager() {
-		 
-		try {
-			datafile = new FileOutputStream(fileName);
-			myWriter = new ObjectOutputStream(datafile);
-			readObjectFromFile = new ObjectInputStream(new FileInputStream(fileName));
+	public FileManager(Controller controller) {
+		this.controller = controller;
+	}
 
-		} catch (FileNotFoundException e) {
-			System.out.println("File Not Found " + e);
-		} catch (IOException e) {
-
-			e.printStackTrace();
+	@Override
+	public void run() {
+		while (!Thread.interrupted() ){
+			try {
+				sleep(60000);
+				controller.saveUserData();
+			} catch (InterruptedException e) {}
 		}
-			
 	}
 
 	/**
@@ -89,32 +85,6 @@ public class FileManager {
 		}
 	}
 
-	public void creatAFileIFNotExist() {
-		try {
-
-			datafile.close();
-		} catch (FileNotFoundException e) {
-			System.out.println("File Not Found " + e);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	public void writeObjectToFile(Object obj) {
-		
-			try {
-
-				myWriter.writeObject(obj);
-				myWriter.flush();// Flushes the stream. This will write any bufferedoutput bytes.
-				myWriter.close();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-	
-	}
-
 	public void writePlantsToFile(ArrayList<Plant> listOfPlants) throws IOException {
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(plantsFile)))) {
@@ -124,22 +94,6 @@ public class FileManager {
 			}
 			oos.flush();
 		}
-	}
-
-	public Object readObjectFromFile() {	
-	
-			try {
-				objectFromTheFile = readObjectFromFile.readObject();
-				readObjectFromFile.close();
-			} catch (EOFException e) {
-			    // End of file reached unexpectedly
-			    System.err.println("End of file reached unexpectedly.");
-			} catch (ClassNotFoundException | IOException e) {
-				e.printStackTrace();
-			}
-		
-		return objectFromTheFile;
-
 	}
 
 	public ArrayList<Plant> readPlantsFromFile() throws IOException {

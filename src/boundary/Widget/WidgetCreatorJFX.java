@@ -11,7 +11,6 @@ import controller.Controller;
 
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.geom.Path2D;
 
 import java.awt.image.BufferedImage;
 
@@ -30,9 +29,9 @@ public class WidgetCreatorJFX extends Pane {
 
 	public WidgetCreatorJFX(Controller controller) {
 
-		plantBufferedImage = convertImageIconToBufferedImage(controller.getPlant().getImage());
+		plantBufferedImage = convertImageIconToBufferedImage(controller.getCurrentPlant().getImage());
 
-		potBufferedImage = convertImageIconToBufferedImage(controller.getPlant().getPot());
+		potBufferedImage = convertImageIconToBufferedImage(controller.getCurrentPlant().getPot());
 
 		combinedImage = mergeAndDrawTheCombinedImages(plantBufferedImage, potBufferedImage);
 

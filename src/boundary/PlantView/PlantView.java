@@ -99,8 +99,8 @@ public class PlantView extends JPanel {
      */
     public void widgetPressed() {
         SwingUtilities.invokeLater(() -> {
-            if ((controller.getPlant() == null)
-                    || ((controller.getPlant().getImage() == null) && (controller.getPlant().getPot() == null))) {
+            if ((controller.getCurrentPlant() == null)
+                    || ((controller.getCurrentPlant().getImage() == null) && (controller.getCurrentPlant().getPot() == null))) {
                 System.out.println("You can't create a Widget because the plant or the pot image is null");
             } else {
                 updateButtonState();
@@ -145,7 +145,7 @@ public class PlantView extends JPanel {
      */
     public void skipHourPressed() {
         int hoursToSkip = 1;
-        Plant currentPlant = controller.getPlant();
+        Plant currentPlant = controller.getCurrentPlant();
         if (currentPlant != null) {
             controller.skipTime(hoursToSkip);
             updatePlantDetails(currentPlant);
@@ -210,15 +210,16 @@ public class PlantView extends JPanel {
      * Waters the current plant by calling the controller's waterPlant method.
      * Updates the plant's water level, details
      *
-     * @author Aleksander Augustyniak
+     * @author Aleksander Augustyniak (main)
+     * @author Petri Närhi (edits)
      */
     public void waterPressed() {
         try {
             System.out.println("Water pressed.");
             controller.waterPlant();
-            plantPanel.updateWaterLevel(controller.getPlant().getWaterLevel());
-            updatePlantDetails(controller.getPlant());
-            System.out.println("Water level: " + controller.getPlant().getWaterLevel());
+            plantPanel.updateWaterLevel(controller.getCurrentPlant().getWaterLevel());
+            updatePlantDetails(controller.getCurrentPlant());
+            System.out.println("Water level: " + controller.getCurrentPlant().getWaterLevel());
         } catch (NullPointerException e) {
             // JOptionPane.showMessageDialog(waterPlant, "No plant exists!");
         }
@@ -296,7 +297,7 @@ public class PlantView extends JPanel {
      */
     public ImageIcon getCurrentPlantImage() {
         try {
-            return controller.getPlant().getImage();
+            return controller.getCurrentPlant().getImage();
         } catch (NullPointerException e) {
             return new ImageIcon("images/plants/default_plant.png");
         }
@@ -312,7 +313,7 @@ public class PlantView extends JPanel {
      */
     public ImageIcon getCurrentPot() {
         try {
-            return controller.getPlant().getPot();
+            return controller.getCurrentPlant().getPot();
         } catch (NullPointerException e) {
             return new ImageIcon("images/pots/default_pot.png");
         }
@@ -328,7 +329,7 @@ public class PlantView extends JPanel {
      */
     public String getCurrentPlantName() {
         try {
-            return controller.getPlant().getName();
+            return controller.getCurrentPlant().getName();
         } catch (NullPointerException e) {
             return "No Plant Created";
         }
@@ -344,7 +345,7 @@ public class PlantView extends JPanel {
      */
     public String getCurrentPlantSpecies() {
         try {
-            String species = controller.getPlant().getType().getPlantTypeNameAlternative();
+            String species = controller.getCurrentPlant().getType().getPlantTypeNameAlternative();
             return ("Species: " + species);
         } catch (NullPointerException e) {
             return "Create a plant to show it here!";
@@ -361,7 +362,7 @@ public class PlantView extends JPanel {
      */
     public int getCurrentPlantWaterLevel() {
         try {
-            return controller.getPlant().getWaterLevel();
+            return controller.getCurrentPlant().getWaterLevel();
         } catch (NullPointerException e) {
             return 0;
         }

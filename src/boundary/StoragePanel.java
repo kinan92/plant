@@ -152,7 +152,7 @@ public class StoragePanel extends JPanel {
      */
     private void plantPressed(int selectedPlant)
     {
-        controller.setPlant(selectedPlant);
+        controller.setCurrentPlant(selectedPlant);
         controller.showPlantView();
         System.out.println(selectedPlant);
     }

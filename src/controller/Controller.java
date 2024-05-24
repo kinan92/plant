@@ -9,9 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,7 +17,7 @@ import javax.swing.*;
 
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
-	private Plant plant;
+	private Plant currentPlant;
 	private MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes;
 	ArrayList<Pot> pots;
@@ -61,10 +58,10 @@ public class Controller {
 
 		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
-		plant = newPlant;
-		System.out.println("New plant! " + plant);
+		currentPlant = newPlant;
+		System.out.println("New plant! " + currentPlant);
 		showPlantView();
-		mainFrame.getPlantView().updatePlantDetails(plant);
+		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		startPlantTimer();
 	}
 
@@ -168,8 +165,8 @@ public class Controller {
 	 * @author Aleksander Augustyniak
 	 */
 	public void waterPlant(){
-		plant.waterPlant();
-		mainFrame.getPlantView().updatePlantDetails(plant);
+		currentPlant.waterPlant();
+		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 
 	}
 
@@ -215,14 +212,14 @@ public class Controller {
 			System.out.println("Skipped time requires a positive number of hours");
 			return;
 		}
-		LocalDateTime newCreationTime = plant.getDateAndTime().minusHours(hours);
-		plant.setDateAndTime(newCreationTime);
+		LocalDateTime newCreationTime = currentPlant.getDateAndTime().minusHours(hours);
+		currentPlant.setDateAndTime(newCreationTime);
 		int ageIncrement = hours / 24;
-		plant.incrementAge(ageIncrement);
-		plant.decreaseWaterLevel();
-		plant.updateState();
+		currentPlant.incrementAge(ageIncrement);
+		currentPlant.decreaseWaterLevel();
+		currentPlant.updateState();
 		mainFrame.getPlantView().updateElapsedTime();
-		mainFrame.getPlantView().updatePlantDetails(plant);
+		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		notifyTimeSkipped(hours);
 	}
 
@@ -266,8 +263,8 @@ public class Controller {
 	 * @return Plant
 	 * @author Petri Närhi
 	 * */
-	public Plant getPlant() {
-		return plant;
+	public Plant getCurrentPlant() {
+		return currentPlant;
 	}
 	public boolean isPaused(){
 		return isPaused;
@@ -279,8 +276,8 @@ public class Controller {
 	 * @param selecedPlant int, the plant to replace the current plant selected in storage
 	 * @author Petri Närhi
 	 * */
-	public void setPlant(int selecedPlant) {
-		this.plant = listOfPlants.get(selecedPlant);
+	public void setCurrentPlant(int selecedPlant) {
+		this.currentPlant = listOfPlants.get(selecedPlant);
 	}
 
 	public ArrayList<Plant> getListOfPlants() {

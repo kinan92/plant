@@ -109,6 +109,8 @@ public class FileManager extends Thread {
 		return listOfPlants;
 	}
 
+	/*TODO: Continue refactoring of settings variables from PlantView and
+	*  repair methods using them, then read and save settings methods */
 	public boolean readSettingsFromFile() {
 	}
 }

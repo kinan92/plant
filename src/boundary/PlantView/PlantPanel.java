@@ -219,8 +219,24 @@ public class PlantPanel extends JPanel {
                 plantSparkleAnimation();
                 plantHappySoundEffect();
             }
+
+            if (waterLevel >= 100 && waterLevel < 110)
+            {
+                waterBar.setForeground(Color.BLUE);
+            }
+
+            else if (waterLevel >= 110 && waterLevel < 120)
+            {
+                waterBar.setForeground(Color.ORANGE);
+            }
+
+            else if (waterLevel >= 120)
+            {
+                waterBar.setForeground(Color.RED);
+            }
         }
         waterBar.setValue(waterLevel);
+        waterBar.setString(waterLevel + "%");
     }
 
     /**

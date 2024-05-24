@@ -5,6 +5,8 @@ import controller.Controller;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
@@ -25,7 +27,13 @@ public class MainFrame extends JFrame {
     {
         this.controller = controller;
         setTitle("Virtual Plant Widgets");
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent event) {
+                windowClose();
+            }
+        });
         setSize(width, height);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -34,6 +42,12 @@ public class MainFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(width, height));
         pack();
         setVisible(true);
+    }
+
+    private void windowClose() {
+        controller.saveUserData();
+        dispose();
+        System.exit(0);
     }
 
     /**

@@ -16,6 +16,7 @@ public class Plant implements Serializable {
 	private PlantType type;
 	private PlantStateEnum state;
 	private Pot pot;
+	private boolean isLastPlant = false;
 
 	/**
 	 * Constructor for plant
@@ -185,6 +186,20 @@ public class Plant implements Serializable {
 	public void setPot(ImageIcon pot)
 	{
 		//this.pot = pot;
+	}
+
+	/**
+	 * Getter and setter for isLastPlant
+	 * a boolean used to determine which plant is the current plant
+	 * when loading from file
+	 * @author Petri Närhi
+	 * */
+	public boolean isLastPlant() {
+		return isLastPlant;
+	}
+
+	public void setLastPlant(boolean lastPlant) {
+		isLastPlant = lastPlant;
 	}
 
 	/**

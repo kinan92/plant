@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
-import java.io.Serializable;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -38,7 +37,7 @@ public class Controller {
 		plantTypes = file.loadPlantTypes();
 		this.pots = file.loadPots();
 		try {
-			load();
+			loadUserData();
 		} catch (RuntimeException e) {}
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
@@ -63,32 +62,48 @@ public class Controller {
 
 		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
+		try {
+			currentPlant.setLastPlant(false);
+		} catch (NullPointerException e) {}
 		currentPlant = newPlant;
+		currentPlant.setLastPlant(true);
 		System.out.println("New plant! " + currentPlant);
 		showPlantView();
 		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		startPlantTimer();
-		save();
+		saveUserData();
 	}
 
-	public void save() {
+	public void saveUserData() {
 		try {
 			file.writePlantsToFile(listOfPlants);
+			//file.writeSettingsToFile();
+			System.out.println("User data saved.");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public void load() {
+	public void loadUserData() {
 		ArrayList<Plant> plantList;
+		boolean soundEffectsOn;
 		try {
 			plantList = file.readPlantsFromFile();
+			//soundEffectsOn = file.readSettingsFromFile();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
 		if (plantList != null && !plantList.isEmpty()) {
 			listOfPlants = plantList;
+			Plant plant;
+			for (int i = 0; i < listOfPlants.size(); i++) {
+				plant = listOfPlants.get(i);
+				if(plant.isLastPlant()) {
+					currentPlant = plant;
+				}
+			}
 		}
+		//soundEffectSetting = soundEffectsOn;
 	}
 
 	/**
@@ -299,11 +314,13 @@ public class Controller {
 	/**
 	 * Sets the current plant
 	 * to change the current plant that is shown in boundary.PlantView.PlantView
-	 * @param selecedPlant int, the plant to replace the current plant selected in storage
+	 * @param selectedPlant int, the plant to replace the current plant selected in storage
 	 * @author Petri Närhi
 	 * */
-	public void setCurrentPlant(int selecedPlant) {
-		this.currentPlant = listOfPlants.get(selecedPlant);
+	public void setCurrentPlant(int selectedPlant) {
+		this.currentPlant.setLastPlant(false);
+		this.currentPlant = listOfPlants.get(selectedPlant);
+		this.currentPlant.setLastPlant(true);
 	}
 
 	public ArrayList<Plant> getListOfPlants() {

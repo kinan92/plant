@@ -275,7 +275,7 @@ public class PlantView extends JPanel {
      */
     public void setSoundEffectSetting(boolean setting)
     {
-        soundEffectSetting = setting;
+        this.soundEffectSetting = setting;
     }
 
     /**

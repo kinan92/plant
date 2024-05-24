@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class MainFrame extends JFrame {
     private int width = 520;
-    private int height = 460;
+    private int height = 450;
     private PlantView plantView;
     private Controller controller;
     private ChoosePlantPanel choosePlantPanel;

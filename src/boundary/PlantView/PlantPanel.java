@@ -23,7 +23,8 @@ public class PlantPanel extends JPanel {
     private JLabel plantImageLabel;
 
     /**
-     * @author Elvira Grubb
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      * @param width Width of the MainFrame
      * @param height Height of the MainFrame
      * @param plantView The active boundary.PlantView.PlantView class
@@ -102,7 +103,8 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      * @return A nameView JPanel
      * This method creates a nameView JPanel where the user can see its active plant's name
      * and species
@@ -136,6 +138,7 @@ public class PlantPanel extends JPanel {
 
     /**
      * @author Elvira Grubb
+     * @author Petri Närhi (edits)
      * @return A PlantCare JPanel
      * This method creates a plantCare JPanel that shows the healthbar and buttons to
      * take care of the user's active plant

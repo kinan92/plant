@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * @author Elvira Grubb
  * @author Petri Närhi
  * */
-
 public class PlantType implements Serializable {
     private String plantTypeName;
     private String plantTypeNameAlternative;

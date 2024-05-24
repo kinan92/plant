@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import javax.swing.*;
 
 public class Plant implements Serializable {
-	
 	private String name;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;

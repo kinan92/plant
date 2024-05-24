@@ -141,7 +141,8 @@ public class ChoosePlantPanel extends JPanel {
     /**
      * Adds a navigation panel with a back button
      * @return JPanel the navigation panel
-     * @author Petri Närhi
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      */
     public JPanel navigation()
     {

@@ -42,8 +42,6 @@ public class Controller {
 			loadUserData();
 		} catch (RuntimeException e) {}
 		autoSave(true);
-		/*startWaterDecreaseTimer();
-		startAgeTimer();*/
 	}
 
 	public MainFrame getMainFrame(){

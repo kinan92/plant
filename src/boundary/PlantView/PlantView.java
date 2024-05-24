@@ -26,7 +26,7 @@ public class PlantView extends JPanel {
     private SideButtons sideButtons;
     private JLabel creationTimeLabel;
     private JLabel stateLabel;
-    private Plant plant;
+    private Plant currentPlant;
     private WidgetJavaFXApplication javaFXApp;
     private static boolean isJavaFXInitialized = false;
     private boolean isVacationMode = false;
@@ -126,8 +126,8 @@ public class PlantView extends JPanel {
      * @author Aleksander Augustyniak
      */
     public void updateElapsedTime(){
-        if (plant != null){
-            LocalDateTime creationTime = plant.getDateAndTime().plus(controller.getTotalPausedDuration());
+        if (currentPlant != null){
+            LocalDateTime creationTime = currentPlant.getDateAndTime().plus(controller.getTotalPausedDuration());
             LocalDateTime now = LocalDateTime.now();
             Duration duration = Duration.between(creationTime, now);
 
@@ -171,7 +171,7 @@ public class PlantView extends JPanel {
      * @author Aleksander Augustyniak
      */
     public void updatePlantDetails(Plant plant){
-        this.plant = plant;
+        this.currentPlant = plant;
         updateElapsedTime();
         plantPanel.updatePlantImage(plant.getImage());
         JProgressBar waterBar = plantPanel.getWaterBar();

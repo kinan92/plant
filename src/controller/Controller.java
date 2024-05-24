@@ -33,12 +33,13 @@ public class Controller {
 
 	public Controller() {
 		this.file = new FileManager();
-		//Controller = (Controller)file.readObjectFromFile();
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
 		plantTypes = file.loadPlantTypes();
 		this.pots = file.loadPots();
-		load();
+		try {
+			load();
+		} catch (RuntimeException e) {}
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
 	}

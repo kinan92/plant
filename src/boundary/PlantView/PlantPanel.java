@@ -149,7 +149,7 @@ public class PlantPanel extends JPanel {
         JPanel plantCare = new JPanel();
         plantCare.setSize(new Dimension(256, 50));
         plantCare.setLayout(new GridBagLayout());
-        plantCare.setBackground(Color.GRAY);
+        plantCare.setBackground(new java.awt.Color(199, 214, 196));
         GridBagConstraints c = new GridBagConstraints();
 
         //Creates the watering button and adds it to the PlantCare panel
@@ -176,6 +176,7 @@ public class PlantPanel extends JPanel {
         currentPlantWaterLevel = plantView.getCurrentPlantWaterLevel();
         waterBar.setValue(currentPlantWaterLevel);
         waterBar.setStringPainted(true);
+        waterBar.setForeground(new java.awt.Color(116, 173, 182));
         c.gridx = 0;
         c.gridy = 1;
         plantCare.add(waterBar, c);
@@ -216,30 +217,53 @@ public class PlantPanel extends JPanel {
     {
         if (plantView.getSoundEffectSetting())
         {
-            waterSoundEffect();
-            if (waterLevel >= 100 && waterLevel <= 103)
+            /*if (waterLevel >= 100 && waterLevel < 110)
             {
-                plantSparkleAnimation();
-                plantHappySoundEffect();
+                waterBar.setForeground(new java.awt.Color(116, 173, 182));
+            }*/
+
+            if (waterLevel <= 80 && waterLevel > 50)
+            {
+                waterBar.setForeground(new java.awt.Color(119, 156, 162));
             }
 
-            if (waterLevel >= 100 && waterLevel < 110)
+            else if (waterLevel <= 50 && waterLevel > 20)
             {
-                waterBar.setForeground(Color.BLUE);
+                waterBar.setForeground(new java.awt.Color(114, 141, 145));
+            }
+
+            else if (waterLevel <= 20)
+            {
+                waterBar.setForeground(new java.awt.Color(116, 130, 132));
             }
 
             else if (waterLevel >= 110 && waterLevel < 120)
             {
-                waterBar.setForeground(Color.ORANGE);
+                waterBar.setForeground(new java.awt.Color(208, 167, 57));
             }
 
             else if (waterLevel >= 120)
             {
-                waterBar.setForeground(Color.RED);
+                waterBar.setForeground(new java.awt.Color(193, 57, 57));
+            }
+
+            else if (waterLevel >= 80 && waterLevel < 110)
+            {
+                waterBar.setForeground(new java.awt.Color(116, 173, 182));
             }
         }
         waterBar.setValue(waterLevel);
         waterBar.setString(waterLevel + "%");
+    }
+
+    public void waterLevelEffects(int waterLevel)
+    {
+        waterSoundEffect();
+        if (waterLevel >= 100 && waterLevel <= 104)
+        {
+            plantSparkleAnimation();
+            plantHappySoundEffect();
+        }
     }
 
     /**

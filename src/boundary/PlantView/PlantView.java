@@ -174,10 +174,8 @@ public class PlantView extends JPanel {
         this.currentPlant = plant;
         updateElapsedTime();
         plantPanel.updatePlantImage(plant.getImage());
-        JProgressBar waterBar = plantPanel.getWaterBar();
         int newWaterLevel = plant.getWaterLevel();
-        waterBar.setValue(newWaterLevel);
-        waterBar.repaint();
+        plantPanel.updateWaterLevel(newWaterLevel);
         stateLabel.setText("State: " + plant.getState().toString());
         UpdateWidgetImages();
     }
@@ -225,6 +223,7 @@ public class PlantView extends JPanel {
             System.out.println("Water pressed.");
             controller.waterPlant();
             plantPanel.updateWaterLevel(controller.getCurrentPlant().getWaterLevel());
+            plantPanel.waterLevelEffects(controller.getCurrentPlant().getWaterLevel());
             updatePlantDetails(controller.getCurrentPlant());
             System.out.println("Water level: " + controller.getCurrentPlant().getWaterLevel());
         } catch (NullPointerException e) {

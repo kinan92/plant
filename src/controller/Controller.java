@@ -47,7 +47,7 @@ public class Controller {
 		try {
 			loadUserData();
 		} catch (RuntimeException e) {}
-		autoSave(true);
+		//autoSave(true);
 	}
 
 	public MainFrame getMainFrame(){
@@ -101,7 +101,7 @@ public class Controller {
 		startWaterLevelTimer();
 		startCheckGrowTimer();
 		currentPlant.checkAndGrow();
-		saveUserData();
+		//saveUserData();
 	}
 
 	/**

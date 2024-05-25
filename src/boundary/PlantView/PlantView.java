@@ -187,6 +187,11 @@ public class PlantView extends JPanel {
      * @author Aleksander Augustyniak
      */
     public void vacationPressed() {
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
+
         if (isVacationMode) {
             controller.resumeTime();
             isVacationMode = false;
@@ -249,6 +254,10 @@ public class PlantView extends JPanel {
      */
     public void helpMenuPressed()
     {
+        if (soundEffectSetting)
+        {
+            buttonPressedSoundEffect();
+        }
         new HelpMenu(width, height);
     }
 

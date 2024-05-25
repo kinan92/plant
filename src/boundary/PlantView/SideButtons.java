@@ -136,6 +136,7 @@ public class SideButtons extends JPanel {
 		settings = new JButton();
 		settings.setBorder(BorderFactory.createEmptyBorder());
 		settings.setContentAreaFilled(false);
+		settings.setFocusPainted(false);
 		settings.setIcon(new ImageIcon("images/buttons/settings.png"));
 
 		settings.setRolloverEnabled(true);
@@ -146,6 +147,7 @@ public class SideButtons extends JPanel {
 		JButton mainMenu = new JButton();
 		mainMenu.setBorder(BorderFactory.createEmptyBorder());
 		mainMenu.setContentAreaFilled(false);
+		mainMenu.setFocusPainted(false);
 		mainMenu.setIcon(new ImageIcon("images/buttons/home.png"));
 
 		mainMenu.setRolloverEnabled(true);
@@ -155,6 +157,7 @@ public class SideButtons extends JPanel {
 		JButton helpButton = new JButton();
 		helpButton.setBorder(BorderFactory.createEmptyBorder());
 		helpButton.setContentAreaFilled(false);
+		helpButton.setFocusPainted(false);
 		helpButton.setIcon(new ImageIcon("images/buttons/help.png"));
 
 		helpButton.setRolloverEnabled(true);

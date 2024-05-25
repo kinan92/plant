@@ -150,19 +150,16 @@ public class ChoosePlantPanel extends JPanel {
         navigation.setLayout(new FlowLayout());
         navigation.setPreferredSize(new Dimension(width, (height / 10)));
 
-        //Loops through plantImages and creates buttons with the images
         JButton backBtn = new JButton();
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setContentAreaFilled(false);
         backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
-
 
         backBtn.setFocusPainted(false);
         backBtn.setRolloverEnabled(true);
 
         backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
 
-        //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(100,100);
 

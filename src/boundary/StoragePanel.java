@@ -13,6 +13,7 @@ public class StoragePanel extends JPanel {
     private ArrayList<ImageIcon> plantBtnImages;
     private ArrayList<ImageIcon> plantBtnHoverImages;
     private ArrayList<JButton> plantButtons = new ArrayList<>();
+    private int currentSelectedPlant = -1;
 
     /**
      * @author Elvira Grubb
@@ -38,31 +39,14 @@ public class StoragePanel extends JPanel {
         setSize(width, height);
         ImageIcon icon = new ImageIcon("images/icon.png");
 
-        JPanel storedPlantsPanel = storedPlantsPanel();
-        this.add(storedPlantsPanel, BorderLayout.CENTER);
+        JScrollPane plantPanel= plantPanel();
+        this.add(plantPanel, BorderLayout.CENTER);
 
         //Adds navigation JPanel
         JPanel navigation = navigation();
         add(navigation, BorderLayout.SOUTH);
 
         setVisible(true);
-    }
-
-    /**
-     * @author Elvira Grubb (main)
-     * @author Petri Närhi (edits)
-     * @return JPanel plants
-     * Creates a JPanel that adds all plantbuttons by looping through the PlantButton ArrayList to
-     * create buttons of each plant
-     */
-    public JPanel storedPlantsPanel()
-    {
-        JPanel plants = new JPanel();
-        plants.setLayout(new GridLayout(2, 1));
-        //plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320));
-        plants.add(plantPanel());
-
-        return plants;
     }
 
     /**
@@ -106,31 +90,53 @@ public class StoragePanel extends JPanel {
     /**
      * Adds a navigation panel with a back button
      * @return JPanel the navigation panel
-     * @author Petri Närhi
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      */
     public JPanel navigation()
     {
+        //creates panel for buttons
         JPanel navigation = new JPanel();
         navigation.setLayout(new FlowLayout());
         navigation.setPreferredSize(new Dimension(width, (height / 10)));
 
-        //Loops through plantImages and creates buttons with the images
+        //creates back button
         JButton backBtn = new JButton();
         backBtn.setBorder(BorderFactory.createEmptyBorder());
         backBtn.setContentAreaFilled(false);
         backBtn.setIcon(new ImageIcon("images/buttons/back.png"));
 
-
         backBtn.setFocusPainted(false);
         backBtn.setRolloverEnabled(true);
-
         backBtn.setRolloverIcon(new ImageIcon("images/buttons/back-hover.png"));
 
-        //ActionListener that will return the ArrayList number when the plant is pressed
         backBtn.addActionListener(l -> backPressed());
         backBtn.setLocation(100,100);
 
+        //creates confirm button
+        JButton confirm = new JButton();
+        confirm.setIcon(new ImageIcon("images/buttons/confirm.png"));
+        confirm.setBorder(BorderFactory.createEmptyBorder());
+        confirm.setContentAreaFilled(false);
+
+        confirm.setRolloverEnabled(true);
+        confirm.setRolloverIcon(new ImageIcon("images/buttons/confirm_hover.png"));
+        confirm.addActionListener(l -> confirmButtonpressed());
+
+        //creates delete button
+        JButton delete = new JButton();
+        confirm.setIcon(new ImageIcon("images/buttons/delete.png"));
+        confirm.setBorder(BorderFactory.createEmptyBorder());
+        confirm.setContentAreaFilled(false);
+
+        confirm.setRolloverEnabled(true);
+        confirm.setRolloverIcon(new ImageIcon("images/buttons/delete-hover.png"));
+        confirm.addActionListener(l -> deleteButtonpressed());
+
+        //adds all buttons
         navigation.add(backBtn);
+        navigation.add(confirm);
+        navigation.add(delete);
         navigation.setVisible(true);
 
         return navigation;
@@ -146,14 +152,48 @@ public class StoragePanel extends JPanel {
     }
 
     /**
-     * Called when a plant button is clicked in storage
-     * @author Petri Närhi
-     * @param selectedPlant int corresponding to the plant chosen in GUI
+     * @author Elvira Grubb
+     * @param plant An int corresponding to the PlantTypes
+     * This method will be replaced by a method that calls a method in the Controller to notify
+     * that a plant has been chosen and which plant has been chosen (via the index that will
+     *  correspond to an index in the PlantType ArrayList)
      */
     private void plantPressed(int selectedPlant)
     {
-        controller.setCurrentPlant(selectedPlant);
-        controller.showPlantView();
-        System.out.println(selectedPlant);
+        if (currentSelectedPlant != -1)
+        {
+            plantButtons.get(currentSelectedPlant).setIcon(plantBtnImages.get(currentSelectedPlant));
+        }
+
+        //buttonPressedSoundEffect();
+        currentSelectedPlant = selectedPlant;
+        plantButtons.get(selectedPlant).setIcon(plantBtnHoverImages.get(selectedPlant));
+    }
+
+    private void confirmButtonpressed()
+    {
+        //buttonPressedSoundEffect();
+        if (currentSelectedPlant == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Please select a plant.");
+        }
+        else
+        {
+            controller.setCurrentPlant(currentSelectedPlant);
+            controller.showPlantView();
+        }
+    }
+
+    private void deleteButtonpressed()
+    {
+        //buttonPressedSoundEffect();
+        if (currentSelectedPlant == -1)
+        {
+            JOptionPane.showMessageDialog(this, "Please select a plant.");
+        }
+        else
+        {
+            JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this plant?");
+        }
     }
 }

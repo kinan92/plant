@@ -45,7 +45,7 @@ public class Controller {
 		try {
 			loadUserData();
 		} catch (RuntimeException e) {}
-		//autoSave(true);
+		autoSave(true);
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
 	}
@@ -101,7 +101,7 @@ public class Controller {
 		//startWaterLevelTimer();
 		//startCheckGrowTimer();
 		//currentPlant.checkAndGrow();
-		//saveUserData();
+		saveUserData();
 	}
 
 	public void deletePlant(int selectedPlant)
@@ -109,7 +109,7 @@ public class Controller {
 		listOfPlants.remove(selectedPlant);
 		currentPlant = listOfPlants.getLast();
 		currentPlant.setLastPlant(true);
-		//saveUserData();
+		saveUserData();
 	}
 
 	/**

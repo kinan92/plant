@@ -52,8 +52,8 @@ public class MainFrame extends JFrame {
      * @author Petri Närhi
      * */
     private void windowClose() {
-        /*controller.autoSave(false);
-        controller.saveUserData();*/
+        controller.autoSave(false);
+        controller.saveUserData();
         dispose();
         System.exit(0);
     }

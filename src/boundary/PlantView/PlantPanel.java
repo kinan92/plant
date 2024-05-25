@@ -210,59 +210,65 @@ public class PlantPanel extends JPanel {
     /**
      * @author Elvira Grubb
      * @param waterLevel Instance variable of the percentage of water the current plant object is at
-     * Method is called when the watering button is pressed. It updates the water levels visually by
-     * calling other methods to update the water bar, play sound effects, and animations
+     * Method is called when the watering levels should be updated. It updates the water levels visually by
+     * updating the color of the waterbar and setting the percentage of the waterbar.
      */
     public void updateWaterLevel(int waterLevel)
     {
-        if (plantView.getSoundEffectSetting())
+        if (waterLevel <= 80 && waterLevel > 50)
         {
-            /*if (waterLevel >= 100 && waterLevel < 110)
-            {
-                waterBar.setForeground(new java.awt.Color(116, 173, 182));
-            }*/
+            waterBar.setForeground(new java.awt.Color(119, 156, 162));
+        }
 
-            if (waterLevel <= 80 && waterLevel > 50)
-            {
-                waterBar.setForeground(new java.awt.Color(119, 156, 162));
-            }
+        else if (waterLevel <= 50 && waterLevel > 20)
+        {
+            waterBar.setForeground(new java.awt.Color(114, 141, 145));
+        }
 
-            else if (waterLevel <= 50 && waterLevel > 20)
-            {
-                waterBar.setForeground(new java.awt.Color(114, 141, 145));
-            }
+        else if (waterLevel <= 20)
+        {
+            waterBar.setForeground(new java.awt.Color(116, 130, 132));
+        }
 
-            else if (waterLevel <= 20)
-            {
-                waterBar.setForeground(new java.awt.Color(116, 130, 132));
-            }
+        else if (waterLevel >= 110 && waterLevel < 120)
+        {
+            waterBar.setForeground(new java.awt.Color(208, 167, 57));
+        }
 
-            else if (waterLevel >= 110 && waterLevel < 120)
-            {
-                waterBar.setForeground(new java.awt.Color(208, 167, 57));
-            }
+        else if (waterLevel >= 120)
+        {
+            waterBar.setForeground(new java.awt.Color(193, 57, 57));
+        }
 
-            else if (waterLevel >= 120)
-            {
-                waterBar.setForeground(new java.awt.Color(193, 57, 57));
-            }
-
-            else if (waterLevel >= 80 && waterLevel < 110)
-            {
-                waterBar.setForeground(new java.awt.Color(116, 173, 182));
-            }
+        else if (waterLevel >= 80 && waterLevel < 110)
+        {
+            waterBar.setForeground(new java.awt.Color(116, 173, 182));
         }
         waterBar.setValue(waterLevel);
         waterBar.setString(waterLevel + "%");
     }
 
+    /**
+     * This method is called when the water button is pressed. It plays sound effects if sound effects are on in the settings, and an
+     * animation if the water levels have reached 100
+     * @param waterLevel The water level of the active plant
+     * @author Elvira Grubb
+     */
     public void waterLevelEffects(int waterLevel)
     {
-        waterSoundEffect();
+        if (plantView.getSoundEffectSetting())
+        {
+            waterSoundEffect();
+        }
+
         if (waterLevel >= 100 && waterLevel <= 104)
         {
             plantSparkleAnimation();
-            plantHappySoundEffect();
+
+            if (plantView.getSoundEffectSetting())
+            {
+                plantHappySoundEffect();
+            }
         }
     }
 

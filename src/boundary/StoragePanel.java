@@ -59,7 +59,7 @@ public class StoragePanel extends JPanel {
     {
         JPanel plants = new JPanel();
         plants.setLayout(new GridLayout(2, 1));
-        plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320));
+        //plants.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320));
         plants.add(plantPanel());
 
         return plants;
@@ -76,8 +76,8 @@ public class StoragePanel extends JPanel {
     {
         JPanel plantPanel = new JPanel();
         plantPanel.setBackground(new java.awt.Color(184, 200, 177));
-        plantPanel.setLayout(new GridLayout(1, plantBtnImages.size()));
-        plantPanel.setPreferredSize(new Dimension(plantBtnImages.size() * 132, 320 / 2));
+        plantPanel.setLayout(new GridLayout(2, plantBtnImages.size()));
+        plantPanel.setPreferredSize(new Dimension(plantBtnImages.size() * 132/2, 320));
 
         for (int i = 0; i < plantBtnImages.size(); i++)
         {

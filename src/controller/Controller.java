@@ -104,6 +104,13 @@ public class Controller {
 		//saveUserData();
 	}
 
+	public void deletePlant(int selectedPlant)
+	{
+		listOfPlants.remove(selectedPlant);
+		currentPlant = listOfPlants.getLast();
+		currentPlant.setLastPlant(true);
+	}
+
 	/**
 	 * Saves user data
 	 * calls filemanager's methods to write plant list to file

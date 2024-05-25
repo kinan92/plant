@@ -174,8 +174,10 @@ public class PlantView extends JPanel {
         this.currentPlant = plant;
         updateElapsedTime();
         plantPanel.updatePlantImage(plant.getImage());
+        JProgressBar waterBar = plantPanel.getWaterBar();
         int newWaterLevel = plant.getWaterLevel();
-        plantPanel.updateWaterLevel(newWaterLevel);
+        waterBar.setValue(newWaterLevel);
+        waterBar.repaint();
         stateLabel.setText("State: " + plant.getState().toString());
         UpdateWidgetImages();
     }
@@ -187,11 +189,6 @@ public class PlantView extends JPanel {
      * @author Aleksander Augustyniak
      */
     public void vacationPressed() {
-        if (soundEffectSetting)
-        {
-            buttonPressedSoundEffect();
-        }
-
         if (isVacationMode) {
             controller.resumeTime();
             isVacationMode = false;
@@ -228,7 +225,6 @@ public class PlantView extends JPanel {
             System.out.println("Water pressed.");
             controller.waterPlant();
             plantPanel.updateWaterLevel(controller.getCurrentPlant().getWaterLevel());
-            plantPanel.waterLevelEffects(controller.getCurrentPlant().getWaterLevel());
             updatePlantDetails(controller.getCurrentPlant());
             System.out.println("Water level: " + controller.getCurrentPlant().getWaterLevel());
         } catch (NullPointerException e) {
@@ -254,10 +250,6 @@ public class PlantView extends JPanel {
      */
     public void helpMenuPressed()
     {
-        if (soundEffectSetting)
-        {
-            buttonPressedSoundEffect();
-        }
         new HelpMenu(width, height);
     }
 

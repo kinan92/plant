@@ -193,7 +193,14 @@ public class StoragePanel extends JPanel {
         }
         else
         {
-            JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this plant?");
+            int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this plant?", "Confirmation", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                controller.deletePlant(currentSelectedPlant);
+                controller.createStorage();
+            }
+            else if (option == JOptionPane.NO_OPTION) {
+                controller.createStorage();
+            }
         }
     }
 }

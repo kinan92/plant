@@ -88,6 +88,13 @@ public class Plant {
 		updateState();
 	}
 
+	/**
+	 * Updates the state of the plant based on its water level
+	 * If the water level is greater than zero, the death timer is canceled.
+	 * If the water level is zero, the death timer is started
+	 * The method then updates the state image to reflect the current state of the plant
+	 * @author Aleksander Augustyniak
+	 */
 	public void updateState(){
 		if (waterLevel > 0) {
 			cancelDeathTimer();
@@ -97,6 +104,14 @@ public class Plant {
 		updateStateImage(getState());
 	}
 
+	/**
+	 * Checks the growth conditions for the plant and updates its state if the conditions are met.
+	 * If the growth start timer is not set, it initializes it to the current time.
+	 * Then, it calculates the duration since the last growth check.
+	 * If the duration is at least 2 days and the water level is greater than,
+	 * the plant's state is set to 'big', the growth start timer is updated, and the state image is updated,
+	 * It updates the plant details in the UI
+	 */
 	public void checkAndGrow(){
 		if (growthStartTime == null){
 			growthStartTime = LocalDateTime.now();
@@ -113,6 +128,11 @@ public class Plant {
 			controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 	}
 
+	/**
+	 * Starts the death timer for the plant.
+	 * If the death timer is not initialized, it creates a new timer that then sets the plant's state to 'dead',
+	 * updates the state image, updates the plant details in the UI, and stops the timer. The timer is started regardless of its previous state
+	 */
 	private void startDeathTimer(){
 		if (deathTimer == null){
 			deathTimer = new Timer(10000, e -> {
@@ -125,6 +145,11 @@ public class Plant {
 		deathTimer.start();
 	}
 
+	/**
+	 * Cancels the death timer if it is currently running.
+	 * This method checks if the death timer is not null and is running,
+	 * and stops the timer if both conditions are met.
+	 */
 	private void cancelDeathTimer(){
 		if (deathTimer != null && deathTimer.isRunning()){
 			deathTimer.stop();

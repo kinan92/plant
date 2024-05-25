@@ -146,6 +146,16 @@ public class Controller {
 		plantTimer.start();
 	}
 
+	/**
+	 * Starts the checkGrowTimer if it is not already running
+	 * The timer triggers every 60 seconds.
+	 * On each trigger, it performs the following actions if the application is not paused
+	 * 1. Check the growth for all plants
+	 * 2. Updates the elapsed time in the plant view
+	 * 3. Updates the plant details in the plant view
+	 * @author Aleksander Augustyniak
+	 */
+
 	private void startCheckGrowTimer(){
 		if (checkGrowTimer == null){
 			checkGrowTimer = new Timer(60000, e -> {
@@ -159,6 +169,13 @@ public class Controller {
 		checkGrowTimer.start();
 	}
 
+	/**
+	 * Triggers every 60 seconds
+	 * On each trigger, it performs:
+	 * 1. Decreases the water level for all plants.
+	 * 2. Updates the plant details in the plant view
+	 * @author Aleksander Augustyniak
+	 */
 	public void startWaterLevelTimer(){
 		if (waterLevelTimer == null){
 			waterLevelTimer = new Timer(3600000, e -> {
@@ -191,9 +208,6 @@ public class Controller {
 		return plant.getWaterLevel();
 	}
 
-	private void notifyTimeSkipped(int hours){
-		System.out.println("Time skipped by " + hours + " hours.");
-	}
 	public void choosePlantFrame()
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
@@ -286,7 +300,6 @@ public class Controller {
 		plant.checkAndGrow();
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(plant);
-		notifyTimeSkipped(hours);
 	}
 
 	public void showPlantView()
@@ -307,6 +320,12 @@ public class Controller {
 			}
 		}
 	}
+
+	/**
+	 * Checks the growth for all plants in the listOfPlants.
+	 * For each plant in the list that is not null, it invokes the plant's checkAndGrow method
+	 * to determine if the plant should grow based on its conditions.
+	 */
 
 	public void checkGrowthForAllPlants(){
 		for (Plant plant : listOfPlants){

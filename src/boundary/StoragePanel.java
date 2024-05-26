@@ -122,7 +122,6 @@ public class StoragePanel extends JPanel {
         confirm.setRolloverEnabled(true);
         confirm.setRolloverIcon(new ImageIcon("images/buttons/confirm_hover.png"));
         confirm.addActionListener(l -> confirmButtonpressed());
-        //confirm.setLocation(146,100);
 
         //creates delete button
         JButton delete = new JButton();

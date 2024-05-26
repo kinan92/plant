@@ -123,7 +123,7 @@ public class Controller {
 	 * calls filemanager's methods to write plant list to file
 	 * @author Petri Närhi
 	 * */
-	public void saveUserData() {
+	public synchronized void saveUserData() {
 		try {
 			file.writePlantsToFile(listOfPlants);
 			//file.writeSettingsToFile();

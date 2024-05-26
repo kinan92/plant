@@ -202,6 +202,7 @@ public class PlantPanel extends JPanel {
      */
     public void updatePlantImage(ImageIcon newImage)
     {
+        System.out.println("update image");
         this.currentPlantImage = newImage;
         plantImageLabel.setIcon(this.currentPlantImage);
         repaint();

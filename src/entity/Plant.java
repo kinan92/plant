@@ -16,6 +16,7 @@ public class Plant implements Serializable {
 	private PlantStateEnum state;
 	private Pot pot;
 	private boolean isLastPlant = false;
+	private LocalDateTime lastWatered;
 
 	/**
 	 * Constructor for plant
@@ -50,9 +51,12 @@ public class Plant implements Serializable {
 	public void updateStateImage(PlantStateEnum state)
 	{
 		switch (state) {
-			case little -> this.image = type.getLittlePlantImage();
-			case big -> this.image = type.getGrownPlantImage();
-			case dead -> this.image = type.getDeadPlantImage();
+			case small -> this.image = type.getLittlePlantImage();
+			case medium -> this.image = type.getMediumPlantImage();
+			case large -> this.image = type.getGrownPlantImage();
+			case smallDead -> this.image = type.getSmallDeadPlantImage();
+			case mediumDead -> this.image = type.getMediumDeadPlantImage();
+			case largeDead -> this.image = type.getLargeDeadPlantImage();
 		}
 	}
 
@@ -74,7 +78,6 @@ public class Plant implements Serializable {
 	 */
 	public void incrementAge(int age){
 		this.age += age;
-		updateState();
 	}
 
 	/**
@@ -91,13 +94,14 @@ public class Plant implements Serializable {
 	}
 
 	public void updateState(){
-		if (waterLevel <= 0){
-			setState(PlantStateEnum.dead);
+		/*if (waterLevel <= 0){
+			setState(PlantStateEnum.largeDead);
 		} else if (waterLevel >= 75){
-			setState(PlantStateEnum.big);
+			setState(PlantStateEnum.large);
 		} else {
-			setState(PlantStateEnum.little);
+			setState(PlantStateEnum.small);
 		}
+		updateStateImage(getState());*/
 		updateStateImage(getState());
 	}
 
@@ -165,6 +169,7 @@ public class Plant implements Serializable {
 	 * */
 	public void setState(PlantStateEnum state) {
 		this.state = state;
+		updateStateImage(this.state);
 	}
 
 	/**
@@ -208,5 +213,15 @@ public class Plant implements Serializable {
 	 * */
 	public String toString() {
 		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
+	}
+
+	public void setLastWatered(LocalDateTime lastWatered)
+	{
+		this.lastWatered = lastWatered;
+	}
+
+	public LocalDateTime getLastWatered()
+	{
+		return lastWatered;
 	}
 }

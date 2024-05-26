@@ -29,6 +29,7 @@ public class Controller {
 	private Random random = new Random();
 	private FileManager file;
 	private WidgetCreatorJFX widget = new WidgetCreatorJFX(); //used here only to access its image merging methods
+	private PlantHandler plantHandler;
 
 	/**
 	 * Constructor for Controller
@@ -48,6 +49,8 @@ public class Controller {
 		autoSave(true);
 		/*startWaterDecreaseTimer();
 		startAgeTimer();*/
+		plantHandler = new PlantHandler(listOfPlants, currentPlant, this);
+		plantHandler.updateAllPlants();
 	}
 
 	public MainFrame getMainFrame(){
@@ -87,11 +90,15 @@ public class Controller {
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
+		Plant newPlant = new Plant(name, 0, initialWaterLevel, type, PlantStateEnum.small, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		try {
 			currentPlant.setLastPlant(false);
 		} catch (NullPointerException e) {}
+
+		plantHandler.setListOfPlants(listOfPlants);
+		plantHandler.setRunning(true);
+
 		currentPlant = newPlant;
 		currentPlant.setLastPlant(true);
 		System.out.println("New plant! " + currentPlant);
@@ -230,7 +237,7 @@ public class Controller {
 		plantTimer.start();
 	}
 
-	private void updateAge(){
+	public void updateAge(){
 		for (Plant plant : listOfPlants){
 			if (plant != null){
 				plant.incrementAge(1);
@@ -238,20 +245,12 @@ public class Controller {
 		}
 	}
 
-	/**
-	 * @author Elvira Grubb
-	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
-	 */
-	private void test()
+	public void updateCurrentPlant()
 	{
-		for (PlantType pt : plantTypes)
+		if (mainFrame.isPlantViewActive())
 		{
-			System.out.println(pt.getPlantTypeName());
-			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getGrownPlantImage());
-			System.out.println(pt.getPlantImageButton());
-			System.out.println(pt.getPlantInformation());
-			System.out.println();
+			System.out.println("update");
+			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		}
 	}
 
@@ -271,6 +270,7 @@ public class Controller {
 	}
 	public void choosePlantFrame()
 	{
+		plantHandler.setRunning(false);
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
 		ArrayList<ImageIcon> potImage = new ArrayList<>();
@@ -293,6 +293,7 @@ public class Controller {
 
 	public void showMainMenu()
 	{
+		plantHandler.setRunning(false);
 		mainFrame.addMainMenu();
 	}
 
@@ -321,6 +322,8 @@ public class Controller {
 
 	public void showPlantView()
 	{
+		startPlantTimer();
+		plantHandler.setRunning(true);
 		mainFrame.addPlantView();
 	}
 
@@ -398,6 +401,7 @@ public class Controller {
 	 * */
 	public void createStorage()
 	{
+		plantHandler.updateAllPlants();
 		ArrayList<ImageIcon> plantBtnImages = new ArrayList<>();
 		ArrayList<ImageIcon> plantBtnHoverImages = new ArrayList<>();
 
@@ -416,6 +420,11 @@ public class Controller {
 			plantBtnHoverImages.add(new ImageIcon(hoverButton));
 		}
 		mainFrame.addStoragePanel(plantBtnImages, plantBtnHoverImages);
+	}
+
+	public void updateCurrentPlantState()
+	{
+		plantHandler.updateActivePlants();
 	}
 
 	/**

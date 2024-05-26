@@ -2,14 +2,16 @@ package entity;
 
 public enum PlantStateEnum {
 	
-	little("Little"),
-	big("Big"),
-	dead("dead");
+	small("Small"),
+	medium("Medium"),
+	large("Big"),
+	smallDead("Small dead"),
+	mediumDead("Medium dead"),
+	largeDead("Large dead");
 
 	private final String state;
 
 	PlantStateEnum(String state) {
 		this.state = state;
-
 	}
 }

@@ -17,6 +17,7 @@ public class MainFrame extends JFrame {
     private ChoosePlantPanel choosePlantPanel;
     private ConfirmPlantPanel confirmPlantPanel;
     private StoragePanel storagePanel;
+    private boolean isPlantViewActive;
 
     /**
      * @author Elvira Grubb (main)
@@ -27,6 +28,7 @@ public class MainFrame extends JFrame {
     public MainFrame(Controller controller)
     {
         this.controller = controller;
+        isPlantViewActive = false;
         setTitle("Virtual Plant Widgets");
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -69,6 +71,7 @@ public class MainFrame extends JFrame {
         plantView = new PlantView(width, height, controller);
         this.setContentPane(plantView);
         this.repaint();
+        isPlantViewActive = true;
     }
 
     public void confirmPlantPanel(ImageIcon selectedPlant, ImageIcon selectedPot, int plantNumber, int potNumber, ArrayList<String> plantInformation)
@@ -111,6 +114,7 @@ public class MainFrame extends JFrame {
      */
     public void addMainMenu()
     {
+        isPlantViewActive = false;
         MainMenu mainMenu = new MainMenu(width, height, controller);
         this.setContentPane(mainMenu);
     }
@@ -128,5 +132,10 @@ public class MainFrame extends JFrame {
         storagePanel = new StoragePanel(controller, plantBtnImages, plantBtnHoverImages, width, height);
         this.setContentPane(storagePanel);
         this.repaint();
+    }
+
+    public boolean isPlantViewActive()
+    {
+        return isPlantViewActive;
     }
 }

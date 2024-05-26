@@ -188,6 +188,7 @@ public class PlantView extends JPanel {
         }
 
         waterLevel = plant.getWaterLevel();
+        System.out.println(currentPlant.getImage());
         plantPanel.updatePlantImage(currentPlant.getImage());
         plantPanel.updateWaterLevel(waterLevel);
         stateLabel.setText("State: " + currentPlant.getState().toString());
@@ -235,6 +236,8 @@ public class PlantView extends JPanel {
     public void waterPressed() {
         try {
             System.out.println("Water pressed.");
+            controller.getCurrentPlant().setLastWatered(LocalDateTime.now());
+            controller.updateCurrentPlantState();
             controller.waterPlant();
             plantPanel.updateWaterLevel(controller.getCurrentPlant().getWaterLevel());
             updatePlantDetails(controller.getCurrentPlant());

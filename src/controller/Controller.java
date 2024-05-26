@@ -106,9 +106,15 @@ public class Controller {
 
 	public void deletePlant(int selectedPlant)
 	{
-		listOfPlants.remove(selectedPlant);
-		currentPlant = listOfPlants.getLast();
-		currentPlant.setLastPlant(true);
+		if (selectedPlant < listOfPlants.size()) {
+			listOfPlants.remove(selectedPlant);
+		}
+		try {
+			currentPlant = listOfPlants.getLast();
+			currentPlant.setLastPlant(true);
+		} catch (Exception e) {
+			currentPlant = null;
+		}
 		saveUserData();
 	}
 
@@ -367,9 +373,18 @@ public class Controller {
 	 * @author Petri Närhi
 	 * */
 	public void setCurrentPlant(int selectedPlant) {
-		this.currentPlant.setLastPlant(false); //old plant is not the last plant anymore
-		this.currentPlant = listOfPlants.get(selectedPlant);
-		this.currentPlant.setLastPlant(true); //sets the current plant as the last plant
+		if (!listOfPlants.isEmpty()) {
+			this.currentPlant.setLastPlant(false); //old plant is not the last plant anymore
+			if (selectedPlant < listOfPlants.size()) {
+				this.currentPlant = listOfPlants.get(selectedPlant);
+			} else {
+				this.currentPlant = listOfPlants.getLast();
+			}
+			this.currentPlant.setLastPlant(true); //sets the current plant as the last plant
+		}
+		else {
+			this.currentPlant = null;
+		}
 	}
 
 	public ArrayList<Plant> getListOfPlants() {

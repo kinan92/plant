@@ -180,7 +180,7 @@ public class StoragePanel extends JPanel {
         else
         {
             controller.setCurrentPlant(currentSelectedPlant);
-            controller.showPlantView();
+            //controller.showPlantView();
         }
     }
 
@@ -196,9 +196,6 @@ public class StoragePanel extends JPanel {
             int option = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this plant?", "Confirmation", JOptionPane.YES_NO_OPTION);
             if (option == JOptionPane.YES_OPTION) {
                 controller.deletePlant(currentSelectedPlant);
-                controller.createStorage();
-            }
-            else if (option == JOptionPane.NO_OPTION) {
                 controller.createStorage();
             }
         }

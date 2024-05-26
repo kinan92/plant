@@ -254,14 +254,14 @@ public class PlantPanel extends JPanel {
      * @param waterLevel The water level of the active plant
      * @author Elvira Grubb
      */
-    public void waterLevelEffects(int waterLevel)
+    public void waterLevelEffects(int waterLevel, boolean sparkleEffect)
     {
         if (plantView.getSoundEffectSetting())
         {
             waterSoundEffect();
         }
 
-        if (waterLevel >= 100 && waterLevel <= 104)
+        if (sparkleEffect)
         {
             plantSparkleAnimation();
 

@@ -30,6 +30,7 @@ public class PlantView extends JPanel {
     private WidgetJavaFXApplication javaFXApp;
     private static boolean isJavaFXInitialized = false;
     private boolean isVacationMode = false;
+    private int waterLevel;
 
     /**
      * @param width      Width of MainFrame
@@ -50,9 +51,12 @@ public class PlantView extends JPanel {
         this.setLayout(borderLayout);
         this.setBackground(new java.awt.Color(184, 200, 177));
 
+        this.waterLevel = controller.getCurrentPlant().getWaterLevel();
+
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         creationTimeLabel = new JLabel("Elapsed Time: Calculating...");
         stateLabel = new JLabel("State: Unknown");
+        topPanel.setBackground(new java.awt.Color(141, 152, 138));
         topPanel.add(creationTimeLabel);
         topPanel.add(stateLabel);
         add(topPanel, BorderLayout.NORTH);
@@ -173,12 +177,20 @@ public class PlantView extends JPanel {
     public void updatePlantDetails(Plant plant){
         this.currentPlant = plant;
         updateElapsedTime();
-        plantPanel.updatePlantImage(plant.getImage());
-        JProgressBar waterBar = plantPanel.getWaterBar();
-        int newWaterLevel = plant.getWaterLevel();
-        waterBar.setValue(newWaterLevel);
-        waterBar.repaint();
-        stateLabel.setText("State: " + plant.getState().toString());
+        if (waterLevel < plant.getWaterLevel())
+        {
+            boolean sparkleEffect = false;
+            if (waterLevel < 100 && plant.getWaterLevel() > 100)
+            {
+                sparkleEffect = true;
+            }
+            plantPanel.waterLevelEffects(currentPlant.getWaterLevel(), sparkleEffect);
+        }
+
+        waterLevel = plant.getWaterLevel();
+        plantPanel.updatePlantImage(currentPlant.getImage());
+        plantPanel.updateWaterLevel(waterLevel);
+        stateLabel.setText("State: " + currentPlant.getState().toString());
         UpdateWidgetImages();
     }
 

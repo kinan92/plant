@@ -101,7 +101,16 @@ public class MainMenu extends JPanel {
 	private void clickGetAPlantButton()
 	{
 		buttonPressedSoundEffect();
-		controller.showPlantView();
+
+		if (controller.lastPlantExist())
+		{
+			controller.showPlantView();
+		}
+
+		else
+		{
+			JOptionPane.showMessageDialog(this, "No plant can be found.");
+		}
 	}
 
 	/**

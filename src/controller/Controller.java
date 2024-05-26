@@ -327,6 +327,18 @@ public class Controller {
 		mainFrame.addPlantView();
 	}
 
+	public boolean lastPlantExist()
+	{
+		boolean plantExist = true;
+
+		if (currentPlant == null)
+		{
+			plantExist = false;
+		}
+
+		return plantExist;
+	}
+
 	/**
 	 * Increments the age of all plants in the list by 1 unit.
 	 * This method iterates through the list of plants and calls the incrementAge method for each plant.

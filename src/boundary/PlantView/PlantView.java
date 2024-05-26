@@ -191,7 +191,7 @@ public class PlantView extends JPanel {
         System.out.println(currentPlant.getImage());
         plantPanel.updatePlantImage(currentPlant.getImage());
         plantPanel.updateWaterLevel(waterLevel);
-        stateLabel.setText("State: " + currentPlant.getState().toString());
+        stateLabel.setText("State: " + currentPlant.getStateText());
         UpdateWidgetImages();
     }
 

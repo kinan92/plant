@@ -42,56 +42,59 @@ public class PlantHandler extends Thread{
 
     public void updateActivePlants()
     {
-        Plant plant = controller.getCurrentPlant();
-        LocalDateTime plantAge = plant.getDateAndTime();
-        LocalDateTime currentTime = LocalDateTime.now();
-        Duration timeElapsed = Duration.between(plantAge, currentTime);
-
-        System.out.println(timeElapsed.toMinutes());
-        int waterlevel = plant.getWaterLevel();
-
-        if (waterlevel > 30 && waterlevel < 130)
+        if (controller.getCurrentPlant() != null)
         {
-            if (timeElapsed.toMinutes() < 120)
+            Plant plant = controller.getCurrentPlant();
+            LocalDateTime plantAge = plant.getDateAndTime();
+            LocalDateTime currentTime = LocalDateTime.now();
+            Duration timeElapsed = Duration.between(plantAge, currentTime);
+
+            System.out.println(timeElapsed.toMinutes());
+            int waterlevel = plant.getWaterLevel();
+
+            if (waterlevel > 30 && waterlevel < 130)
             {
-                System.out.println("Plant is younger than two hours.");
-                plant.setState(PlantStateEnum.small);
+                if (timeElapsed.toMinutes() < 120)
+                {
+                    System.out.println("Plant is younger than two hours.");
+                    plant.setState(PlantStateEnum.small);
+                }
+
+                else if (timeElapsed.toMinutes() > 120 && timeElapsed.toMinutes() <= 200)
+                {
+                    System.out.println("Plant is younger than 180 hours.");
+                    plant.setState(PlantStateEnum.medium);
+                }
+
+                else if (timeElapsed.toMinutes() > 200)
+                {
+                    plant.setState(PlantStateEnum.large);
+                }
             }
 
-            else if (timeElapsed.toMinutes() > 120 && timeElapsed.toMinutes() <= 200)
+            else
             {
-                System.out.println("Plant is younger than 180 hours.");
-                plant.setState(PlantStateEnum.medium);
+                if (timeElapsed.toMinutes() < 120)
+                {
+                    System.out.println("Plant is younger than two hours.");
+                    plant.setState(PlantStateEnum.smallDead);
+                }
+
+                else if (timeElapsed.toMinutes() > 120 && timeElapsed.toMinutes() <= 180)
+                {
+                    System.out.println("Plant is younger than 180 hours.");
+                    plant.setState(PlantStateEnum.mediumDead);
+                }
+
+                else if (timeElapsed.toMinutes() > 180)
+                {
+                    plant.setState(PlantStateEnum.largeDead);
+                }
             }
 
-            else if (timeElapsed.toMinutes() > 200)
-            {
-                plant.setState(PlantStateEnum.large);
-            }
+            controller.updateCurrentPlant();
+            controller.updateAge();
         }
-
-        else
-        {
-            if (timeElapsed.toMinutes() < 120)
-            {
-                System.out.println("Plant is younger than two hours.");
-                plant.setState(PlantStateEnum.smallDead);
-            }
-
-            else if (timeElapsed.toMinutes() > 120 && timeElapsed.toMinutes() <= 180)
-            {
-                System.out.println("Plant is younger than 180 hours.");
-                plant.setState(PlantStateEnum.mediumDead);
-            }
-
-            else if (timeElapsed.toMinutes() > 180)
-            {
-                plant.setState(PlantStateEnum.largeDead);
-            }
-        }
-
-        controller.updateCurrentPlant();
-        controller.updateAge();
     }
 
     public void updateAllPlants()

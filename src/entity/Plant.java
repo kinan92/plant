@@ -162,6 +162,11 @@ public class Plant implements Serializable {
 		return state;
 	}
 
+	public String getStateText()
+	{
+		return state.getState();
+	}
+
 	/**
 	 * Setter for plant state
 	 * @param state PlantStateEnum

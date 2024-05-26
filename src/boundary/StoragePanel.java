@@ -153,10 +153,7 @@ public class StoragePanel extends JPanel {
 
     /**
      * @author Elvira Grubb
-     * @param plant An int corresponding to the PlantTypes
-     * This method will be replaced by a method that calls a method in the Controller to notify
-     * that a plant has been chosen and which plant has been chosen (via the index that will
-     *  correspond to an index in the PlantType ArrayList)
+     * @param selectedPlant An int corresponding to the plant chosen
      */
     private void plantPressed(int selectedPlant)
     {
@@ -180,7 +177,7 @@ public class StoragePanel extends JPanel {
         else
         {
             controller.setCurrentPlant(currentSelectedPlant);
-            //controller.showPlantView();
+            controller.showPlantView();
         }
     }
 

@@ -122,16 +122,17 @@ public class StoragePanel extends JPanel {
         confirm.setRolloverEnabled(true);
         confirm.setRolloverIcon(new ImageIcon("images/buttons/confirm_hover.png"));
         confirm.addActionListener(l -> confirmButtonpressed());
+        //confirm.setLocation(146,100);
 
         //creates delete button
         JButton delete = new JButton();
-        confirm.setIcon(new ImageIcon("images/buttons/delete.png"));
-        confirm.setBorder(BorderFactory.createEmptyBorder());
-        confirm.setContentAreaFilled(false);
+        delete.setIcon(new ImageIcon("images/buttons/delete.png"));
+        delete.setBorder(BorderFactory.createEmptyBorder());
+        delete.setContentAreaFilled(false);
 
-        confirm.setRolloverEnabled(true);
-        confirm.setRolloverIcon(new ImageIcon("images/buttons/delete-hover.png"));
-        confirm.addActionListener(l -> deleteButtonpressed());
+        delete.setRolloverEnabled(true);
+        delete.setRolloverIcon(new ImageIcon("images/buttons/delete-hover.png"));
+        delete.addActionListener(l -> deleteButtonpressed());
 
         //adds all buttons
         navigation.add(backBtn);

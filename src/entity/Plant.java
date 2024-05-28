@@ -11,6 +11,7 @@ public class Plant implements Serializable {
 	private LocalDateTime dateAndTime;
 	private LocalDateTime growthStartTime;
 	private Timer deathTimer;
+	private Timer refreshPlantImageTimer;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
@@ -18,6 +19,7 @@ public class Plant implements Serializable {
 	private PlantStateEnum state;
 	private Pot pot;
 	private boolean isLastPlant = false;
+	private boolean isDeathStarted = false;
 
 	/**
 	 * Constructor for plant
@@ -49,9 +51,12 @@ public class Plant implements Serializable {
 	public void updateStateImage(PlantStateEnum state)
 	{
 		switch (state) {
-			case little -> this.image = type.getLittlePlantImage();
-			case big -> this.image = type.getGrownPlantImage();
-			case dead -> this.image = type.getDeadPlantImage();
+			case small -> this.image = type.getLittlePlantImage();
+			case medium -> this.image = type.getMediumPlantImage();
+			case large -> this.image = type.getGrownPlantImage();
+			case smallDead -> this.image = type.getSmallDeadPlantImage();
+			case mediumDead -> this.image = type.getMediumDeadPlantImage();
+			case largeDead -> this.image = type.getLargeDeadPlantImage();
 		}
 	}
 
@@ -97,25 +102,30 @@ public class Plant implements Serializable {
 		}
 		LocalDateTime now = LocalDateTime.now();
 		Duration duration = Duration.between(dateAndTime, now);
-		if (duration.toDays() >= 2 && waterLevel > 0){
-			setState(PlantStateEnum.big);
+		if (duration.toDays() >= 4 && waterLevel > 0){
+			setState(PlantStateEnum.large);
+			growthStartTime = now;
+			updateStateImage(getState());
+		} else if (duration.toDays() >= 3 && waterLevel > 0){
+			setState(PlantStateEnum.medium);
 			growthStartTime = now;
 			updateStateImage(getState());
 		}
 		PlantStateEnum state = getState();
 		setState(state);
-		//controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 	}
 
 	private void startDeathTimer(){
 		if (deathTimer == null){
+
 			deathTimer = new Timer(3000, e -> {
-				setState(PlantStateEnum.dead);
+				isDeathStarted = true;
+				setState(getState().getDeadState());
 				updateStateImage(getState());
-				//controller.getMainFrame().getPlantView().updatePlantDetails(Plant.this);
 				deathTimer.stop();
 			});
 		}
+		isDeathStarted = false;
 		deathTimer.start();
 	}
 
@@ -123,6 +133,10 @@ public class Plant implements Serializable {
 		if (deathTimer != null && deathTimer.isRunning()){
 			deathTimer.stop();
 		}
+	}
+
+	public boolean isStartDeathTimer(){
+		return isDeathStarted;
 	}
 
 	/**

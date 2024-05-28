@@ -22,9 +22,9 @@ public class Controller {
 	private MainFrame mainFrame;
 	ArrayList<PlantType> plantTypes;
 	ArrayList<Pot> pots;
-	private Timer plantTimer;
 	private Timer waterLevelTimer;
 	private Timer checkGrowTimer;
+	private Timer refreshPlantImageTimer;
 
 	private boolean isPaused = false;
 	private LocalDateTime pauseStartTime;
@@ -40,6 +40,7 @@ public class Controller {
 	 * @author Petri Närhi and others
 	 * */
 	public Controller() {
+
 		this.file = new FileManager(this);
 		mainFrame = new MainFrame(this);
 		mainFrame.addMainMenu();
@@ -47,12 +48,10 @@ public class Controller {
 		this.pots = file.loadPots();
 		try {
 			loadUserData();
+
 		} catch (RuntimeException e) {}
 		autoSave(true);
-	}
 
-	public MainFrame getMainFrame(){
-		return mainFrame;
 	}
 
 	/**
@@ -88,7 +87,7 @@ public class Controller {
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, initialWaterLevel, type, PlantStateEnum.little, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
+		Plant newPlant = new Plant(name, initialWaterLevel, type, PlantStateEnum.small, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
 		listOfPlants.add(newPlant);
 		try {
 			currentPlant.setLastPlant(false);
@@ -97,12 +96,11 @@ public class Controller {
 		currentPlant.setLastPlant(true);
 		System.out.println("New plant! " + currentPlant);
 		showPlantView();
-		mainFrame.getPlantView().updatePlantDetails(currentPlant);
-		startPlantTimer();
 		startWaterLevelTimer();
 		startCheckGrowTimer();
+		startRefreshTimer();
 		currentPlant.checkAndGrow();
-		getMainFrame().getPlantView().updatePlantDetails(currentPlant);
+		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		saveUserData();
 	}
 
@@ -172,21 +170,9 @@ public class Controller {
 		if(!isPaused){
 			isPaused = true;
 			pauseStartTime = LocalDateTime.now();
-			stopPlantTimer();
 			stopWaterLevelTimer();
 			stopCheckGrowTimer();
 			System.out.println("Tid är pausad");
-		}
-	}
-
-	/**
-	 * Stops the plant timer if it is currently running.
-	 * Ensures that the timer does not continue to update plant state while paused
-	 * @author Aleksander Augustyniak
-	 */
-	public void stopPlantTimer() {
-		if (plantTimer != null) {
-			plantTimer.stop();
 		}
 	}
 
@@ -217,31 +203,13 @@ public class Controller {
 	 */
 	public void resumeTime(){
 		if (isPaused){
-			isPaused = false;
 			Duration pauseDuration = Duration.between(pauseStartTime, LocalDateTime.now());
 			totalPausedDuration = totalPausedDuration.plus(pauseDuration);
-			startPlantTimer();
+			startWaterLevelTimer();
+			startCheckGrowTimer();
+			startRefreshTimer();
 			System.out.println("Tiden återupptas");
 		}
-	}
-
-	/**
-	 * Starts the plant timer if it is not already running. The timer updates the plant's age,
-	 * decreases the water level for all plants, and updates the elapsed time in the PlantView.
-	 * @author Aleksander Augustyniak
-	 */
-	private void startPlantTimer(){
-		if (plantTimer == null){
-			plantTimer = new Timer(1000, e -> {
-				if (!isPaused){
-					checkGrowthForAllPlants();
-
-					mainFrame.getPlantView().updateElapsedTime();
-					mainFrame.getPlantView().updatePlantDetails(currentPlant);
-				}
-			});
-		}
-		plantTimer.start();
 	}
 
 	private void startCheckGrowTimer(){
@@ -257,16 +225,24 @@ public class Controller {
 		checkGrowTimer.start();
 	}
 
-	public void startWaterLevelTimer(){
-		if (waterLevelTimer == null){
-			waterLevelTimer = new Timer(3600000, e -> {
-				if (!isPaused){
-					decreaseWaterLevelForAllPlants();
+	public void startRefreshTimer(){
+		if (refreshPlantImageTimer == null){
+			refreshPlantImageTimer = new Timer(1000, e -> {
+				if (currentPlant.isStartDeathTimer()){
 					mainFrame.getPlantView().updatePlantDetails(currentPlant);
 				}
 			});
-			waterLevelTimer.start();
+			refreshPlantImageTimer.start();
 		}
+	}
+
+	public void startWaterLevelTimer(){
+			waterLevelTimer = new Timer(360000, e -> {
+					decreaseWaterLevelForAllPlants();
+					mainFrame.getPlantView().updatePlantDetails(currentPlant);
+			});
+			waterLevelTimer.start();
+
 	}
 
 	/**
@@ -315,10 +291,6 @@ public class Controller {
 	 * @author Aleksander Augustyniak
 	 */
 	public void skipTime(int hours){
-		if (hours <= 0){
-			System.out.println("Skipped time requires a positive number of hours");
-			return;
-		}
 		LocalDateTime newCreationTime = currentPlant.getDateAndTime().minusHours(hours);
 		currentPlant.setDateAndTime(newCreationTime);
 		currentPlant.decreaseWaterLevel();
@@ -331,6 +303,13 @@ public class Controller {
 	public void showPlantView()
 	{
 		mainFrame.addPlantView();
+		startCheckGrowTimer();
+		startRefreshTimer();
+		startWaterLevelTimer();
+		if(currentPlant != null){
+			mainFrame.getPlantView().updatePlantDetails(currentPlant);
+			mainFrame.getPlantView().updateElapsedTime();
+		}
 	}
 
 	/**
@@ -351,7 +330,7 @@ public class Controller {
 		for (Plant plant : listOfPlants){
 			if (plant != null){
 				plant.checkAndGrow();
-				getMainFrame().getPlantView().updatePlantDetails(currentPlant);
+				mainFrame.getPlantView().updatePlantDetails(currentPlant);
 			}
 		}
 	}
@@ -365,9 +344,6 @@ public class Controller {
 	 * */
 	public Plant getCurrentPlant() {
 		return currentPlant;
-	}
-	public boolean isPaused(){
-		return isPaused;
 	}
 
 	/**

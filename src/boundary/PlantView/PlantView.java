@@ -202,8 +202,10 @@ public class PlantView extends JPanel {
     public void vacationPressed() {
         if (isVacationMode) {
             controller.resumeTime();
-            isVacationMode = false;
+            updatePlantDetails(currentPlant);
             System.out.println("Vacation mode disabled, resuming time");
+            isVacationMode = false;
+
         } else {
             controller.pausTime();
             isVacationMode = true;

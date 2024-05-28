@@ -239,23 +239,6 @@ public class Controller {
 	}
 
 	/**
-	 * @author Elvira Grubb
-	 * Test class to make sure the planttypes are read correctly. Will be deleted when PlantType class is done
-	 */
-	private void test()
-	{
-		for (PlantType pt : plantTypes)
-		{
-			System.out.println(pt.getPlantTypeName());
-			System.out.println(pt.getPlantTypeNameAlternative());
-			System.out.println(pt.getGrownPlantImage());
-			System.out.println(pt.getPlantImageButton());
-			System.out.println(pt.getPlantInformation());
-			System.out.println();
-		}
-	}
-
-	/**
 	 * Waters the current plant by calling its waterPlant method.
 	 * Updates the PlantView to reflect the new state of the plant
 	 * @author Aleksander Augustyniak
@@ -321,7 +304,15 @@ public class Controller {
 
 	public void showPlantView()
 	{
-		mainFrame.addPlantView();
+		if (currentPlant != null)
+		{
+			mainFrame.addPlantView();
+		}
+
+		else
+		{
+			JOptionPane.showMessageDialog(mainFrame, "<html>No plant found. Please create plant<br>or choose one from the plant storage.</html>");
+		}
 	}
 
 	/**

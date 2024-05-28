@@ -68,16 +68,31 @@ public class MainMenu extends JPanel {
 		openPlant.setRolloverIcon(new ImageIcon("images/buttons/open_last_plant_hover.png"));
 		openPlant.addActionListener(l -> clickGetAPlantButton());
 
+		JButton plantStorage = new JButton();
+		plantStorage.setIcon(new ImageIcon("images/buttons/plant_storage.png"));
+		plantStorage.setBorder(BorderFactory.createEmptyBorder());
+		plantStorage.setContentAreaFilled(false);
+		plantStorage.setRolloverEnabled(true);
+		plantStorage.setRolloverIcon(new ImageIcon("images/buttons/plant_storage_hover.png"));
+		plantStorage.addActionListener(l -> clickPlantStorageButton());
+
 		//Adds the buttons with constraints
+		c.insets = new Insets(26, 0, 0, 0);
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 0;
 		background.add(createPlant, c);
 
+		c.insets = new Insets(0, 0, 0, 0);
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 1;
 		background.add(openPlant, c);
+
+		c.weightx = 0;
+		c.gridx = 0;
+		c.gridy = 2;
+		background.add(plantStorage, c);
 
 		return background;
 	}
@@ -102,6 +117,12 @@ public class MainMenu extends JPanel {
 	{
 		buttonPressedSoundEffect();
 		controller.showPlantView();
+	}
+
+	private void clickPlantStorageButton()
+	{
+		buttonPressedSoundEffect();
+		controller.createStorage();
 	}
 
 	/**

@@ -160,7 +160,6 @@ public class PlantView extends JPanel {
         } else {
             System.out.println("Error: No current plant found");
         }
-
         if (soundEffectSetting)
         {
             buttonPressedSoundEffect();

@@ -53,7 +53,6 @@ public class Controller {
 		autoSave(true);
 		startRefreshTimer();
 		startCheckGrowTimer();
-
 	}
 
 	/**
@@ -98,8 +97,7 @@ public class Controller {
 		currentPlant.setLastPlant(true);
 		System.out.println("New plant! " + currentPlant);
 		showPlantView();
-		startWaterLevelTimer();
-		startCheckGrowTimer();
+		checkGrowthForAllPlants();
 		startRefreshTimer();
 		currentPlant.checkAndGrow();
 		mainFrame.getPlantView().updatePlantDetails(currentPlant);

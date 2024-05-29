@@ -43,6 +43,7 @@ public class MainFrame extends JFrame {
         getContentPane().setPreferredSize(new Dimension(width, height));
         pack();
         setVisible(true);
+        controller.startWaterLevelTimer();
     }
 
     /**

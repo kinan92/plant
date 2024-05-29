@@ -52,7 +52,6 @@ public class PlantView extends JPanel {
         this.setBackground(new java.awt.Color(184, 200, 177));
 
         this.waterLevel = controller.getCurrentPlant().getWaterLevel();
-        controller.startWaterLevelTimer();
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         creationTimeLabel = new JLabel("Elapsed Time: Calculating...");

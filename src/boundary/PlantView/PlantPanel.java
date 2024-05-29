@@ -56,7 +56,7 @@ public class PlantPanel extends JPanel {
         c.gridx = 0;
         c.gridy = 1;
         JLayeredPane plantWindow = getPlantWindow();
-        creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min, 0 sec");
+        creationTimeLabel = new JLabel("Creation Time: 0 days, 0h, 0 min");
         this.add(plantWindow, c);
         this.add(creationTimeLabel, c);
 
@@ -182,16 +182,6 @@ public class PlantPanel extends JPanel {
         plantCare.add(waterBar, c);
 
         return plantCare;
-    }
-
-    /**
-     * Gets the water level bar for the plant.
-     * @return the JProgressBar representing the plant's water level
-     * @author Aleksander Augustyniak
-     */
-    public JProgressBar getWaterBar()
-    {
-        return this.waterBar;
     }
 
     /**

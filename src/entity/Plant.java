@@ -5,7 +5,8 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.swing.*;
 
-public class Plant implements Serializable {
+public class Plant implements Serializable
+{
 	private String name;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
@@ -31,7 +32,8 @@ public class Plant implements Serializable {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
+	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot)
+	{
 		super();
 		this.name = name;
 		this.dateAndTime = dateAndTime;
@@ -65,10 +67,11 @@ public class Plant implements Serializable {
 	 * Updates the state of the plant based on the new water level (Just for test)
 	 * @author Aleksander Augustyniak
 	 */
-	public void waterPlant(){
+	public void waterPlant()
+	{
 		waterLevel += WATER_INCREMENT;
 		cancelDeathTimer();
-		updateState();
+		updateDeathTimer();
 	}
 
 	/**
@@ -77,17 +80,25 @@ public class Plant implements Serializable {
 	 * @param
 	 * @author Aleksander Augustyniak
 	 */
-	public void decreaseWaterLevel(){
+	public void decreaseWaterLevel()
+	{
 		if(waterLevel > 0) {
 			waterLevel -= WATER_DECREMENT;
 			if (waterLevel <= 0) {
 				startDeathTimer();
 			}
 		}
-		updateState();
+		updateDeathTimer();
 	}
 
-	public void updateState(){
+	/**
+	 * Updates the death timer based on the current water level.
+	 * If the water level is greater than zero, the death timer is canceled. Otherwise, the death timer is started.
+	 * The plant's image is then updated to reflect its current state.
+	 * @author Aleksander Augustyniak
+	 */
+	public void updateDeathTimer()
+	{
 		if (waterLevel > 0) {
 			cancelDeathTimer();
 		} else {
@@ -96,7 +107,17 @@ public class Plant implements Serializable {
 		updateStateImage(getState());
 	}
 
-	public void checkAndGrow(){
+
+	/**
+	 * Checks the growth of the plant and updates its state based on the elapsed time and water level.
+	 * It first checks if the growthStartTime is null, and if so, initializes it to the current time.
+	 * It then calculates the duration between the plant's creation time and the current time.
+	 * Based on this duration and plant's water level, it updates the plant's state to either medium or large.
+	 * Finally, it updates the plant's image to reflect the new state.
+	 * @author Aleksander Augustyniak
+	 */
+	public void checkAndGrow()
+	{
 		if (growthStartTime == null){
 			growthStartTime = LocalDateTime.now();
 		}
@@ -115,10 +136,19 @@ public class Plant implements Serializable {
 		setState(state);
 	}
 
-	private void startDeathTimer(){
-		if (deathTimer == null){
+	/**
+	 * Starts the death timer for the plant.
+	 * This method initializes a timer that triggers the death
+	 * process for the plant after a set delay. When the timer completes,
+	 * it sets the plant's state to the corresponding dead state and updates
+	 * the plant's image.
+	 * @author Aleksander Augustyniak
+	 */
 
-			deathTimer = new Timer(3000, e -> {
+	private void startDeathTimer()
+	{
+		if (deathTimer == null){
+			deathTimer = new Timer(3600000, e -> {
 				isDeathStarted = true;
 				setState(getState().getDeadState());
 				updateStateImage(getState());
@@ -129,42 +159,38 @@ public class Plant implements Serializable {
 		deathTimer.start();
 	}
 
-	private void cancelDeathTimer(){
+	/**
+	 * Cancels the death timer if it is currently running.
+	 * This method checks if the death timer is not null and is running,
+	 * and stops the timer if both conditions are met.
+	 * @author Aleksander Augustyniak
+	 */
+	private void cancelDeathTimer()
+	{
 		if (deathTimer != null && deathTimer.isRunning()){
 			deathTimer.stop();
 		}
 	}
 
+	/**
+	 * Checks if the death timer has started for the plant.
+	 * This method returns the status of whatever the death timer for the plant has started or not.
+	 * @return boolean indicating if the death timer has started.
+	 * @author Aleksander Augustyniak
+	 */
 	public boolean isStartDeathTimer(){
 		return isDeathStarted;
 	}
 
-	/**
-	 * Gets the current water level of the plant
-	 * @return the water level
-	 */
 	public int getWaterLevel(){
 		return this.waterLevel;
-	}
-	public boolean needsWater(){
-		return waterLevel < 10;
-	}
-	public boolean isOverWatered(){
-		return waterLevel > 100;
 	}
 	public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
 	public ImageIcon getImage() {
 		return image;
 	}
-	public void setImage(ImageIcon image) {
-		this.image = image;
-	}
-	
 	public LocalDateTime getDateAndTime() {
 		return dateAndTime;
 	}

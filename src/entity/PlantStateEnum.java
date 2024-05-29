@@ -11,16 +11,20 @@ public enum PlantStateEnum {
 
 	private final String state;
 
-	PlantStateEnum(String state) {
+	PlantStateEnum(String state)
+	{
 		this.state = state;
 	}
 
-	public String getState()
+	/**
+	 * Gets the dead state for the current plant state.
+	 * This method checks hte current plant state and returns the corresponding dead state.
+	 * If the state i small, it returns smallDead and so on.
+	 * @return PlantStateEnum representing the dead state for the current plant state.
+	 * @author Aleksander Augustyniak
+	 */
+	public PlantStateEnum getDeadState()
 	{
-		return state;
-	}
-
-	public PlantStateEnum getDeadState() {
 		switch (this){
 			case small:
 				return smallDead;

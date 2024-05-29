@@ -5,8 +5,6 @@ import boundary.Widget.WidgetCreatorJFX;
 import entity.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.RescaleOp;
 import java.io.IOException;
@@ -175,11 +173,20 @@ public class Controller {
 		System.out.println("Tid är pausad");
 	}
 
+	/**
+	 * Stops the water level timer if it is currently running
+	 * @author Aleksander Augustyniak
+	 */
 	public void stopWaterLevelTimer(){
 		if (waterLevelTimer != null) {
 			waterLevelTimer.stop();
 		}
 	}
+
+	/**
+	 * Stops the growth check timer if it is currently running
+	 * @author Aleksander Augustyniak
+	 */
 	public void stopCheckGrowTimer(){
 		if (checkGrowTimer != null) {
 			checkGrowTimer.stop();
@@ -190,6 +197,7 @@ public class Controller {
 	 * Returns the total duration for which the plant timer has been paused.
 	 * This duration accumulates each time the timer is paused and resumed.
 	 * @return Duration representing the total paused duration
+	 * @author Aleksander Augustyniak
 	 */
 	public Duration getTotalPausedDuration(){
 		return totalPausedDuration;
@@ -211,6 +219,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Starts the timer that periodically check for plant growth.
+	 * The timer is set to check every 60 seconds.
+	 * If the timer is paused, it will not perform the growth check.
+	 * @author Aleksander Augustyniak
+	 */
 	private void startCheckGrowTimer(){
 		if (checkGrowTimer == null){
 			checkGrowTimer = new Timer(60000, e -> {
@@ -224,6 +238,12 @@ public class Controller {
 		checkGrowTimer.start();
 	}
 
+	/**
+	 * Starts the timer that periodically refreshes the plant image.
+	 * The timer is set to refresh every second.
+	 * It updates the plant details if the death timer for the current plant is running
+	 * @author Aleksander Augustyniak
+	 */
 	public void startRefreshTimer(){
 		if (refreshPlantImageTimer == null){
 			refreshPlantImageTimer = new Timer(1000, e -> {
@@ -235,8 +255,13 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Starts the timer that periodically deceases the water level for all plants.
+	 * The timer is set to decease the water level every 30 mins
+	 * @author Aleksander Augustyniak
+	 */
 	public void startWaterLevelTimer(){
-		waterLevelTimer = new Timer(3000, e -> {
+		waterLevelTimer = new Timer(1300000 , e -> {
 			decreaseWaterLevelForAllPlants();
 			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		});
@@ -293,7 +318,7 @@ public class Controller {
 		LocalDateTime newCreationTime = currentPlant.getDateAndTime().minusHours(hours);
 		currentPlant.setDateAndTime(newCreationTime);
 		currentPlant.decreaseWaterLevel();
-		currentPlant.updateState();
+		currentPlant.updateDeathTimer();
 		currentPlant.checkAndGrow();
 		mainFrame.getPlantView().updateElapsedTime();
 		mainFrame.getPlantView().updatePlantDetails(currentPlant);
@@ -322,6 +347,12 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * Checks the growth state for all plants in the list and updates the details.
+	 * It iterates through the list of plants and invokes the checkAndGrow method on each plant.
+	 * It then updates the plant details in the view for the current plant.
+	 * @author Aleksander Augustyniak
+	 */
 	public void checkGrowthForAllPlants(){
 		for (Plant plant : listOfPlants){
 			if (plant != null){

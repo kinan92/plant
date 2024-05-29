@@ -96,27 +96,12 @@ public class PlantType implements Serializable {
         return smallPlantImage;
     }
 
-    public ImageIcon getMediumPlantImage()
-    {
-        return mediumPlantImage;
-    }
-
-    public ImageIcon getSmallDeadPlantImage()
-    {
-        return smallDeadPlantImage;
-    }
-
-    public ImageIcon getMediumDeadPlantImage()
-    {
-        return mediumDeadPlantImage;
-    }
-
     /**
      * Getter for the dead plant image
      * @return deadPlantImage ImageIcon
      * @author Petri Närhi
      * */
-    public ImageIcon getLargeDeadPlantImage() {
+    public ImageIcon getDeadPlantImage() {
         return largeDeadPlantImage;
     }
 

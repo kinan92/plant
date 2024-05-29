@@ -236,7 +236,7 @@ public class Controller {
 	}
 
 	public void startWaterLevelTimer(){
-		waterLevelTimer = new Timer(1000, e -> {
+		waterLevelTimer = new Timer(10000, e -> {
 			decreaseWaterLevelForAllPlants();
 			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		});

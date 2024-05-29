@@ -160,6 +160,7 @@ public class PlantView extends JPanel {
         } else {
             System.out.println("Error: No current plant found");
         }
+
         if (soundEffectSetting)
         {
             buttonPressedSoundEffect();
@@ -202,10 +203,8 @@ public class PlantView extends JPanel {
     public void vacationPressed() {
         if (isVacationMode) {
             controller.resumeTime();
-            updatePlantDetails(currentPlant);
-            System.out.println("Vacation mode disabled, resuming time");
             isVacationMode = false;
-
+            System.out.println("Vacation mode disabled, resuming time");
         } else {
             controller.pausTime();
             isVacationMode = true;

@@ -167,13 +167,12 @@ public class Controller {
 	 * @author Aleksander Augustyniak
 	 */
 	public void pausTime(){
-		if(!isPaused){
+
 			isPaused = true;
 			pauseStartTime = LocalDateTime.now();
 			stopWaterLevelTimer();
 			stopCheckGrowTimer();
 			System.out.println("Tid är pausad");
-		}
 	}
 
 	public void stopWaterLevelTimer(){
@@ -237,7 +236,7 @@ public class Controller {
 	}
 
 	public void startWaterLevelTimer(){
-			waterLevelTimer = new Timer(360000, e -> {
+			waterLevelTimer = new Timer(1000, e -> {
 					decreaseWaterLevelForAllPlants();
 					mainFrame.getPlantView().updatePlantDetails(currentPlant);
 			});
@@ -303,9 +302,6 @@ public class Controller {
 	public void showPlantView()
 	{
 		mainFrame.addPlantView();
-		startCheckGrowTimer();
-		startRefreshTimer();
-		startWaterLevelTimer();
 		if(currentPlant != null){
 			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 			mainFrame.getPlantView().updateElapsedTime();

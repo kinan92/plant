@@ -210,6 +210,10 @@ public class PlantView extends JPanel {
             isVacationMode = true;
             System.out.println("Vacation mode enabled, pausing time");
         }
+
+        if (soundEffectSetting) {
+            buttonPressedSoundEffect();
+        }
     }
 
     /**

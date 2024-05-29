@@ -51,6 +51,9 @@ public class Controller {
 
 		} catch (RuntimeException e) {}
 		autoSave(true);
+		startWaterLevelTimer();
+		startRefreshTimer();
+		stopCheckGrowTimer();
 
 	}
 

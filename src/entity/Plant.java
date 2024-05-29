@@ -1,14 +1,17 @@
 package entity;
 
 import java.io.Serializable;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import javax.swing.ImageIcon;
+import javax.swing.*;
 
 public class Plant implements Serializable {
 	private String name;
-	private int age;
 	private ImageIcon image;
 	private LocalDateTime dateAndTime;
+	private LocalDateTime growthStartTime;
+	private Timer deathTimer;
+	private Timer refreshPlantImageTimer;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
@@ -16,12 +19,11 @@ public class Plant implements Serializable {
 	private PlantStateEnum state;
 	private Pot pot;
 	private boolean isLastPlant = false;
+	private boolean isDeathStarted = false;
 
 	/**
 	 * Constructor for plant
 	 * @param name the String user has typed in as its name
-	 * @param age int, starts at 0 for new plants but is a variable in case
-	 *               creating grown plants becomes an option
 	 * @param initialWaterLevel int, a random water level for new plants
 	 * @param type PlantType, its species
 	 * @param state PlantStateEnum, little, medium, grown or any of the dead states,
@@ -29,10 +31,9 @@ public class Plant implements Serializable {
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
-	public Plant(String name, int age, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
+	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot) {
 		super();
 		this.name = name;
-		this.age = age;
 		this.dateAndTime = dateAndTime;
 		this.waterLevel = initialWaterLevel;
 		this.type = type;
@@ -50,9 +51,12 @@ public class Plant implements Serializable {
 	public void updateStateImage(PlantStateEnum state)
 	{
 		switch (state) {
-			case little -> this.image = type.getLittlePlantImage();
-			case big -> this.image = type.getGrownPlantImage();
-			case dead -> this.image = type.getDeadPlantImage();
+			case small -> this.image = type.getLittlePlantImage();
+			case medium -> this.image = type.getMediumPlantImage();
+			case large -> this.image = type.getGrownPlantImage();
+			case smallDead -> this.image = type.getSmallDeadPlantImage();
+			case mediumDead -> this.image = type.getMediumDeadPlantImage();
+			case largeDead -> this.image = type.getLargeDeadPlantImage();
 		}
 	}
 
@@ -62,18 +66,8 @@ public class Plant implements Serializable {
 	 * @author Aleksander Augustyniak
 	 */
 	public void waterPlant(){
-			waterLevel += WATER_INCREMENT;
-			updateState();
-	}
-
-	/**
-	 * Increments the age of the plant by the specified amount.
-	 * Update the state of the plant based on the new age.
-	 * @param age the amount to increment the plant's age by.
-	 * @author Aleksander Augustyniak
-	 */
-	public void incrementAge(int age){
-		this.age += age;
+		waterLevel += WATER_INCREMENT;
+		cancelDeathTimer();
 		updateState();
 	}
 
@@ -84,21 +78,65 @@ public class Plant implements Serializable {
 	 * @author Aleksander Augustyniak
 	 */
 	public void decreaseWaterLevel(){
-		if(waterLevel > 0){
+		if(waterLevel > 0) {
 			waterLevel -= WATER_DECREMENT;
+			if (waterLevel <= 0) {
+				startDeathTimer();
+			}
 		}
 		updateState();
 	}
 
 	public void updateState(){
-		if (waterLevel <= 0){
-			setState(PlantStateEnum.dead);
-		} else if (waterLevel >= 75){
-			setState(PlantStateEnum.big);
+		if (waterLevel > 0) {
+			cancelDeathTimer();
 		} else {
-			setState(PlantStateEnum.little);
+			startDeathTimer();
 		}
 		updateStateImage(getState());
+	}
+
+	public void checkAndGrow(){
+		if (growthStartTime == null){
+			growthStartTime = LocalDateTime.now();
+		}
+		LocalDateTime now = LocalDateTime.now();
+		Duration duration = Duration.between(dateAndTime, now);
+		if (duration.toDays() >= 4 && waterLevel > 0){
+			setState(PlantStateEnum.large);
+			growthStartTime = now;
+			updateStateImage(getState());
+		} else if (duration.toDays() >= 3 && waterLevel > 0){
+			setState(PlantStateEnum.medium);
+			growthStartTime = now;
+			updateStateImage(getState());
+		}
+		PlantStateEnum state = getState();
+		setState(state);
+	}
+
+	private void startDeathTimer(){
+		if (deathTimer == null){
+
+			deathTimer = new Timer(3000, e -> {
+				isDeathStarted = true;
+				setState(getState().getDeadState());
+				updateStateImage(getState());
+				deathTimer.stop();
+			});
+		}
+		isDeathStarted = false;
+		deathTimer.start();
+	}
+
+	private void cancelDeathTimer(){
+		if (deathTimer != null && deathTimer.isRunning()){
+			deathTimer.stop();
+		}
+	}
+
+	public boolean isStartDeathTimer(){
+		return isDeathStarted;
 	}
 
 	/**
@@ -119,12 +157,6 @@ public class Plant implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public int getAge() {
-		return age;
-	}
-	public void setAge(int age) {
-		this.age = age;
 	}
 	public ImageIcon getImage() {
 		return image;
@@ -207,6 +239,6 @@ public class Plant implements Serializable {
 	 * @author Petri Närhi
 	 * */
 	public String toString() {
-		return ("Name: " + name + " | Age: " + age + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
+		return ("Name: " + name + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
 	}
 }

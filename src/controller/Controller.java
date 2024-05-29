@@ -51,9 +51,8 @@ public class Controller {
 
 		} catch (RuntimeException e) {}
 		autoSave(true);
-		startWaterLevelTimer();
 		startRefreshTimer();
-		stopCheckGrowTimer();
+		startCheckGrowTimer();
 
 	}
 
@@ -239,7 +238,7 @@ public class Controller {
 	}
 
 	public void startWaterLevelTimer(){
-		waterLevelTimer = new Timer(10000, e -> {
+		waterLevelTimer = new Timer(3000, e -> {
 			decreaseWaterLevelForAllPlants();
 			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 		});

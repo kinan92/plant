@@ -179,7 +179,8 @@ public class PlantView extends JPanel {
         if (waterLevel < plant.getWaterLevel())
         {
             boolean sparkleEffect = false;
-            if (waterLevel < 100 && plant.getWaterLevel() > 100)
+            System.out.println(waterLevel + " and " + plant.getWaterLevel());
+            if (waterLevel < 100 && plant.getWaterLevel() >= 100)
             {
                 sparkleEffect = true;
             }

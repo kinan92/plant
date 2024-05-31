@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class SideButtons extends JPanel {
-	private int width;
 	private int height;
 	private PlantView plantView;
 	private ImageIcon skiphour = new ImageIcon("images/buttons/skiphour.png");
@@ -17,13 +16,11 @@ public class SideButtons extends JPanel {
 
 	/**
 	 * This constructor creates a SideButton panel.
-	 * @param width The width of the MainFrame
 	 * @param height The height of the MainFrame
 	 * @param plantView The active PlantView object
 	 * @author Elvira Grubb
 	 */
-	public SideButtons(int width, int height, PlantView plantView) {
-		this.width = width;
+	public SideButtons(int height, PlantView plantView) {
 		this.height = height;
 		this.plantView = plantView;
 		this.setBackground(Color.LIGHT_GRAY);
@@ -35,12 +32,6 @@ public class SideButtons extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		this.add(backgroundPanel(), c);
-
-		// creates the time indication
-		/*
-		 * JLabel timeLabel = new JLabel("Time: "); c.gridx = 0; c.gridy = 0; c.anchor =
-		 * GridBagConstraints.LINE_END; sideButtons.add(timeLabel, c);
-		 */
 	}
 
 	/**
@@ -55,84 +46,80 @@ public class SideButtons extends JPanel {
 		backgroundPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 
-		// Creates Plant Storage button
+		//Creates Plant Storage button
 		JButton getPlant = new JButton();
 		getPlant.setBorder(BorderFactory.createEmptyBorder());
 		getPlant.setContentAreaFilled(false);
 		getPlant.setIcon(storage);
-		// getPlant.setPreferredSize(new Dimension(208, 60));
 
-		// Sets location for Plant Storage button
+		//Sets location for Plant Storage button
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 0;
 
-		// Adds Plant Storage button to panel and adds actionlistener
+		//Adds Plant Storage button to panel and adds actionlistener
 		backgroundPanel.add(getPlant, c);
 		getPlant.addActionListener(l -> plantView.storagePressed());
 		getPlant.setRolloverEnabled(true);
 		getPlant.setRolloverIcon(new ImageIcon("images/buttons/storage_hover.png"));
 
-		// Creates Widget button
+		//Creates Widget button
 		widget = new JButton();
 		widget.setBorder(BorderFactory.createEmptyBorder());
 		widget.setContentAreaFilled(false);
 		widget.setIcon(widgetImage);
-		// widget.setPreferredSize(new Dimension(208, 60));
 
-		// Sets location for Widget button
+		//Sets location for Widget button
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 1;
 
-		// Adds Widget button to panel and adds actionlistener
+		//Adds Widget button to panel and adds actionlistener
 		backgroundPanel.add(widget, c);
 		widget.addActionListener(l -> plantView.widgetPressed());
 		widget.setRolloverEnabled(true);
 		widget.setRolloverIcon(new ImageIcon("images/buttons/widget_hover.png"));
 
-		// Creates Skip Hour button
+		//Creates Skip Hour button
 		skipHour = new JButton();
 		skipHour.setBorder(BorderFactory.createEmptyBorder());
 		skipHour.setContentAreaFilled(false);
 		skipHour.setIcon(skiphour);
-		// skipHour.setPreferredSize(new Dimension(208, 60));
 
-		// Sets location for Skip Hour button
+		//Sets location for Skip Hour button
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
 
-		// Adds Skip Hour button to panel and adds actionlistener
+		//Adds Skip Hour button to panel and adds actionlistener
 		backgroundPanel.add(skipHour, c);
 		skipHour.addActionListener(l -> plantView.skipHourPressed());
 		skipHour.setRolloverEnabled(true);
 		skipHour.setRolloverIcon(new ImageIcon("images/buttons/skiphour_hover.png"));
 
-		// Creates Vacation button
+		//Creates Vacation button
 		JButton vacation = new JButton();
 		vacation.setBorder(BorderFactory.createEmptyBorder());
 		vacation.setContentAreaFilled(false);
 		vacation.setIcon(vacationImage);
-		// vacation.setPreferredSize(new Dimension(208, 60));
 
-		// Sets location for Vacation button
+		//Sets location for Vacation button
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 3;
 
-		// Adds Vacation button to panel and adds actionlistener
+		//Adds Vacation button to panel and adds actionlistener
 		backgroundPanel.add(vacation, c);
 		vacation.addActionListener(l -> plantView.vacationPressed());
 		vacation.setRolloverEnabled(true);
 		vacation.setRolloverIcon(new ImageIcon("images/buttons/vacation_hover.png"));
 
-		// Creates a JLabel to put the Settings and Main Menu buttons on
+		//Creates a JLabel to put the Settings and Main Menu buttons on
 		JLabel settingsMenuButtons = new JLabel();
 		settingsMenuButtons.setLayout(new GridLayout(1, 2));
 		settingsMenuButtons.setPreferredSize(new Dimension(200, 60));
 
-		// Creates Settings button
+		//Creates Settings button
 		settings = new JButton();
 		settings.setBorder(BorderFactory.createEmptyBorder());
 		settings.setContentAreaFilled(false);
@@ -143,7 +130,7 @@ public class SideButtons extends JPanel {
 		settings.setRolloverIcon(new ImageIcon("images/buttons/settings_hover.png"));
 		settings.addActionListener(l -> plantView.settingsPressed());
 
-		// Creates Main Menu button
+		//Creates Main Menu button
 		JButton mainMenu = new JButton();
 		mainMenu.setBorder(BorderFactory.createEmptyBorder());
 		mainMenu.setContentAreaFilled(false);
@@ -164,12 +151,12 @@ public class SideButtons extends JPanel {
 		helpButton.setRolloverIcon(new ImageIcon("images/buttons/help_hover.png"));
 		helpButton.addActionListener(l -> plantView.helpMenuPressed());
 
-		// Adds mainMenu and settings buttons onto their shared JLabel
+		//Adds mainMenu and settings buttons onto their shared JLabel
 		settingsMenuButtons.add(mainMenu);
 		settingsMenuButtons.add(settings);
 		settingsMenuButtons.add(helpButton);
 
-		// Adds settingsMenuButton JLabel to the main panel with constraints
+		//Adds settingsMenuButton JLabel to the main panel with constraints
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 4;
@@ -182,9 +169,11 @@ public class SideButtons extends JPanel {
 	{
 		return settings;
 	}
+
 	public JButton getSkipHour() {
 		return skipHour;
 	}
+
 	public JButton getWidget() {
 		return widget;
 	}

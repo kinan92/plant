@@ -33,11 +33,11 @@ public class PlantView extends JPanel {
     private int waterLevel;
 
     /**
+     * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
+     * active plant, relevant information about the plant and buttons for taking care of the plant
      * @param width      Width of MainFrame
      * @param height     Height of MainFrame
      * @param controller Active Controller object used in program
-     * This constructor creates a boundary.PlantView.PlantView Panel that adds relevant panels to show the user's
-     * active plant, relevant information about the plant and buttons for taking care of the plant
      * @author Elvira Grubb
      */
     public PlantView(int width, int height, Controller controller) {
@@ -62,10 +62,10 @@ public class PlantView extends JPanel {
         add(topPanel, BorderLayout.NORTH);
         updateElapsedTime();
 
-        plantPanel = new PlantPanel(width, height, this);
+        plantPanel = new PlantPanel(height, this);
         add(plantPanel, BorderLayout.WEST);
 
-        sideButtons = new SideButtons(width, height, this);
+        sideButtons = new SideButtons(height, this);
         add(sideButtons, BorderLayout.EAST);
 
         settingsView = new SettingsView(width, height, this);
@@ -101,7 +101,7 @@ public class PlantView extends JPanel {
     /**
      * Method used when the Widget button is pressed
      * Method creates a widget of the currently open plant
-     * it will cheack if the Plant and the images is not null and it will call the sendDataToJavaFX method
+     * it will check if the Plant and the images is not null and it will call the sendDataToJavaFX method
      * The Widget will start from here.
      *
      * @author kinan
@@ -184,7 +184,7 @@ public class PlantView extends JPanel {
             {
                 sparkleEffect = true;
             }
-            plantPanel.waterLevelEffects(currentPlant.getWaterLevel(), sparkleEffect);
+            plantPanel.waterLevelEffects(sparkleEffect);
         }
 
         waterLevel = plant.getWaterLevel();
@@ -218,10 +218,10 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * Method called when the Main Menu button is pressed. It calls on a method in controller
      * to show the main menu in the mainframe, and plays the button sound effect if sound
      * is on in the settings
+     * @author Elvira Grubb
      */
     public void mainMenuPressed() {
         controller.showMainMenu();
@@ -250,9 +250,9 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * Method called when the settings button is pressed. If sound settings is on it
      * calls to the button sound effect method, then sets the settings menu to visible.
+     * @author Elvira Grubb
      */
     public void settingsPressed() {
         if (soundEffectSetting) {
@@ -262,8 +262,8 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * Used when the help button is clicked. This method creates the HelpMenu.
+     * @author Elvira Grubb
      */
     public void helpMenuPressed()
     {
@@ -271,8 +271,8 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * This method plays a button clicking sound effect.
+     * @author Elvira Grubb
      */
     private void buttonPressedSoundEffect()
     {
@@ -291,9 +291,9 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @param setting A boolean indicating whether the sound is on or off in the settings
      * Method called when the settings in the settings menu are saved to update whether
      * the sound is on or off
+     * @param setting A boolean indicating whether the sound is on or off in the settings
      * @author Elvira Grubb
      */
     public void setSoundEffectSetting(boolean setting)
@@ -302,9 +302,9 @@ public class PlantView extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
-     * @return boolean for whether the sound effect setting is on or off
      * This method returns a boolean indicating whether the user has turned the settings on or off
+     * @return boolean for whether the sound effect setting is on or off
+     * @author Elvira Grubb
      */
     public boolean getSoundEffectSetting()
     {

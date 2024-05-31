@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class PlantPanel extends JPanel {
-    private int width;
     private int height;
     private PlantView plantView;
     private ImageIcon currentPlantImage;
@@ -23,17 +22,15 @@ public class PlantPanel extends JPanel {
     private JLabel plantImageLabel;
 
     /**
-     * @author Elvira Grubb (main)
-     * @author Petri Närhi (edits)
-     * @param width Width of the MainFrame
-     * @param height Height of the MainFrame
-     * @param plantView The active boundary.PlantView.PlantView class
      * This constructor creates a PlantPanel, filling it with relevant JPanels to function
      * as a window where the user can see their plant, relevant plant information, and plant care
+     * @param height Height of the MainFrame
+     * @param plantView The active boundary.PlantView.PlantView class
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      */
-    public PlantPanel(int width, int height, PlantView plantView)
+    public PlantPanel(int height, PlantView plantView)
     {
-        this.width = width;
         this.height = height;
         this.plantView = plantView;
         this.currentPlantImage = plantView.getCurrentPlantImage();
@@ -70,10 +67,10 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
-     * @return JLayeredPane plantWindow, a window where the user can see its active plant
      * This method creates a JLayeredPane where the plant is shown by layering relevant
      * images on top of each other
+     * @return JLayeredPane plantWindow, a window where the user can see its active plant
+     * @author Elvira Grubb
      */
     private JLayeredPane getPlantWindow() {
         //Creates a JLayeredPane
@@ -103,14 +100,15 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb (main)
-     * @author Petri Närhi (edits)
-     * @return A nameView JPanel
      * This method creates a nameView JPanel where the user can see its active plant's name
      * and species
+     * @return A nameView JPanel
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      */
     public JPanel nameView()
-    {//Creates a JPanel for the NameView
+    {
+        //Creates a JPanel for the NameView
         JPanel nameView = new JPanel();
         nameView.setPreferredSize(new Dimension(256, height / 7));
         nameView.setLayout(new GridBagLayout());
@@ -137,11 +135,11 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
-     * @author Petri Närhi (edits)
-     * @return A PlantCare JPanel
      * This method creates a plantCare JPanel that shows the healthbar and buttons to
      * take care of the user's active plant
+     * @return A PlantCare JPanel
+     * @author Elvira Grubb
+     * @author Petri Närhi (edits)
      */
     private JPanel plantCare()
     {
@@ -198,10 +196,10 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
-     * @param waterLevel Instance variable of the percentage of water the current plant object is at
      * Method is called when the watering levels should be updated. It updates the water levels visually by
      * updating the color of the waterbar and setting the percentage of the waterbar.
+     * @param waterLevel Instance variable of the percentage of water the current plant object is at
+     * @author Elvira Grubb
      */
     public void updateWaterLevel(int waterLevel)
     {
@@ -241,10 +239,10 @@ public class PlantPanel extends JPanel {
     /**
      * This method is called when the water button is pressed. It plays sound effects if sound effects are on in the settings, and an
      * animation if the water levels have reached 100
-     * @param waterLevel The water level of the active plant
+     * @param sparkleEffect A boolean that indicates whether the sparkle effect should play
      * @author Elvira Grubb
      */
-    public void waterLevelEffects(int waterLevel, boolean sparkleEffect)
+    public void waterLevelEffects(boolean sparkleEffect)
     {
         if (plantView.getSoundEffectSetting())
         {
@@ -263,14 +261,13 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * Method that plays a watering sound effect
+     * @author Elvira Grubb
      */
     private void waterSoundEffect()
     {
-        AudioInputStream audioInputStream = null;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/water_sound.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/water_sound.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -284,14 +281,13 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * Method that plays a happy sparkle sound effect
+     * @author Elvira Grubb
      */
     private void plantHappySoundEffect()
     {
-        AudioInputStream audioInputStream = null;
         try {
-            audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/twinkle_sound.wav").getAbsoluteFile());
+            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/twinkle_sound.wav").getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();
@@ -305,8 +301,8 @@ public class PlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * This method starts a new thread to play the sparkle animation gif
+     * @author Elvira Grubb
      */
     public void plantSparkleAnimation()
     {

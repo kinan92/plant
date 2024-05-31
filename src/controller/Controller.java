@@ -245,7 +245,7 @@ public class Controller {
 	 * @author Aleksander Augustyniak
 	 */
 	public void startRefreshTimer(){
-		if (refreshPlantImageTimer == null){
+		if (refreshPlantImageTimer == null && currentPlant != null){
 			refreshPlantImageTimer = new Timer(1000, e -> {
 				if (currentPlant.isStartDeathTimer()){
 					mainFrame.getPlantView().updatePlantDetails(currentPlant);
@@ -326,10 +326,16 @@ public class Controller {
 
 	public void showPlantView()
 	{
-		mainFrame.addPlantView();
-		if(currentPlant != null){
+		if (currentPlant != null)
+		{
+			mainFrame.addPlantView();
 			mainFrame.getPlantView().updatePlantDetails(currentPlant);
 			mainFrame.getPlantView().updateElapsedTime();
+		}
+
+		else
+		{
+			JOptionPane.showMessageDialog(mainFrame, "No last plant found.");
 		}
 	}
 

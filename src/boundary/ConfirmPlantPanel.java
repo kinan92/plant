@@ -21,7 +21,7 @@ public class ConfirmPlantPanel extends JPanel{
     Controller controller;
 
     /**
-     * @author Elvira Grubb
+     * This constructor creates a ConfirmPlant panel used as a frame and adds other panels to it
      * @param width The width of the MainFrame
      * @param height THe height of the MainFrame
      * @param selectedPlant ImageIcon of the user's selected plant
@@ -30,11 +30,10 @@ public class ConfirmPlantPanel extends JPanel{
      * @param potNumber The ArrayList position of the user's selected plant
      * @param plantInfoArray An ArrayList that contains information from the PlantType class
      * @param controller The current Controller Object
-     * This constructor creates a ConfirmPlant panel used as a frame and adds other panels to it
+     * @author Elvira Grubb
      */
     public ConfirmPlantPanel(int width, int height, ImageIcon selectedPlant, ImageIcon selectedPot, int plantNumber, int potNumber, ArrayList<String> plantInfoArray, Controller controller)
     {
-        super(null);
         System.out.println("You're in ConfirmPlantPanel");
         this.selectedPlant = selectedPlant;
         this.selectedPot = selectedPot;
@@ -54,9 +53,9 @@ public class ConfirmPlantPanel extends JPanel{
     }
 
     /**
-     * @author Elvira Grubb
-     * @return A PlantInformation JPanel
      * This method creates a JPanel that's used as a frame for two other JPanels
+     * @return A PlantInformation JPanel
+     * @author Elvira Grubb
      */
     private JPanel plantInformation()
     {
@@ -68,9 +67,9 @@ public class ConfirmPlantPanel extends JPanel{
     }
 
     /**
-     * @author Elvira Grubb
-     * @return JPanel with the selected plant and pot shown
      * This method creates a JPanel that shows the selected plant and pot
+     * @return JPanel with the selected plant and pot shown
+     * @author Elvira Grubb
      */
     private JPanel plantView()
     {
@@ -105,9 +104,9 @@ public class ConfirmPlantPanel extends JPanel{
     }
 
     /**
-     * @author Elvira Grubb
-     * @return JPanel with plant information
      * This method creates a JPanel containing information about the selected plant and a textfield to input a name for it
+     * @return JPanel with plant information
+     * @author Elvira Grubb
      */
     private JPanel plantInfo()
     {
@@ -157,18 +156,13 @@ public class ConfirmPlantPanel extends JPanel{
         plantNameEnglish.setFont(new Font("Calibri", Font.ITALIC, 16));
         plantInfo.add(plantNameEnglish, c);
 
-        /*c.gridx = 0;
-        c.gridy = 3;
-        JTextArea plantInformation = new JTextArea(plantInfoArray.get(2));
-        plantInfo.add(plantInformation, c);*/
-
         return plantInfo;
     }
 
     /**
-     * @author Elvira Grubb
-     * @return A JPanel that acts as a header
      * This method creates a JPanel that's used as a header for the ConfirmPlantPanel
+     * @return A JPanel that acts as a header
+     * @author Elvira Grubb
      */
     private JPanel titlePanel()
     {
@@ -232,19 +226,19 @@ public class ConfirmPlantPanel extends JPanel{
     }
 
     /**
-     * @author Elvira Grubb
      * This method calls on a method to return to the ChoosePlantFrame view
+     * @author Elvira Grubb
      */
     private void backPressed()
     {
         buttonPressedSoundEffect();
-        controller.choosePlantFrame();
+        controller.createChoosePlantPanel();
     }
 
     /**
-     * @author Elvira Grubb
      * This method is called when the user confirms their plant. If a name has not been input the program will prompt the user to
      * input a name, if a name is present the method will call on a method to create the plant
+     * @author Elvira Grubb
      */
     private void createPlant()
     {
@@ -261,8 +255,8 @@ public class ConfirmPlantPanel extends JPanel{
     }
 
     /**
-     * @author Elvira Grubb
      * This method plays a sound effect whenever a button is pressed
+     * @author Elvira Grubb
      */
     private void buttonPressedSoundEffect() {
         AudioInputStream audioInputStream = null;

@@ -23,7 +23,6 @@ public class Controller {
 	private Timer waterLevelTimer;
 	private Timer checkGrowTimer;
 	private Timer refreshPlantImageTimer;
-
 	private boolean isPaused = false;
 	private LocalDateTime pauseStartTime;
 	private Duration totalPausedDuration = Duration.ZERO;
@@ -36,6 +35,7 @@ public class Controller {
 	 * creates filemanager and mainframe, loads planttypes,
 	 * pots and user data and turns on autosave
 	 * @author Petri Närhi and others
+	 * @author Elvira Grubb
 	 * */
 	public Controller() {
 
@@ -69,7 +69,14 @@ public class Controller {
 		}
 	}
 
-	public void confirmPlant(int plantNumber, int potNumber) {
+	/**
+	 * Calls to a MainFrame method to open the confirm plant panel
+	 * @param plantNumber An int corresponding to a PlantType in the ArrayList of PlantTypes
+	 * @param potNumber An int corresponding to a pot in the pot ArrayList
+	 * @author Elvira Grubb
+	 */
+	public void confirmPlant(int plantNumber, int potNumber)
+	{
 		mainFrame.confirmPlantPanel(plantTypes.get(plantNumber).getGrownPlantImage(), pots.get(potNumber).getPotImage(), plantNumber, potNumber, plantTypes.get(plantNumber).getPlantInfoArray());
 	}
 
@@ -78,6 +85,7 @@ public class Controller {
 	 * called by a boundary class
 	 * @param plantNumber int, the index of the chosen plant in the GUI
 	 * @param potNumber int, the index of the chosen pot in the GUI
+	 * @param plantName The name the user has selected for their plant
 	 * @author Petri Närhi, Elvira Grubb
 	 * */
 	public void createPlant(int plantNumber, int potNumber, String plantName) {
@@ -280,7 +288,11 @@ public class Controller {
 
 	}
 
-	public void choosePlantFrame()
+	/**
+	 * Creates the ChoosePlantFrame by making ArrayLists of the button images and then creating the panel
+	 * @author Elvira Grubb
+	 */
+	public void createChoosePlantPanel()
 	{
 		ArrayList<ImageIcon> plantImage = new ArrayList<>();
 		ArrayList<ImageIcon> plantImageHover = new ArrayList<>();
@@ -302,6 +314,10 @@ public class Controller {
 		mainFrame.addChoosePlantPanel(plantImage, plantImageHover, potImage, potImageHover);
 	}
 
+	/**
+	 * Calls on a method to create the Main Menu
+	 * @author Elvira Grubb
+	 */
 	public void showMainMenu()
 	{
 		mainFrame.addMainMenu();
@@ -324,6 +340,10 @@ public class Controller {
 		mainFrame.getPlantView().updatePlantDetails(currentPlant);
 	}
 
+	/**
+	 * Shows the PlantView if the currentPlant isn't null. If currentPlant is null the method will show a JOptionPane informing the user
+	 * @author Elvira Grubb
+	 */
 	public void showPlantView()
 	{
 		if (currentPlant != null)

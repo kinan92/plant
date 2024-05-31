@@ -27,8 +27,7 @@ public class Plant implements Serializable
 	 * @param name the String user has typed in as its name
 	 * @param initialWaterLevel int, a random water level for new plants
 	 * @param type PlantType, its species
-	 * @param state PlantStateEnum, little, medium, grown or any of the dead states,
-	 *                 new plants start as little
+	 * @param state PlantStateEnum, little, medium, grown or any of the dead states, new plants start as little
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
 	 * @author Petri Närhi
 	 * */
@@ -49,6 +48,7 @@ public class Plant implements Serializable
 	 * @param state PlantStateEnum
 	 * @author Petri Närhi
 	 * @author Aleksander Augustyniak
+	 * @author Elvira Grubb
 	 * */
 	public void updateStateImage(PlantStateEnum state)
 	{

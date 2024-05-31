@@ -19,10 +19,10 @@ public class MainFrame extends JFrame {
     private StoragePanel storagePanel;
 
     /**
+     * This constructor creates a MainFrame for the whole program
+     * @param controller Current controller class used in the program
      * @author Elvira Grubb (main)
      * @author Petri Närhi (edits)
-     * @param controller Current controller class used in the program
-     * This constructor creates a MainFrame for the whole program
      */
     public MainFrame(Controller controller)
     {
@@ -60,8 +60,8 @@ public class MainFrame extends JFrame {
     }
 
     /**
+     * This method clears the MainFrame and adds the PlantView panel
      * @author Elvira Grubb
-     * This method clears the MainFrame and adds the boundary.PlantView.PlantView panel
      */
     public void addPlantView()
     {
@@ -72,6 +72,15 @@ public class MainFrame extends JFrame {
         this.repaint();
     }
 
+    /**
+     * This method adds the Confirm Plant panel
+     * @param selectedPlant The user's selected plant
+     * @param selectedPot The user's selected pot
+     * @param plantNumber An int that corresponds to the ArrayList number of the selected plant
+     * @param potNumber An int that corresponds to the ArrayList number of the selected pot
+     * @param plantInformation An ArrayList with all relevant plant information
+     * @author Elvira Grubb
+     */
     public void confirmPlantPanel(ImageIcon selectedPlant, ImageIcon selectedPot, int plantNumber, int potNumber, ArrayList<String> plantInformation)
     {
         this.getContentPane().removeAll();
@@ -92,10 +101,10 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * @author Elvira Grubb
+     * This method clears the MainFrame and adds ChoosePlantPanel
      * @param plantImage An ArrayList of all PlantType images
      * @param plantImageHover An ArrayList of all PlantType hover images
-     * This method clears the MainFrame and adds ChoosePlantPanel
+     * @author Elvira Grubb
      */
     public void addChoosePlantPanel(ArrayList<ImageIcon> plantImage, ArrayList<ImageIcon> plantImageHover, ArrayList<ImageIcon> potImage, ArrayList<ImageIcon> potImageHover)
     {
@@ -107,8 +116,8 @@ public class MainFrame extends JFrame {
     }
 
     /**
-     * @author Elvira Grubb
      * This method adds the MainMenu to the MainFrame
+     * @author Elvira Grubb
      */
     public void addMainMenu()
     {

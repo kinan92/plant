@@ -23,13 +23,15 @@ public class ChoosePlantPanel extends JPanel {
     private int currentSelectedPot;
 
     /**
-     * @author Elvira Grubb
+     * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
      * @param controller The active controller class used in the program
      * @param plantBtnImages An ArrayList of plantbutton images
      * @param plantBtnHoverImages An ArrayList of plantbutton hover images
+     * @param potBtnImages An ArrayList of potbutton images
+     * @param potBtnHoverImages An ArrayList of potbutton hover images
      * @param width The width of the MainFrame
      * @param height The height of the MainFrame
-     * This method creates the base JPanel for the ChoosePlantPanel and adds relevant panels onto it
+     * @author Elvira Grubb
      */
     public ChoosePlantPanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, ArrayList<ImageIcon> potBtnImages, ArrayList<ImageIcon> potBtnHoverImages, int width, int height)
     {
@@ -47,7 +49,6 @@ public class ChoosePlantPanel extends JPanel {
 
         setLayout(new BorderLayout());
         setSize(width, height);
-        ImageIcon icon = new ImageIcon("images/icon.png");
 
         JPanel plantAndPotPanel = plantAndPotPanel();
         this.add(plantAndPotPanel, BorderLayout.CENTER);
@@ -60,10 +61,10 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
-     * @return JPanel plants
      * Creates a JPanel that adds all PlantTypes by looping through the PlantButton ArrayList to
      * create buttons of each PlantType
+     * @return JPanel plants
+     * @author Elvira Grubb
      */
     public JPanel plantAndPotPanel()
     {
@@ -76,6 +77,11 @@ public class ChoosePlantPanel extends JPanel {
         return plants;
     }
 
+    /**
+     * Creates a JScrollPane and adds plant buttons to it
+     * @return A JScrollPane containing plant buttons
+     * @author Elvira Grubb
+     */
     public JScrollPane plantPanel()
     {
         JPanel plantPanel = new JPanel();
@@ -107,6 +113,11 @@ public class ChoosePlantPanel extends JPanel {
         return scrollPlantPanel;
     }
 
+    /**
+     * Creates a JScrollPane and adds pot buttons to it
+     * @return A JScrollPane containing pot buttons
+     * @author Elvira Grubb
+     */
     public JScrollPane potPanel()
     {
         JPanel potPanel = new JPanel();
@@ -209,11 +220,9 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
+     * This method sets the selected plant icon to indicate it's been selected, and saves which plant is selected as an int
      * @param plant An int corresponding to the PlantTypes
-     * This method will be replaced by a method that calls a method in the Controller to notify
-     * that a plant has been chosen and which plant has been chosen (via the index that will
-     *  correspond to an index in the PlantType ArrayList)
+     * @author Elvira Grubb
      */
     private void plantPressed(int plant)
     {
@@ -228,6 +237,11 @@ public class ChoosePlantPanel extends JPanel {
         System.out.println(plant);
     }
 
+    /**
+     * This method sets the selected pot icon to indicate it's been selected, and saves which pot is selected as an int
+     * @param pot An int corresponding to the pots
+     * @author Elvira Grubb
+     */
     private void potPressed(int pot)
     {
         if (currentSelectedPot != -1)
@@ -241,8 +255,8 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
      * This method plays a sound effect whenever a button is pressed
+     * @author Elvira Grubb
      */
     private void buttonPressedSoundEffect() {
         AudioInputStream audioInputStream = null;

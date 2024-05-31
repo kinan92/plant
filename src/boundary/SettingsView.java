@@ -12,11 +12,11 @@ public class SettingsView extends JFrame {
     private JCheckBox soundEffects;
 
     /**
-     * @author Elvira Grubb
+     * This method creates a Settings menu but will not set it to visible until prompted
      * @param width The width of the MainFrame
      * @param height The height of the MainFrame
-     * @param plantView The active boundary.PlantView.PlantView
-     * This method creates a Settings menu but will not set it to visible until prompted
+     * @param plantView The active PlantView
+     * @author Elvira Grubb
      */
     public SettingsView (int width, int height, PlantView plantView)
     {
@@ -26,8 +26,8 @@ public class SettingsView extends JFrame {
         setTitle("Settings");
 
         //Calls a method on close instead of closing the window
-        //in order to give the user a warning in case they have unsaved
-        //settings
+        //so the program doesn't have to create a new settings menu
+        //every time the user opens it
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -47,9 +47,9 @@ public class SettingsView extends JFrame {
     }
 
     /**
-     * @author Elvira Grubb
-     * @return JPanel with settings
      * Creates a JPanel with various settings and a confirm button
+     * @return JPanel with settings
+     * @author Elvira Grubb
      */
     public JPanel settings()
     {
@@ -78,16 +78,19 @@ public class SettingsView extends JFrame {
         return settings;
     }
 
-    //Currently sets the window as invisible
-    //Will later give the user a warning in case the user has made changes
-    //that have not yet been saved
+    /**
+     * Sets the window to not visible when user closes it
+     * @author Elvira Grubb
+     */
     private void windowClose()
     {
         this.setVisible(false);
     }
 
-    //Method called when settings are confirmed that updates the settings in boundary.PlantView.PlantView
-    //and sets the settings windows as invisible
+    /**
+     * Sets the user's selected settings in the PlantView when confirmed is pressed and sets the settings menu to not visible
+     * @author Elvira Grubb
+     */
     private void confirmSettings()
     {
         plantView.setSoundEffectSetting(soundEffects.isSelected());

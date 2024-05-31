@@ -267,7 +267,7 @@ public class PlantView extends JPanel {
      */
     public void helpMenuPressed()
     {
-        new HelpMenu(width, height);
+        new HelpMenu();
     }
 
     /**

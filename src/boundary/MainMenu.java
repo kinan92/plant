@@ -8,23 +8,17 @@ import java.io.File;
 import java.io.IOException;
 
 public class MainMenu extends JPanel {
-	private int width;
-	private int height;
 	private Controller controller;
 
 	/**
-	 * @author Elvira Grubb
+	 * This method creates the MainMenu panel
 	 * @param width Width of the MainFrame
 	 * @param height Height of the MainFrame
 	 * @param controller Active Controller object in the program
-	 * This method creates the MainMenu panel
+	 * @author Elvira Grubb
 	 */
 	public MainMenu(int width, int height, Controller controller)
 	{
-		super(null);
-		this.controller = controller;
-		this.width = width;
-		this.height = height;
 		this.controller = controller;
 		this.setSize(width, height);
 		this.setLayout(new BorderLayout());
@@ -35,10 +29,10 @@ public class MainMenu extends JPanel {
 	}
 
 	/**
-	 * @author Elvira Grubb
-	 * @return A label that functions as a panel, with a background and buttons
 	 * This method creates a label that essentially functions as a panel, adding a
 	 * background image to the label and buttons onto the background
+	 * @return A label that functions as a panel, with a background and buttons
+	 * @author Elvira Grubb
 	 */
 	private JLabel backgroundPanel()
 	{
@@ -98,20 +92,20 @@ public class MainMenu extends JPanel {
 	}
 
 	/**
-	 * @author Elvira Grubb
 	 * ActionListener used for the createPlant button that calls on a method in the
-	 * Controller to allow the user to create a pant
+	 * Controller to allow the user to create a plant
+	 * @author Elvira Grubb
 	 */
 	private void clickCreatePlantButton()
 	{
 		buttonPressedSoundEffect();
-		controller.choosePlantFrame();
+		controller.createChoosePlantPanel();
 	}
 
 	/**
-	 * @author Elvira Grubb
 	 * ActionListener used for the getPlant button. Calls on a method in the controller
 	 * to allow the user to view their last plant
+	 * @author Elvira Grubb
 	 */
 	private void clickGetAPlantButton()
 	{
@@ -119,6 +113,10 @@ public class MainMenu extends JPanel {
 		controller.showPlantView();
 	}
 
+	/**
+	 * ActionListener used to open Plant Storage from the main menu
+	 * @author Elvira Grubb
+	 */
 	private void clickPlantStorageButton()
 	{
 		buttonPressedSoundEffect();
@@ -126,13 +124,12 @@ public class MainMenu extends JPanel {
 	}
 
 	/**
-	 * @author Elvira Grubb
 	 * This method plays a sound effect whenever a button is pressed
+	 * @author Elvira Grubb
 	 */
 	private void buttonPressedSoundEffect() {
-		AudioInputStream audioInputStream = null;
 		try {
-			audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
+			AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File("sounds/button_sound.wav").getAbsoluteFile());
 			Clip clip = AudioSystem.getClip();
 			clip.open(audioInputStream);
 			clip.start();

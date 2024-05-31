@@ -7,7 +7,11 @@ public class HelpMenu extends JFrame{
     private int width;
     private int height;
 
-    public HelpMenu (int width, int height)
+    /**
+     * Creates a frame for the help menu and adds a panel to show the help text
+     * @author Elvira Grubb
+     */
+    public HelpMenu ()
     {
         this.width = 250;
         this.height = 270;
@@ -25,17 +29,15 @@ public class HelpMenu extends JFrame{
         setVisible(true);
     }
 
+    /**
+     * Creates a JScrollPane with the help text
+     * @return a JScrollPane with help text
+     * @author Elvira Grubb
+     */
     private JScrollPane helpText()
     {
         JPanel helpPanel = new JPanel();
         helpPanel.setPreferredSize(new Dimension(230, 922));
-
-        /*JTextArea plantCareTitle = new JTextArea(20, 1);
-        plantCareTitle.setText("hej");
-        plantCareTitle.setEditable(false);
-        plantCareTitle.setSize(new Dimension(width, height));
-        plantCareTitle.setFont(new Font("Calibri", Font.BOLD, 16));
-        helpPanel.add(plantCareTitle);*/
 
         JLabel helpImage = new JLabel();
         helpImage.setIcon(new ImageIcon("images/help_menu.png"));

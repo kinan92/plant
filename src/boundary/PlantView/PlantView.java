@@ -73,15 +73,11 @@ public class PlantView extends JPanel {
         checkJavaFXToolKit();
 
     }
-    /* TODO: Not just in this class, but: make open all plants as widgets button in storage
-     *   merge plants and pots and resize them and make buttons and hoverbuttons
-     *   of them with java graphics or javafx
-     *   make the name display under the buttons */
 
     /**
-     * @author Petri Närhi
      * ActionListener used for the Storage button that calls on a method in the
      * Controller to show the Storage panel
+     * @author Petri Närhi
      */
     public void storagePressed()
     {
@@ -109,7 +105,7 @@ public class PlantView extends JPanel {
     public void widgetPressed() {
         SwingUtilities.invokeLater(() -> {
             if ((controller.getCurrentPlant() == null)
-                    || ((controller.getCurrentPlant().getImage() == null) && (controller.getCurrentPlant().getPot() == null))) {
+                    || ((controller.getCurrentPlant().getPlantImage() == null) && (controller.getCurrentPlant().getPot() == null))) {
                 System.out.println("You can't create a Widget because the plant or the pot image is null");
             } else {
                 updateButtonState();
@@ -188,7 +184,7 @@ public class PlantView extends JPanel {
         }
 
         waterLevel = plant.getWaterLevel();
-        plantPanel.updatePlantImage(currentPlant.getImage());
+        plantPanel.updatePlantImage(currentPlant.getPlantImage());
         plantPanel.updateWaterLevel(waterLevel);
         stateLabel.setText("State: " + currentPlant.getState().toString());
         UpdateWidgetImages();
@@ -321,7 +317,7 @@ public class PlantView extends JPanel {
      */
     public ImageIcon getCurrentPlantImage() {
         try {
-            return controller.getCurrentPlant().getImage();
+            return controller.getCurrentPlant().getPlantImage();
         } catch (NullPointerException e) {
             return new ImageIcon("images/plants/default_plant.png");
         }

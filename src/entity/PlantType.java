@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Stores the plant data regarding generic information
- * (generic = same for all plants of the type rather than specific plant)
+ * (generic = same for all plants of the species rather than specific plant)
  * @author Elvira Grubb
  * @author Petri Närhi
  * */

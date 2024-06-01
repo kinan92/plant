@@ -14,6 +14,12 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.*;
 
+/**
+ * Main control for the program, controls the flow
+ * @author Petri Närhi
+ * @author Elvira Grubb
+ * @author Aleksander Augustyniak
+ * */
 public class Controller {
 	private ArrayList<Plant> listOfPlants = new ArrayList<>();
 	private Plant currentPlant;
@@ -34,7 +40,7 @@ public class Controller {
 	 * Constructor for Controller
 	 * creates filemanager and mainframe, loads planttypes,
 	 * pots and user data and turns on autosave
-	 * @author Petri Närhi and others
+	 * @author Petri Närhi
 	 * @author Elvira Grubb
 	 * */
 	public Controller() {
@@ -57,8 +63,8 @@ public class Controller {
 	 * Autosave method
 	 * starts file saving thread if turned on
 	 * interrupts file saving thread if turned off
-	 * @author Petri Närhi
 	 * @param on boolean
+	 * @author Petri Närhi
 	 * */
 	public void autoSave(boolean on) {
 		if (on) {
@@ -90,11 +96,10 @@ public class Controller {
 	 * */
 	public void createPlant(int plantNumber, int potNumber, String plantName) {
 		PlantType type = plantTypes.get(plantNumber);
-		String name = plantName;
 		int initialWaterLevel = random.nextInt(21) * 5; //divisible by 5 so the watering will work as intended
 		LocalDateTime dateAndTime = LocalDateTime.now();
 
-		Plant newPlant = new Plant(name, initialWaterLevel, type, PlantStateEnum.small, dateAndTime, pots.get(potNumber)); //ny planta är alltid liten
+		Plant newPlant = new Plant(plantName, initialWaterLevel, type, PlantStateEnum.small, dateAndTime, pots.get(potNumber));
 		listOfPlants.add(newPlant);
 		try {
 			currentPlant.setLastPlant(false);
@@ -110,6 +115,12 @@ public class Controller {
 		saveUserData();
 	}
 
+	/**
+	 * Deletes a selected plant in Storage
+	 * then sets the last plant in the list as current plant if not null
+	 * @param selectedPlant int, receives index of selected plant
+	 * @author Petri Närhi
+	 * */
 	public void deletePlant(int selectedPlant)
 	{
 		if (selectedPlant < listOfPlants.size()) {
@@ -127,12 +138,12 @@ public class Controller {
 	/**
 	 * Saves user data
 	 * calls filemanager's methods to write plant list to file
+	 * synchronized since both main thread and autosave thread uses it
 	 * @author Petri Närhi
 	 * */
 	public synchronized void saveUserData() {
 		try {
 			file.writePlantsToFile(listOfPlants);
-			//file.writeSettingsToFile();
 			System.out.println("User data saved.");
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -142,15 +153,14 @@ public class Controller {
 	/**
 	 * Loads saved user data
 	 * Calls filemanager's methods to read plants from file
-	 * Future possible implementation: read settings
+	 * finds current plant from the list of plants by checking boolean value
 	 * @author Petri Närhi
 	 * */
-	public void loadUserData() {
+	public void loadUserData()
+	{
 		ArrayList<Plant> plantList;
-		boolean soundEffectsOn;
 		try {
 			plantList = file.readPlantsFromFile();
-			//soundEffectsOn = file.readSettingsFromFile();
 		} catch (IOException e) {
 			throw new RuntimeException(e);
 		}
@@ -164,7 +174,6 @@ public class Controller {
 				}
 			}
 		}
-		//soundEffectSetting = soundEffectsOn;
 	}
 
 	/**
@@ -291,6 +300,7 @@ public class Controller {
 	/**
 	 * Creates the ChoosePlantFrame by making ArrayLists of the button images and then creating the panel
 	 * @author Elvira Grubb
+	 * @author Petri Närhi (refactored from Strings to ImageIcons throughout the program)
 	 */
 	public void createChoosePlantPanel()
 	{
@@ -390,7 +400,7 @@ public class Controller {
 
 	/**
 	 * Gets the current plant
-	 * to show the current plant that is shown in boundary.PlantView.PlantView
+	 * to show the current plant that is shown in PlantView
 	 * and to be able to use the plant's methods in various classes
 	 * @return Plant
 	 * @author Petri Närhi
@@ -401,7 +411,8 @@ public class Controller {
 
 	/**
 	 * Sets the current plant
-	 * to change the current plant that is shown in boundary.PlantView.PlantView
+	 * to change the current plant that is shown in PlantView
+	 * checks if list of plants is empty first to avoid null exception
 	 * @param selectedPlant int, the plant to replace the current plant selected in storage
 	 * @author Petri Närhi
 	 * */
@@ -420,13 +431,17 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * @author Petri Närhi
+	 * */
 	public ArrayList<Plant> getListOfPlants() {
 		return listOfPlants;
 	}
 
 	/**
-	 * Creates images to be used for the plant buttons in Storage,
+	 * Creates buttons and hover buttons to be used for the plants in Storage,
 	 * then adds the Storage window
+	 * Uses the current look of the plants
 	 * @author Petri Närhi
 	 * */
 	public void createStorage()
@@ -436,7 +451,7 @@ public class Controller {
 
 		for (int i = 0; i < listOfPlants.size(); i++)
 		{
-			ImageIcon plant = listOfPlants.get(i).getImage();
+			ImageIcon plant = listOfPlants.get(i).getPlantImage();
 			ImageIcon pot = listOfPlants.get(i).getPot();
 
 			BufferedImage plantBuffered = widget.convertImageIconToBufferedImage(plant);
@@ -455,11 +470,11 @@ public class Controller {
 	 * Resizes an image (type BufferedImage)
 	 * used to create buttons of plants dynamically for Storage
 	 * based on the actual state of the plant in question
-	 * @author Petri Närhi
 	 * @param originalImage BufferedImage
 	 * @param width int, desired width of the image
 	 * @param height int, desired height of the image
 	 * @return resizedImage BufferedImage
+	 * @author Petri Närhi
 	 * */
 	public BufferedImage resizeImage(BufferedImage originalImage, int width, int height)
 	{
@@ -473,10 +488,10 @@ public class Controller {
 	/**
 	 * Changes brightness of image (type BufferedImage)
 	 * used to create hover buttons dynamically for the Storage panel
-	 * @author Petri Närhi
 	 * @param image BufferedImage, the image to be brightened/darkened
 	 * @param scaleFactor float, desired brightness
 	 * @return image BufferedImage
+	 * @author Petri Närhi
 	 * */
 	public BufferedImage brightenImage(BufferedImage image, float scaleFactor)
 	{

@@ -5,10 +5,17 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import javax.swing.*;
 
+/**
+ * Plant class holds data for the created plants
+ * Serializable due to being saved in an array to file
+ * @author Petri Närhi
+ * @author Aleksander Augustyniak
+ * @author Elvira Grubb
+ * */
 public class Plant implements Serializable
 {
 	private String name;
-	private ImageIcon image;
+	private ImageIcon plantImage;
 	private LocalDateTime dateAndTime;
 	private LocalDateTime growthStartTime;
 	private Timer deathTimer;
@@ -27,8 +34,9 @@ public class Plant implements Serializable
 	 * @param name the String user has typed in as its name
 	 * @param initialWaterLevel int, a random water level for new plants
 	 * @param type PlantType, its species
-	 * @param state PlantStateEnum, little, medium, grown or any of the dead states, new plants start as little
+	 * @param state PlantStateEnum, small, medium, big or any of the dead states, new plants start as little
 	 * @param dateAndTime LocalDateTime, the exact time the plant was created
+	 * @param pot Pot, chosen pot for the plant
 	 * @author Petri Närhi
 	 * */
 	public Plant(String name, int initialWaterLevel, PlantType type, PlantStateEnum state, LocalDateTime dateAndTime, Pot pot)
@@ -40,7 +48,7 @@ public class Plant implements Serializable
 		this.type = type;
 		this.state = state;
 		updateStateImage(state);
-		this.pot = pot; //läggs till som parameter sen när vi har ett "välj kruka"-fönster
+		this.pot = pot;
 	}
 
 	/**
@@ -53,12 +61,12 @@ public class Plant implements Serializable
 	public void updateStateImage(PlantStateEnum state)
 	{
 		switch (state) {
-			case small -> this.image = type.getLittlePlantImage();
-			case medium -> this.image = type.getMediumPlantImage();
-			case large -> this.image = type.getGrownPlantImage();
-			case smallDead -> this.image = type.getSmallDeadPlantImage();
-			case mediumDead -> this.image = type.getMediumDeadPlantImage();
-			case largeDead -> this.image = type.getLargeDeadPlantImage();
+			case small -> this.plantImage = type.getLittlePlantImage();
+			case medium -> this.plantImage = type.getMediumPlantImage();
+			case large -> this.plantImage = type.getGrownPlantImage();
+			case smallDead -> this.plantImage = type.getSmallDeadPlantImage();
+			case mediumDead -> this.plantImage = type.getMediumDeadPlantImage();
+			case largeDead -> this.plantImage = type.getLargeDeadPlantImage();
 		}
 	}
 
@@ -188,8 +196,8 @@ public class Plant implements Serializable
 	public String getName() {
 		return name;
 	}
-	public ImageIcon getImage() {
-		return image;
+	public ImageIcon getPlantImage() {
+		return plantImage;
 	}
 	public LocalDateTime getDateAndTime() {
 		return dateAndTime;
@@ -236,16 +244,6 @@ public class Plant implements Serializable
 	}
 
 	/**
-	 * Setter for pot image
-	 * @param pot ImageIcon
-	 * @author Petri Närhi
-	 * */
-	public void setPot(ImageIcon pot)
-	{
-		//this.pot = pot;
-	}
-
-	/**
 	 * Getter and setter for isLastPlant
 	 * a boolean used to determine which plant is the current plant
 	 * when loading from file
@@ -265,6 +263,6 @@ public class Plant implements Serializable
 	 * @author Petri Närhi
 	 * */
 	public String toString() {
-		return ("Name: " + name + " | Image: "  + image + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
+		return ("Name: " + name + " | Image: "  + plantImage + " | Created: "  + dateAndTime + " | WaterLevel: " + waterLevel + " | " + type + " | State: "  + state);
 	}
 }

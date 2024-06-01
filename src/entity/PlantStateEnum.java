@@ -18,8 +18,8 @@ public enum PlantStateEnum {
 
 	/**
 	 * Gets the dead state for the current plant state.
-	 * This method checks hte current plant state and returns the corresponding dead state.
-	 * If the state i small, it returns smallDead and so on.
+	 * This method checks the current plant state and returns the corresponding dead state.
+	 * If the state is small, it returns smallDead and so on.
 	 * @return PlantStateEnum representing the dead state for the current plant state.
 	 * @author Aleksander Augustyniak
 	 */

@@ -6,6 +6,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * GUI for the Storage Panel
+ * Shows all the plants the user has created and lets you choose between them
+ * @author Petri Närhi
+ * @author Elvira Grubb
+ * */
 public class StoragePanel extends JPanel {
     private Controller controller;
     private int width;
@@ -16,14 +22,14 @@ public class StoragePanel extends JPanel {
     private int currentSelectedPlant = -1;
 
     /**
-     * @author Elvira Grubb
-     * @author Petri Närhi
+     * This method creates the Storage JPanel
      * @param controller The active controller class used in the program
      * @param plantBtnImages An ArrayList of plantbutton images
      * @param plantBtnHoverImages An ArrayList of plantbutton hover images
      * @param width The width of the MainFrame
      * @param height The height of the MainFrame
-     * This method creates the Storage JPanel
+     * @author Elvira Grubb
+     * @author Petri Närhi
      */
     public StoragePanel(Controller controller, ArrayList<ImageIcon> plantBtnImages, ArrayList<ImageIcon> plantBtnHoverImages, int width, int height)
     {
@@ -50,11 +56,11 @@ public class StoragePanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb (main)
-     * @author Petri Närhi (edits)
-     * @return JScrollPane plantPanel
      * Creates a scrollable pane for the storedPlantsPanel
      * which includes all the plant buttons
+     * @return JScrollPane plantPanel
+     * @author Elvira Grubb (main)
+     * @author Petri Närhi (edits)
      */
     public JScrollPane plantPanel()
     {
@@ -152,8 +158,11 @@ public class StoragePanel extends JPanel {
     }
 
     /**
-     * @author Elvira Grubb
+     * Called when a plant is pressed
+     * selected plant becomes lighter and the current selected plant
      * @param selectedPlant An int corresponding to the plant chosen
+     * @author Elvira Grubb
+     * @author Petri Närhi (javadoc only)
      */
     private void plantPressed(int selectedPlant)
     {
@@ -167,6 +176,13 @@ public class StoragePanel extends JPanel {
         plantButtons.get(selectedPlant).setIcon(plantBtnHoverImages.get(selectedPlant));
     }
 
+    /**
+     * Called when the confirm button is pressed
+     * if selected plant is not -1, it becomes the current plant in Controller
+     * to be shown in PlantView
+     * @author Elvira Grubb
+     * @author Petri Närhi
+     */
     private void confirmButtonpressed()
     {
         //buttonPressedSoundEffect();
@@ -181,6 +197,12 @@ public class StoragePanel extends JPanel {
         }
     }
 
+    /**
+     * Called when the delete button is pressed
+     * if selected plant is not -1, and the user is sure, it will be deleted
+     * and the storage will be updated
+     * @author Petri Närhi
+     */
     private void deleteButtonpressed()
     {
         //buttonPressedSoundEffect();

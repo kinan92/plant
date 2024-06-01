@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 /**
  * The FileManager class handles reading and writing files
+ * as well as being an autosave thread
  * @author Petri Närhi
  * */
 public class FileManager extends Thread {
@@ -104,10 +105,11 @@ public class FileManager extends Thread {
 	 * Writes plants to file
 	 * Takes the list of plants from controller and writes them to a dat-file
 	 * using buffered object output stream
-	 * @author Petri Närhi
 	 * @param listOfPlants ArrayList of plants
+	 * @author Petri Närhi
 	 * */
-	public void writePlantsToFile(ArrayList<Plant> listOfPlants) throws IOException {
+	public void writePlantsToFile(ArrayList<Plant> listOfPlants) throws IOException
+	{
 		try (ObjectOutputStream oos = new ObjectOutputStream(
 				new BufferedOutputStream(new FileOutputStream(plantsFile)))) {
 			oos.writeInt(listOfPlants.size());
@@ -121,10 +123,11 @@ public class FileManager extends Thread {
 	/**
 	 * Reads plants from file
 	 * Reads list of plants from a dat-file using buffered object input stream
-	 * @author Petri Närhi
 	 * @return listOfPlants ArrayList of plants
+	 * @author Petri Närhi
 	 * */
-	public ArrayList<Plant> readPlantsFromFile() throws IOException {
+	public ArrayList<Plant> readPlantsFromFile() throws IOException
+	{
 		ArrayList<Plant> listOfPlants = new ArrayList<>();
 		try (ObjectInputStream ois = new ObjectInputStream(new BufferedInputStream(new FileInputStream(plantsFile))) ) {
 			int n = ois.readInt();

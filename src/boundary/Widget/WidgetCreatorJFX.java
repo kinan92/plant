@@ -29,7 +29,7 @@ public class WidgetCreatorJFX extends Pane {
 
 	public WidgetCreatorJFX(Controller controller) {
 
-		plantBufferedImage = convertImageIconToBufferedImage(controller.getCurrentPlant().getImage());
+		plantBufferedImage = convertImageIconToBufferedImage(controller.getCurrentPlant().getPlantImage());
 
 		potBufferedImage = convertImageIconToBufferedImage(controller.getCurrentPlant().getPot());
 

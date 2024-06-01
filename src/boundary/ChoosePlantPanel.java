@@ -9,6 +9,11 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * GUI for the Create Plant window that lets you choose plant and pot
+ * @author Elvira Grubb
+ * @author Petri Närhi
+ * */
 public class ChoosePlantPanel extends JPanel {
     private Controller controller;
     private int width;
@@ -191,7 +196,7 @@ public class ChoosePlantPanel extends JPanel {
     }
 
     /**
-     * Called when actionlistener notices the back button has been pressed
+     * Called when action listener notices the back button has been pressed
      * @author Petri Närhi
      */
     private void backPressed()

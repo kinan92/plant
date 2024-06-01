@@ -56,7 +56,6 @@ public class Controller {
 		} catch (RuntimeException e) {}
 		autoSave(true);
 		startRefreshTimer();
-		startCheckGrowTimer();
 	}
 
 	/**
@@ -242,7 +241,7 @@ public class Controller {
 	 * If the timer is paused, it will not perform the growth check.
 	 * @author Aleksander Augustyniak
 	 */
-	private void startCheckGrowTimer(){
+	public void startCheckGrowTimer(){
 		if (checkGrowTimer == null){
 			checkGrowTimer = new Timer(60000, e -> {
 				if (!isPaused){

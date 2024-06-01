@@ -19,7 +19,6 @@ public class Plant implements Serializable
 	private LocalDateTime dateAndTime;
 	private LocalDateTime growthStartTime;
 	private Timer deathTimer;
-	private Timer refreshPlantImageTimer;
 	private int waterLevel;
 	private final int WATER_INCREMENT = 5;
 	private final int WATER_DECREMENT = 1;
@@ -78,8 +77,12 @@ public class Plant implements Serializable
 	public void waterPlant()
 	{
 		waterLevel += WATER_INCREMENT;
-		cancelDeathTimer();
-		updateDeathTimer();
+		if (waterLevel >= 120){
+			startDeathTimer();
+	} else {
+			cancelDeathTimer();
+			updateDeathTimer();
+		}
 	}
 
 	/**
@@ -114,7 +117,6 @@ public class Plant implements Serializable
 		}
 		updateStateImage(getState());
 	}
-
 
 	/**
 	 * Checks the growth of the plant and updates its state based on the elapsed time and water level.
@@ -152,7 +154,6 @@ public class Plant implements Serializable
 	 * the plant's image.
 	 * @author Aleksander Augustyniak
 	 */
-
 	private void startDeathTimer()
 	{
 		if (deathTimer == null){

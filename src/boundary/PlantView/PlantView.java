@@ -7,7 +7,6 @@ import controller.Controller;
 import entity.Plant;
 import javafx.application.Platform;
 import javafx.stage.Stage;
-
 import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
@@ -50,7 +49,6 @@ public class PlantView extends JPanel {
         BorderLayout borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         this.setBackground(new java.awt.Color(184, 200, 177));
-
         this.waterLevel = controller.getCurrentPlant().getWaterLevel();
 
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -61,6 +59,7 @@ public class PlantView extends JPanel {
         topPanel.add(stateLabel);
         add(topPanel, BorderLayout.NORTH);
         updateElapsedTime();
+        controller.startCheckGrowTimer();
 
         plantPanel = new PlantPanel(height, this);
         add(plantPanel, BorderLayout.WEST);
@@ -71,7 +70,6 @@ public class PlantView extends JPanel {
         settingsView = new SettingsView(width, height, this);
 
         checkJavaFXToolKit();
-
     }
 
     /**
@@ -207,7 +205,6 @@ public class PlantView extends JPanel {
             isVacationMode = true;
             System.out.println("Vacation mode enabled, pausing time");
         }
-
         if (soundEffectSetting) {
             buttonPressedSoundEffect();
         }
@@ -406,7 +403,6 @@ public class PlantView extends JPanel {
      *
      * @author kinan
      */
-
     private void checkJavaFXToolKit() {
         if (!isJavaFXInitialized) {
             // Initialize JavaFX only if it hasn't been initialized yet

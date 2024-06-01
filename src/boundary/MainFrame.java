@@ -2,7 +2,6 @@ package boundary;
 
 import boundary.PlantView.PlantView;
 import controller.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
@@ -89,7 +88,6 @@ public class MainFrame extends JFrame {
         this.setContentPane(confirmPlantPanel);
         this.repaint();
     }
-
 
     /**
      * Gets the current PlantView instance associated with the MainFrame
